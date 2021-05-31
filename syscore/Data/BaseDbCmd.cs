@@ -41,8 +41,6 @@ namespace Sys.Data
             return null;
         }
 
-
-
         public IEnumerable<T> FillDataColumn<T>(int column = 0)
         {
             Contract.Requires(column >= 0);
@@ -127,8 +125,13 @@ namespace Sys.Data
             if (dt == null)
                 return null;
 
-            return dt.AsEnumerable().Select(row => newObject(row)).ToList();
-        }
+            List<T> list = new List<T>();
+            foreach (DataRow row in dt.Rows)
+            {
+                list.Add(newObject(row));
+            }
 
+            return list;
+        }
     }
 }

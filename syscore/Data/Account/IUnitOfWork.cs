@@ -14,25 +14,13 @@
 //                                                                                                  //
 //                                                                                                  //
 //--------------------------------------------------------------------------------------------------//
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Sys
+namespace Sys.Data
 {
-    public class ActiveAccount
+    public interface IUnitOfWork
     {
-        private static IAccount account = null;
-
-        public static IAccount Account
-        {
-            get { return ActiveAccount.account; }
-        }
-
-        public static void SetActiveAccount(IAccount account)
-        {
-            ActiveAccount.account = account;
-        }
+        string Name { get; }
+        string ConnectionString { get; }
+        IAccount User { get; }
     }
 }
