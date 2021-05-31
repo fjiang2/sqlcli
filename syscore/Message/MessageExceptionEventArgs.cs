@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sys
+namespace Sys.Diagnose
 {
     public class MessageExceptionEventArgs : EventArgs
     {

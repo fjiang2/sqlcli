@@ -26,7 +26,7 @@ using DataProviderHandle = System.Int32;
 
 namespace Sys.Data
 {
-    public abstract class DbCmd : IDbCmd
+    public abstract class DbCmd : IDbFill, IDbCmd
     {
         protected string script;
         protected DbProvider dbProvider;
@@ -217,6 +217,11 @@ namespace Sys.Data
             }
 
             return list;
+        }
+
+        public DataRow FillDataRow()
+        {
+            return FillDataRow(0);
         }
 
         public DataRow FillDataRow(int row = 0)
