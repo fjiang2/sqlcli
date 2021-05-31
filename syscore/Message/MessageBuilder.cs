@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Sys
+namespace Sys.Diagnose
 {
     /// <summary>
     /// message list
