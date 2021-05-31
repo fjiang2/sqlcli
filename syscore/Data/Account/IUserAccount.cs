@@ -19,19 +19,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Sys.Data
+namespace Sys
 {
-    public enum Provider
+    public interface IUserAccount
     {
-       /// <summary>
-       /// Default database provider
-       /// </summary>
-        DefaultDataSource = ConnectionProvider.DEFAULT_HANDLE,
-
-        DataSource1 = ConnectionProvider.DEFAULT_HANDLE + 1,
-        DataSource2 = ConnectionProvider.DEFAULT_HANDLE + 2,
-        DataSource3 = ConnectionProvider.DEFAULT_HANDLE + 3,
-        DataSource4 = ConnectionProvider.DEFAULT_HANDLE + 4,
-        DataSource5 = ConnectionProvider.DEFAULT_HANDLE + 5
+        int UserID { get; }
+        string UserName { get; }
     }
 }

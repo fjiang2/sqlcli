@@ -21,9 +21,15 @@ using System.Text;
 
 namespace Sys
 {
-    public interface IAccount
+    public class ActiveUserAccount
     {
-        int UserID { get; }
-        string UserName { get; }
+        private static IUserAccount account = null;
+
+        public static IUserAccount Account => account;
+
+        public static void SetActiveAccount(IUserAccount account)
+        {
+            ActiveUserAccount.account = account;
+        }
     }
 }
