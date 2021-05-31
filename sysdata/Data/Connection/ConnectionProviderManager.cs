@@ -37,14 +37,14 @@ namespace Sys.Data
         {
         }
 
-        public static ConnectionProviderManager Instance
+        internal static ConnectionProviderManager Instance
         {
             get
             {
-                if (ConnectionProviderManager.instance == null)
-                    ConnectionProviderManager.instance = new ConnectionProviderManager();
+                if (instance == null)
+                    instance = new ConnectionProviderManager();
 
-                return ConnectionProviderManager.instance;
+                return instance;
             }
 
         }
@@ -84,18 +84,18 @@ namespace Sys.Data
             if (providers.ContainsKey(handle))
                 return providers[handle];
 
-            return ConnectionProviderManager.DefaultProvider;
+            return DefaultProvider;
         }
 
-        public ConnectionProvider GetProvider(string name)
+        public static ConnectionProvider GetProvider(string name)
         {
-            foreach (var provider in this.providers.Values)
+            foreach (var provider in Instance.providers.Values)
             {
                 if (provider.Name == name)
                     return provider;
             }
 
-            return ConnectionProviderManager.DefaultProvider;
+            return DefaultProvider;
 
         }
 
@@ -144,15 +144,9 @@ namespace Sys.Data
         #endregion
 
 
-        /// <summary>
-        /// provider's handle is assigned during runtime
-        /// </summary>
-        private static int PROVIDER = ConnectionProvider.USER_HANDLE_BASE;
-
-
         public static int Register(ConnectionProvider pvd)
         {
-            pvd.Handle = ++PROVIDER;
+            pvd.Handle = pvd.ConnectionString.GetHashCode();
             Instance.Add(pvd);
             return pvd.Handle;
         }

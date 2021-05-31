@@ -19,8 +19,19 @@ namespace Sys.Data
 {
     public interface IUnitOfWork
     {
+        /// <summary>
+        /// 
+        /// </summary>
         string ApplicationName { get; }
-        string ConnectionString { get; }
+
+        /// <summary>
+        /// Database server name
+        /// </summary>
+        string ServerName { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
         IUserAccount User { get; }
     }
 }
