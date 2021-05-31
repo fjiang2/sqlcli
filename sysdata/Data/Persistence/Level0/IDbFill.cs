@@ -6,7 +6,7 @@ using System.Data;
 namespace Sys.Data
 {
 
-    public interface IDbFill : IDbCmd
+    public interface IDbFill
     {
         DataSet FillDataSet();
         DataTable FillDataTable();
