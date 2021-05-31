@@ -14,16 +14,24 @@
 //                                                                                                  //
 //                                                                                                  //
 //--------------------------------------------------------------------------------------------------//
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Sys
+namespace Sys.Data
 {
-    public interface IAccount
+    public interface IUnitOfWork
     {
-        int UserID { get; }
-        string UserName { get; }
+        /// <summary>
+        /// 
+        /// </summary>
+        string ApplicationName { get; }
+
+        /// <summary>
+        /// Database server name
+        /// </summary>
+        string ServerName { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        IUserAccount User { get; }
     }
 }

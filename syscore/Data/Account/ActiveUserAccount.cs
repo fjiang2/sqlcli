@@ -21,18 +21,15 @@ using System.Text;
 
 namespace Sys
 {
-    public class ActiveAccount
+    public class ActiveUserAccount
     {
-        private static IAccount account = null;
+        private static IUserAccount account = null;
 
-        public static IAccount Account
-        {
-            get { return ActiveAccount.account; }
-        }
+        public static IUserAccount Account => account;
 
-        public static void SetActiveAccount(IAccount account)
+        public static void SetActiveAccount(IUserAccount account)
         {
-            ActiveAccount.account = account;
+            ActiveUserAccount.account = account;
         }
     }
 }
