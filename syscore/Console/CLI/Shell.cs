@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.IO;
 
 using Sys;
-using Sys.Data;
+using Sys.IO;
 using Sys.Stdio;
 
 namespace Sys.Cli
@@ -21,7 +21,7 @@ namespace Sys.Cli
         /// <summary>
         /// read command line from console and run command
         /// </summary>
-        public void DoConsole()
+        public void Run()
         {
 
             string line = null;
@@ -64,7 +64,7 @@ namespace Sys.Cli
         /// process command batch file
         /// </summary>
         /// <param name="lines"></param>
-        public void DoBatch(string[] lines)
+        internal void DoBatch(string[] lines)
         {
             FlowControl flow = new FlowControl(lines);
             NextStep next = flow.Execute(Run);
@@ -77,7 +77,7 @@ namespace Sys.Cli
         private bool multipleLineMode = false;
         private StringBuilder multipleLineBuilder = new StringBuilder();
 
-        public NextStep Run(string line)
+        internal NextStep Run(string line)
         {
 
             if (!multipleLineMode)
@@ -171,5 +171,16 @@ namespace Sys.Cli
 #endif
         }
 
+        public static void RunBatch(IWorkspace workspace, string path, string[] args)
+        {
+            Batch batch = new Batch(workspace, path);
+            batch.Call(null, args);
+        }
+
+        public static void RunBatch(IShellTask task, IWorkspace workspace, string path, string[] args)
+        {
+            Batch batch = new Batch(workspace, path);
+            batch.Call(task, args);
+        }
     }
 }

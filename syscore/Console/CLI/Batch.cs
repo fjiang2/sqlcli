@@ -10,16 +10,16 @@ using Sys.IO;
 
 namespace Sys.Cli
 {
-    public class Batch
+    class Batch
     {
         private const string EXT = ".sqc";
         private readonly string path;
-        private readonly IWorkSpace workspace;
+        private readonly IWorkspace workspace;
 
 
         public bool IsBatch { get; } = false;
 
-        public Batch(IWorkSpace workspace, string path)
+        public Batch(IWorkspace workspace, string path)
         {
             this.workspace = workspace;
             this.path = GetFullPath(path);

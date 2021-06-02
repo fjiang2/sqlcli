@@ -67,7 +67,7 @@ namespace sqlcli
 
                     default:
                         if (!string.IsNullOrEmpty(arg))
-                            RunBatch(arg, args);
+                            Shell.RunBatch(cfg, arg, args);
                         else
                             ShowHelp();
 
@@ -78,18 +78,8 @@ namespace sqlcli
             ShellTask task = new ShellTask(cfg);
             Shell = new Shell(task);
             Context.DS.AddHostObject(Context.SHELL, Shell);
-            Shell.DoConsole();
+            Shell.Run();
         }
-
-
-
-        private void RunBatch(string path, params string[] args)
-        {
-            Batch batch = new Batch(cfg, path);
-            batch.Call(null, args);
-        }
-
-     
 
         public static void ShowHelp()
         {

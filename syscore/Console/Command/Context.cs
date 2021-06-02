@@ -86,7 +86,7 @@ namespace Sys.Stdio
 
                         if (line != null)
                         {
-                            IShell shell = DS[SHELL].Value as IShell;
+                            Shell shell = DS[SHELL].Value as Shell;
                             if (shell != null)
                             {
                                 int result = (int)shell.Run(line);

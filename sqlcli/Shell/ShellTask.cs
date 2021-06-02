@@ -12,7 +12,7 @@ namespace sqlcli
     class ShellTask : ShellContext, IShellTask
     {
         public ShellTask(IApplicationConfiguration cfg)
-            :base(cfg)
+            : base(cfg)
         {
         }
 
@@ -131,10 +131,8 @@ namespace sqlcli
                     return NextStep.COMPLETED;
 
                 case "compare":
-                    {
-                        commandee.compare(cmd, cfg);
-                        return NextStep.COMPLETED;
-                    }
+                    commandee.compare(cmd, cfg);
+                    return NextStep.COMPLETED;
 
                 case "copy":
                     commandee.copy(cmd, CompareSideType.copy);
@@ -179,21 +177,16 @@ namespace sqlcli
 
                 case "path":
                     if (cmd.Arg1 == null)
-                    {
                         cout.WriteLine(cfg.Path);
-                    }
                     else
-                    {
                         Context.SetValue("path", cmd.Arg1);
-                    }
                     return NextStep.COMPLETED;
 
                 case "run":
                     if (cmd.Arg1 != null)
-                    {
-                        Batch batch = new Batch(cfg, cmd.Arg1);
-                        batch.Call(this, cmd.Arguments);
-                    }
+                        Shell.RunBatch(this, cfg, cmd.Arg1, cmd.Arguments);
+                    else
+                        cout.WriteLine("invalid arguments");
                     return NextStep.COMPLETED;
 
                 case "call":

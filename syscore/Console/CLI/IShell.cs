@@ -2,6 +2,7 @@
 {
     public interface IShell
     {
-        NextStep Run(string line);
+        IShellTask Task { get; }
+        void Run();
     }
 }
