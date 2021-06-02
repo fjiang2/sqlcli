@@ -80,7 +80,7 @@ namespace sqlcli
 
         public void ProcessZipArchive()
         {
-            string file = cmd.arg1;
+            string file = cmd.Arg1;
             if (file == null)
             {
                 cerr.WriteLine("file name not specified");

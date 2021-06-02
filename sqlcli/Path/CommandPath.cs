@@ -16,9 +16,9 @@ namespace sqlcli
             var pt = mgr.current;
             if (!(pt.Item is Locator) && !(pt.Item is TableName))
             {
-                if (cmd.arg1 != null)
+                if (cmd.Arg1 != null)
                 {
-                    PathName path = new PathName(cmd.arg1);
+                    PathName path = new PathName(cmd.Arg1);
                     var node = mgr.Navigate(path);
                     if (node != null)
                     {

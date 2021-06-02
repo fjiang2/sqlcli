@@ -10,7 +10,7 @@ using Sys.Stdio;
 
 namespace sqlcli
 {
-    class Shell : IShell
+    public class Shell : IShell
     {
         public IShellTask Task { get; }
         IApplicationConfiguration cfg;
@@ -162,15 +162,15 @@ namespace sqlcli
                 return NextStep.CONTINUE;
 
             ApplicationCommand cmd = new ApplicationCommand(cfg, line);
-            if (cmd.badcommand)
+            if (cmd.InvalidCommand)
                 return NextStep.ERROR;
             
             switch (cmd.Action)
             {
                 case "run":
-                    if (cmd.arg1 != null)
+                    if (cmd.Arg1 != null)
                     {
-                        new Batch(cfg, cmd.arg1).Call(this, cmd.Arguments);
+                        new Batch(cfg, cmd.Arg1).Call(this, cmd.Arguments);
                     }
                     return NextStep.COMPLETED;
             }

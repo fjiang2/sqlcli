@@ -17,8 +17,9 @@ namespace sqlcli
 
         public string CurrentPath => mgr.ToString();
 
-        public NextStep DoSingleLineCommand(ApplicationCommand cmd)
+        public NextStep DoSingleLineCommand(IApplicationCommand command)
         {
+            ApplicationCommand cmd = command as ApplicationCommand;
             switch (cmd.Action)
             {
                 case "set":
@@ -50,7 +51,7 @@ namespace sqlcli
 
                 case "cd":
                 case "chdir":
-                    if (cmd.arg1 != null || cmd.HasHelp)
+                    if (cmd.Arg1 != null || cmd.HasHelp)
                         chdir(cmd);
                     else
                         cout.WriteLine(mgr.ToString());
@@ -86,14 +87,14 @@ namespace sqlcli
                     return NextStep.COMPLETED;
 
                 case "show":
-                    if (cmd.arg1 != null)
-                        Show(cmd.arg1.ToLower(), cmd.arg2);
+                    if (cmd.Arg1 != null)
+                        Show(cmd.Arg1.ToLower(), cmd.Arg2);
                     else
                         cerr.WriteLine("invalid argument");
                     return NextStep.COMPLETED;
 
                 case "find":
-                    commandee.find(cmd, cmd.arg1);
+                    commandee.find(cmd, cmd.Arg1);
                     return NextStep.COMPLETED;
 
                 case "save":
@@ -134,20 +135,20 @@ namespace sqlcli
                     return NextStep.COMPLETED;
 
                 case "lcd":
-                    if (cmd.arg1 != null)
-                        cfg.WorkingDirectory.ChangeDirectory(cmd.arg1);
+                    if (cmd.Arg1 != null)
+                        cfg.WorkingDirectory.ChangeDirectory(cmd.Arg1);
                     else
                         cout.WriteLine(cfg.WorkingDirectory.CurrentDirectory);
                     return NextStep.COMPLETED;
 
                 case "ldir":
-                    cfg.WorkingDirectory.ShowCurrentDirectory(cmd.arg1);
+                    cfg.WorkingDirectory.ShowCurrentDirectory(cmd.Arg1);
                     return NextStep.COMPLETED;
 
                 case "ltype":
-                    if (cmd.arg1 != null)
+                    if (cmd.Arg1 != null)
                     {
-                        string[] lines = cfg.WorkingDirectory.ReadAllLines(cmd.arg1);
+                        string[] lines = cfg.WorkingDirectory.ReadAllLines(cmd.Arg1);
                         if (lines != null)
                         {
                             foreach (var _line in lines)
@@ -159,13 +160,13 @@ namespace sqlcli
                     return NextStep.COMPLETED;
 
                 case "path":
-                    if (cmd.arg1 == null)
+                    if (cmd.Arg1 == null)
                     {
                         cout.WriteLine(cfg.Path);
                     }
                     else
                     {
-                        Context.SetValue("path", cmd.arg1);
+                        Context.SetValue("path", cmd.Arg1);
                     }
                     return NextStep.COMPLETED;
 

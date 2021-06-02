@@ -9,7 +9,7 @@ using Sys;
 
 namespace sqlcli
 {
-    class Batch
+    public class Batch
     {
         private const string EXT = ".sqc";
         private readonly string path;

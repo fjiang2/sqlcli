@@ -10,7 +10,7 @@ namespace Sys.Stdio
 {
     public class Command : ICommand
     {
-        public bool badcommand { get; private set; }
+        public bool InvalidCommand { get; private set; }
         protected List<string> paths = new List<string>();
 
         /// <summary>
@@ -23,9 +23,9 @@ namespace Sys.Stdio
         /// <summary>
         /// 
         /// </summary>
-        public string args { get; private set; }
-        public string arg1 { get; private set; }
-        public string arg2 { get; private set; }
+        public string Args { get; private set; }
+        public string Arg1 { get; private set; }
+        public string Arg2 { get; private set; }
         public string[] Arguments { get; private set; }
 
         public Options Options { get; } = new Options();
@@ -50,23 +50,23 @@ namespace Sys.Stdio
 
             if (!eval(line, out _line))
             {
-                badcommand = true;
+                InvalidCommand = true;
                 return;
             }
 
 
             int k = parseAction(_line, out string action);
             this.Action = action;
-            this.args = _line.Substring(k);
+            this.Args = _line.Substring(k);
 
-            this.badcommand = !parseArgument(this.args, out string[] L);
+            this.InvalidCommand = !parseArgument(this.Args, out string[] L);
             this.Arguments = L;
 
             if (L.Length > 0 && !L[0].StartsWith("/"))
-                this.arg1 = L[0];
+                this.Arg1 = L[0];
 
             if (L.Length > 1 && !L[1].StartsWith("/"))
-                this.arg2 = L[1];
+                this.Arg2 = L[1];
 
             for (int i = 0; i < L.Length; i++)
             {

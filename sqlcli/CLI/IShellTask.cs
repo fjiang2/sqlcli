@@ -2,12 +2,12 @@
 
 namespace sqlcli
 {
-    interface IShellTask
+    public interface IShellTask
     {
         ISide TheSide { get; }
         string CurrentPath { get; }
         void ChangeSide(ISide side);
         NextStep DoMultipleLineCommand(string text);
-        NextStep DoSingleLineCommand(ApplicationCommand cmd);
+        NextStep DoSingleLineCommand(IApplicationCommand cmd);
     }
 }

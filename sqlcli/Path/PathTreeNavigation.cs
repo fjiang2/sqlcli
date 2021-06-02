@@ -203,14 +203,14 @@ namespace sqlcli
                 return pt;
             }
 
-            if (string.IsNullOrEmpty(cmd.arg1))
+            if (string.IsNullOrEmpty(cmd.Arg1))
             {
                 cerr.WriteLine("argument cannot be empty");
             }
 
             TableName tname = GetCurrentPath<TableName>();
 
-            var locator = new Locator(cmd.arg1) { Name = cmd.GetValue("name") };
+            var locator = new Locator(cmd.Arg1) { Name = cmd.GetValue("name") };
             if (locator.Name == null)
             {
                 locator.Name = $"filter{pt.Nodes.Count + 1}";
@@ -219,7 +219,7 @@ namespace sqlcli
             var builder = new SqlBuilder().SELECT().TOP(1).COLUMNS().FROM(tname).WHERE(locator);
             if (builder.Invalid())
             {
-                cerr.WriteLine($"invalid path: {cmd.arg1}");
+                cerr.WriteLine($"invalid path: {cmd.Arg1}");
                 return pt;
             }
 
