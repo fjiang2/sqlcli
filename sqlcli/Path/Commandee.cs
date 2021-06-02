@@ -225,7 +225,7 @@ namespace sqlcli
             }
         }
 
-        private SqlBuilder ParsePhysLocStatement(UniqueTable table, string text)
+        private static SqlBuilder ParsePhysLocStatement(UniqueTable table, string text)
         {
             if (string.IsNullOrEmpty(text))
                 return null;
@@ -235,7 +235,7 @@ namespace sqlcli
             Memory ds = new Memory();
 
             Script.Evaluate(text, ds);
-            if (ds.Names.Count() == 0)
+            if (!ds.Names.Any())
                 return null;
 
             SqlBuilder sum = null;
@@ -746,7 +746,7 @@ namespace sqlcli
                 string SQL;
                 var schema = new TableSchema(tname);
 
-                if (schema.Columns.Where(c => c.ColumnName.ToLower() == column.ToLower()).Count() != 0)
+                if (!schema.Columns.Where(c => c.ColumnName.ToLower() == column.ToLower()).Any())
                     SQL = $"ALTER TABLE [{tname.Name}] ALTER COLUMN {column} {type} {nullable}";
                 else
                     SQL = $"ALTER TABLE [{tname.Name}] ADD {column} {type} {nullable}";
@@ -1013,7 +1013,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
             }
         }
 
-        public void clean(ApplicationCommand cmd, IApplicationConfiguration cfg)
+        public void clean(ApplicationCommand cmd)
         {
             if (cmd.HasHelp)
             {
@@ -1099,7 +1099,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
             cerr.WriteLine("select database or table first");
         }
 
-        public void load(ApplicationCommand cmd, IApplicationConfiguration cfg)
+        public void load(ApplicationCommand cmd)
         {
             if (cmd.HasHelp)
             {
@@ -1657,7 +1657,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
                 return;
             }
 #else
-			cerr.WriteLine("doesn't support editor");
+            cerr.WriteLine("doesn't support editor");
 #endif			
         }
 
@@ -1787,7 +1787,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
 #endif
                 }
             }
-            else if(cmd.Has("string"))
+            else if (cmd.Has("string"))
             {
                 var pt = mgr.current;
                 if (pt.Item is DatabaseName)
@@ -1797,9 +1797,9 @@ sp_rename '{1}', '{2}', 'COLUMN'";
                     string root = cmd.GetValue("directory") ?? ".";
                     DatabaseName dname = (DatabaseName)pt.Item;
                     TableName tname = new TableName(dname, schema_name, table_name);
-                    
+
                     StringDumper dumper = new StringDumper(tname);
-                  
+
                     string SqlFileName = cmd.OutputFile(cfg.OutputFile);
                     using (var writer = SqlFileName.CreateStreamWriter(cmd.Append))
                     {
@@ -1857,14 +1857,14 @@ sp_rename '{1}', '{2}', 'COLUMN'";
         }
 
 
-        public void check(ApplicationCommand cmd, Side theSide)
+        public void check(ApplicationCommand cmd)
         {
             if (cmd.HasHelp)
             {
                 cout.WriteLine("check data correctness");
                 cout.WriteLine("check [path]                   : check data on current table");
                 cout.WriteLine("options:");
-                cout.WriteLine("   /syntax                       : check key-value pair syntax");
+                cout.WriteLine("   /syntax                     : check key-value pair syntax");
                 cout.WriteLine("   /key:c1                     : column name of key variable");
                 cout.WriteLine("   /value:c2                   : column name of value expression");
                 cout.WriteLine("examples:");
@@ -1923,7 +1923,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
         }
 
 
-        public void last(ApplicationCommand cmd, IApplicationConfiguration cfg)
+        public void last(ApplicationCommand cmd)
         {
             if (cmd.HasHelp)
             {

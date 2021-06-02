@@ -204,11 +204,11 @@ namespace sqlcli
                     return NextStep.COMPLETED;
 
                 case "load":
-                    commandee.load(cmd, cfg);
+                    commandee.load(cmd);
                     return NextStep.COMPLETED;
 
                 case "clean":
-                    commandee.clean(cmd, cfg);
+                    commandee.clean(cmd);
                     return NextStep.COMPLETED;
 
                 case "mount":
@@ -224,12 +224,12 @@ namespace sqlcli
                     return NextStep.COMPLETED;
 
                 case "last":
-                    commandee.last(cmd, cfg);
+                    commandee.last(cmd);
                     return NextStep.COMPLETED;
 
                 case "chk":
                 case "check":
-                    commandee.check(cmd, theSide);
+                    commandee.check(cmd);
                     return NextStep.COMPLETED;
 
                 default:
