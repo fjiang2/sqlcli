@@ -71,11 +71,12 @@ namespace sqlcli
             {
                 var lines = ReadLines(args);
 
-                var _shell = new Shell(cfg);
+                ShellTask task = new ShellTask(cfg);
+                var _shell = new Shell(cfg, task);
 
                 //go to current theSide
                 if (shell != null)
-                    _shell.ChangeSide(shell.theSide);
+                    _shell.Task.ChangeSide(shell.Task.TheSide);
 
                 _shell.DoBatch(lines);
 

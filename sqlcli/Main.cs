@@ -74,8 +74,8 @@ namespace sqlcli
                 }
             }
 
-
-            Shell = new Shell(cfg);
+            ShellTask task = new ShellTask(cfg);
+            Shell = new Shell(cfg, task);
             Context.DS.AddHostObject(Context.SHELL, Shell);
             Shell.DoConsole();
         }
