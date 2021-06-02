@@ -23,8 +23,8 @@ namespace Sys.Data
     [System.AttributeUsage(System.AttributeTargets.Class)]
     public class TableAttribute : Attribute
     {
-        private string tableName;
-        private Level level;
+        private readonly string tableName;
+        private readonly Level level;
         public int Provider = (int)ConnectionProvider.DEFAULT_HANDLE;
 
         public bool DefaultValueUsed = false;

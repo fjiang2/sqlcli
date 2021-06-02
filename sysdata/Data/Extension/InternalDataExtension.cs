@@ -212,7 +212,7 @@ namespace Sys.Data
 
 
         #region Metadata Table pool
-        private static DataPool<TableName, TableSchema> pool = new DataPool<TableName, TableSchema>(20);
+        private static readonly DataPool<TableName, TableSchema> pool = new DataPool<TableName, TableSchema>(20);
 
         //return TableId ==-1 , ColumnId == -1
         public static TableSchema GetTableSchema(this TableName tname)

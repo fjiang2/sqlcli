@@ -10,8 +10,8 @@ namespace Sys
 {
     public class Log
     {
-        private static ReaderWriterLockSlim rwLock = new ReaderWriterLockSlim();
-        private static int timeout = 5 * 1000;
+        private static readonly ReaderWriterLockSlim rwLock = new ReaderWriterLockSlim();
+        private static readonly int timeout = 5 * 1000;
         public static string Path { get; set; } = "sys.log";
 
         private static bool Append(string path, string text)

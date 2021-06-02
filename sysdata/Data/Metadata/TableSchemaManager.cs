@@ -21,7 +21,7 @@ namespace Sys.Data
 {
     class TableSchemaManager
     {
-        private Dictionary<TableName, DataTable> dict = new Dictionary<TableName, DataTable>();
+        private readonly Dictionary<TableName, DataTable> dict = new Dictionary<TableName, DataTable>();
         private TableSchemaManager()
         {
         }
@@ -63,7 +63,7 @@ namespace Sys.Data
             return dtSchema;
         }
 
-        private static TableSchemaManager mgr = mgr ?? new TableSchemaManager();
+        private static readonly TableSchemaManager mgr = mgr ?? new TableSchemaManager();
 
         public static DataTable GetTableSchema(TableName tname)
         {

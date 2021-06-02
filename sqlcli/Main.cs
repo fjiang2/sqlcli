@@ -13,7 +13,7 @@ namespace sqlcli
     class Main
     {
 
-        private ApplicationConfiguration cfg;
+        private readonly ApplicationConfiguration cfg;
         private IShell shell;
 
         public Main(ApplicationConfiguration cfg)

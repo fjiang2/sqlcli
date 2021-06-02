@@ -24,7 +24,7 @@ namespace sqlcli.Windows
 {
     class ScriptResultControl : TabControl
     {
-        private TabControl tabControl;
+        private readonly TabControl tabControl;
         private Dictionary<FileLink, IResultPane> panes { get; } = new Dictionary<FileLink, IResultPane>();
 
         public SqlEditor Editor { get; }

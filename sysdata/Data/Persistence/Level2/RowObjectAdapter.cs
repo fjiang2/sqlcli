@@ -25,7 +25,7 @@ namespace Sys.Data
 {
     class RowObjectAdapter : RowAdapter
     {
-        private PersistentObject obj;
+        private readonly PersistentObject obj;
 
 
         public RowObjectAdapter(PersistentObject obj)

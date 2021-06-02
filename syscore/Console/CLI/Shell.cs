@@ -75,7 +75,7 @@ namespace Sys.Stdio.Cli
         }
 
         private bool multipleLineMode = false;
-        private StringBuilder multipleLineBuilder = new StringBuilder();
+        private readonly StringBuilder multipleLineBuilder = new StringBuilder();
 
         public NextStep Run(string line)
         {

@@ -6,9 +6,9 @@ namespace Sys.Data.Linq
 {
     public class QueryResultReader
     {
-        private DataContext db;
-        private Type[] types;
-        private DataSet ds;
+        private readonly DataContext db;
+        private readonly Type[] types;
+        private readonly DataSet ds;
 
         internal QueryResultReader(DataContext db, Type[] types, DataSet ds)
         {

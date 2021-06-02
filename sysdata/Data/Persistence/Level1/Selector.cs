@@ -26,7 +26,7 @@ namespace Sys.Data
     /// </summary>
     public class Selector
     {
-        string[] columns;
+        readonly string[] columns;
 
 
         /// <summary>

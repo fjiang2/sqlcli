@@ -20,9 +20,9 @@ namespace sqlcli
             get; private set;
         }
 
-        private PathManager mgr;
+        private readonly PathManager mgr;
 
-        private bool valid = false;
+        private readonly bool valid = false;
 
         public PathBothSide(PathManager mgr, ApplicationCommand cmd)
         {

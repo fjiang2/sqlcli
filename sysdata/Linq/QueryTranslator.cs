@@ -9,7 +9,7 @@ namespace Sys.Data.Linq
 {
     class QueryTranslator : ExpressionVisitor
     {
-        private StringBuilder builder;
+        private readonly StringBuilder builder;
 
         public QueryTranslator()
         {

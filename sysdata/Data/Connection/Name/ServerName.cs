@@ -23,8 +23,8 @@ namespace Sys.Data
 {
     public class ServerName : IComparable<ServerName>, IComparable, IDataPath
     {
-        private ConnectionProvider provider;
-        private string name;
+        private readonly ConnectionProvider provider;
+        private readonly string name;
 
         internal ServerName(ConnectionProvider provider, string alias)
         {

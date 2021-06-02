@@ -9,7 +9,7 @@ namespace Sys.Data
 
     class SqlTemplate
     {
-        private string formalName;
+        private readonly string formalName;
         private SqlTemplateFormat format = SqlTemplateFormat.SingleLine;
         private string NewLine = string.Empty;
 

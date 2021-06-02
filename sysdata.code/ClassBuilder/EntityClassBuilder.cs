@@ -14,7 +14,7 @@ namespace Sys.Data.Code
 
     public class EntityClassBuilder : TheClassBuilder
     {
-        private TableName tname;
+        private readonly TableName tname;
         public bool IsAssocication { get; private set; }
 
         public EntityClassBuilder(IApplicationCommand cmd, TableName tname)

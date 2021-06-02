@@ -8,9 +8,9 @@ namespace UnitTestProject
     [TestClass]
     public class SqlBuilderUnitTest
     {
-        SqlExpr ProductId = "ProductId".ColumnName();
-        string Products = "Products";
-        string Categories = "Categories";
+        readonly SqlExpr ProductId = "ProductId".ColumnName();
+        readonly string Products = "Products";
+        readonly string Categories = "Categories";
 
         public SqlBuilderUnitTest()
         {

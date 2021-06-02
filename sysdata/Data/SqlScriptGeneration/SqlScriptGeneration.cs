@@ -17,9 +17,9 @@ namespace Sys.Data
     /// </summary>
     class SqlScriptGeneration
     {
-        private SqlScriptType type;
-        private TableDataClause script;
-        private ITableSchema schema;
+        private readonly SqlScriptType type;
+        private readonly TableDataClause script;
+        private readonly ITableSchema schema;
         private int count;
 
         public Locator Where { get; set; }

@@ -32,7 +32,7 @@ namespace sqlcli
 
 
         private bool hasRowId;
-        private IApplicationConfiguration cfg;
+        private readonly IApplicationConfiguration cfg;
 
         public ApplicationCommand(IApplicationConfiguration cfg, string line)
         {

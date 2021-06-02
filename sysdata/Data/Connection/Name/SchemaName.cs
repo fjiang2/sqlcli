@@ -10,7 +10,7 @@ namespace Sys.Data
         public static readonly SchemaName Dbo = new SchemaName(dbo);
         public const string dbo = "dbo";
 
-        private string name;
+        private readonly string name;
 
         public SchemaName()
         {

@@ -11,7 +11,7 @@ namespace Sys.Data
 
     class Dependency
     {
-        private DependencyInfo[] rows;
+        private readonly DependencyInfo[] rows;
 
         public Dependency(DatabaseName dname)
         {

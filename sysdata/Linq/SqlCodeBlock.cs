@@ -16,7 +16,7 @@ namespace Sys.Data.Linq
             public override string ToString() => Statement;
         }
 
-        List<SqlStatement> clauses = new List<SqlStatement>();
+        readonly List<SqlStatement> clauses = new List<SqlStatement>();
 
         public void AppendLine<TEntity>(string clause)
         {

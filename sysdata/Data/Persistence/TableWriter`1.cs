@@ -30,7 +30,7 @@ namespace Sys.Data
     /// <typeparam name="T"></typeparam>
     public class TableWriter<T> where T : class,  IDPObject, new()
     {
-        private DataTable dataTable;
+        private readonly DataTable dataTable;
 
         /// <summary>
         /// write data table

@@ -12,12 +12,12 @@ namespace Sys.Data
         public readonly TableName TableName;
         public static string ROWID = "$RowId";
 
-        private DataTable table;
-        private List<byte[]> LOC = new List<byte[]>();
-        private bool hasPhysloc = false;
+        private readonly DataTable table;
+        private readonly List<byte[]> LOC = new List<byte[]>();
+        private readonly bool hasPhysloc = false;
 
-        private DataColumn colLoc = null;
-        private DataColumn colRowID = null;
+        private readonly DataColumn colLoc = null;
+        private readonly DataColumn colRowID = null;
 
         public UniqueTable(TableName tname, DataTable table)
         {
@@ -216,8 +216,8 @@ namespace Sys.Data
 
     public class DataColumnCollection
     {
-        private DataTable table;
-        private List<Column> columns = new List<Column>();
+        private readonly DataTable table;
+        private readonly List<Column> columns = new List<Column>();
 
         internal DataColumnCollection(DataTable table)
         {
@@ -249,8 +249,8 @@ namespace Sys.Data
 
     public class Column
     {
-        private DataColumn column;
-        private DataTable table;
+        private readonly DataColumn column;
+        private readonly DataTable table;
 
         internal Column(DataTable table, DataColumn name)
         {

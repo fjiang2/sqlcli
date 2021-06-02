@@ -24,11 +24,11 @@ namespace Sys.Data
 {
     public class TableAdapter
     {
-        private ColumnAdapterCollection columns;
-        private DataFieldCollection fields;
-        private DataTable dataTable;
-        private TableName tableName;
-        private Locator locator;
+        private readonly ColumnAdapterCollection columns;
+        private readonly DataFieldCollection fields;
+        private readonly DataTable dataTable;
+        private readonly TableName tableName;
+        private readonly Locator locator;
 
         public TableAdapter(DataTable dataTable, TableName tableName, Locator locator)
         {

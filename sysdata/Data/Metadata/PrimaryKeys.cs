@@ -25,8 +25,8 @@ namespace Sys.Data
    
     public class PrimaryKeys : IPrimaryKeys
     {
-        private string[] keys;
-        private string constraintName;
+        private readonly string[] keys;
+        private readonly string constraintName;
 
         public PrimaryKeys(string[] columns)
         {

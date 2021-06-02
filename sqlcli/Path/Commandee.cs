@@ -23,7 +23,7 @@ namespace sqlcli
 
     internal class Commandee : ITabCompletion
     {
-        private PathManager mgr;
+        private readonly PathManager mgr;
         private TreeNode<IDataPath> pt;
         public CommandState ErrorCode { get; private set; } = CommandState.OK;
 
@@ -450,7 +450,7 @@ namespace sqlcli
 
 
             var nodes = pt.Nodes.Where(node => node.Item is Locator && (node.Item as Locator).Path == cmd.Path1.name).ToArray();
-            if (nodes.Count() > 0)
+            if (nodes.Length > 0)
             {
                 if (!cin.YesOrNo("are you sure to delete (y/n)?"))
                     return;
@@ -844,7 +844,7 @@ namespace sqlcli
 ALTER TABLE {0} ADD {1} INT IDENTITY(1, 1)
 ALTER TABLE {0} DROP COLUMN {2}
 sp_rename '{1}', '{2}', 'COLUMN'";
-                string.Format(SQL, tname.Name, $"_{column}_", column);
+                SQL = string.Format(SQL, tname.Name, $"_{column}_", column);
                 ExecuteNonQuery(tname.Provider, SQL);
                 return;
             }
@@ -1913,7 +1913,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
                     }
                 }
 
-                cout.WriteLine($"{L.Count()} items checking completed");
+                cout.WriteLine($"{L.Count} items checking completed");
                 return;
             }
 

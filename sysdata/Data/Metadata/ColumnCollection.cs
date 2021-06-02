@@ -23,7 +23,7 @@ namespace Sys.Data
 {
     public class ColumnCollection : List<IColumn>
     {
-        ITableSchema metaTable;
+        readonly ITableSchema metaTable;
 
         public ColumnCollection(ITableSchema metaTable)
         {

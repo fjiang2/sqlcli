@@ -172,8 +172,7 @@ namespace sqlcli
                 return xnode;
             else
             {
-                int result;
-                if (int.TryParse(segment, out result))
+                if (int.TryParse(segment, out int result))
                 {
                     result--;
 

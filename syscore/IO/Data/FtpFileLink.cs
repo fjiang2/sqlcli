@@ -9,8 +9,8 @@ namespace Sys.Data.IO
 {
     class FtpFileLink : FileLink
     {
-        private Uri uri;
-        private FtpClient client;
+        private readonly Uri uri;
+        private readonly FtpClient client;
 
         public FtpFileLink(string url, string userName, string password)
             : base(url)

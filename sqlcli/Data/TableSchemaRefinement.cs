@@ -20,8 +20,8 @@ namespace sqlcli
 
     class TableSchemaRefinement
     {
-        private TableName tname;
-        private TableSchema schema;
+        private readonly TableName tname;
+        private readonly TableSchema schema;
 
         public TableSchemaRefinement(TableName tname)
         {

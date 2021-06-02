@@ -32,18 +32,15 @@ namespace Sys.Data
 
     class Mapping
     {
-        private AssociationAttribute association;
-        private MappingType mappingType;
-        private PersistentObject dpoInstance;
-
-
-
-        PropertyInfo propertyInfo1;              //fieldof(UserDpo._ID)
-        PropertyInfo propertyInfo2;              //fieldof(DPCollection<RoleDpo>)  or fieldof(xxxDpo)
+        private readonly AssociationAttribute association;
+        private readonly MappingType mappingType;
+        private readonly PersistentObject dpoInstance;
+        readonly PropertyInfo propertyInfo1;              //fieldof(UserDpo._ID)
+        readonly PropertyInfo propertyInfo2;              //fieldof(DPCollection<RoleDpo>)  or fieldof(xxxDpo)
 
         
-        private SqlBuilder clause1;     //A := SELECT UserRoles.Role_ID FROM UserRoles WHERE UserRoles.User_ID=@[User.ID]
-        private SqlBuilder clause2;     //B := SELECT * FROM Roles WHERE Roles.Role_ID IN (A)
+        private readonly SqlBuilder clause1;     //A := SELECT UserRoles.Role_ID FROM UserRoles WHERE UserRoles.User_ID=@[User.ID]
+        private readonly SqlBuilder clause2;     //B := SELECT * FROM Roles WHERE Roles.Role_ID IN (A)
 
         public Mapping(PersistentObject dpo, PropertyInfo propertyInfo2)
         {

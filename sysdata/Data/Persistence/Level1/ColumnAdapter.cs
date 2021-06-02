@@ -33,7 +33,7 @@ namespace Sys.Data
         protected object value;
         private string alias;
 
-        private DataField field;
+        private readonly DataField field;
 
         /// Constructor
         public ColumnAdapter(DataField field)

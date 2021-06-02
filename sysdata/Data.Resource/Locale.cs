@@ -12,7 +12,7 @@ namespace Sys.Data.Resource
 {
     public class Locale
     {
-        private List<entry> entries = new List<entry>();
+        private readonly List<entry> entries = new List<entry>();
 
         public ResourceFormat Format { get; set; } = ResourceFormat.resx;
         public bool Append { get; set; } = false;

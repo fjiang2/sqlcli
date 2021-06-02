@@ -11,7 +11,7 @@ namespace sqlcli.Windows
 {
     public class DbTableNodeUI : DbTreeNodeUI
     {
-        private DbTreeUI tree;
+        private readonly DbTreeUI tree;
 
         public DbTableNodeUI(DbTreeUI tree, TableName tname)
             : base(tname.Path, "Table_16x16.png")

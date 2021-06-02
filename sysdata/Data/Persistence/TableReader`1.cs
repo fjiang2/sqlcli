@@ -31,7 +31,7 @@ namespace Sys.Data
     /// <typeparam name="T"></typeparam>
     public class TableReader<T> where T : class,  IDPObject, new()
     {
-        TableReader reader;
+        readonly TableReader reader;
 
         /// <summary>
         /// read all records in the database

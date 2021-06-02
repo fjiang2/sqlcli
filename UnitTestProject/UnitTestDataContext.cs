@@ -18,7 +18,7 @@ namespace UnitTestProject
     [TestClass]
     public class UnitTestDataContext
     {
-        string connectionString;
+        readonly string connectionString;
         public UnitTestDataContext()
         {
             if (Environment.MachineName.StartsWith("XPS"))

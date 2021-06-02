@@ -16,7 +16,7 @@ namespace Sys.Networking
     public class RemoteProxy
     {
 
-        private RemoteOutputBlock result = new RemoteOutputBlock { ret = string.Empty, err = string.Empty };
+        private readonly RemoteOutputBlock result = new RemoteOutputBlock { ret = string.Empty, err = string.Empty };
 
 
         public RemoteProxy()

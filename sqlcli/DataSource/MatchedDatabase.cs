@@ -11,8 +11,8 @@ namespace sqlcli
 {
     class MatchedDatabase
     {
-        private string Pattern;
-        private DatabaseName DatabaseName;
+        private readonly string Pattern;
+        private readonly DatabaseName DatabaseName;
 
         public string[] Includedtables { get; set; }
         public string[] Excludedtables { get; set; }

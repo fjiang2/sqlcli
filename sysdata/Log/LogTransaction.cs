@@ -27,7 +27,7 @@ namespace Sys.Data.Log
         public readonly Transaction transaction = new Transaction();
 
         private List<ILogable> logList = new List<ILogable>();
-        private ITransactionLogee logee;
+        private readonly ITransactionLogee logee;
 
         public LogTransaction(Transaction transaction, ITransactionLogee logee)
         {

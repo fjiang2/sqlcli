@@ -30,7 +30,7 @@ namespace Sys
         private T item;
         private TreeNode<T> parent;
         private int index;
-        private TreeNodeCollection<T> nodes;
+        private readonly TreeNodeCollection<T> nodes;
 
         /// <summary>
         /// create tree node from value item

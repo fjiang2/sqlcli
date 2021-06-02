@@ -29,8 +29,8 @@ namespace Sys.Data
     /// </summary>
     public class TableWriter
     {
-        private Locator locator;
-        private ITableSchema schema;
+        private readonly Locator locator;
+        private readonly ITableSchema schema;
 
         /// <summary>
         /// use default locator to save records into database, primary keys must be defined

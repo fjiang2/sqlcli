@@ -30,12 +30,11 @@ namespace Sys.Data.Manager
 {
     public class Packing
     {
-        private FieldInfo[] publicFields;
-        private Type dpoType;
-        PersistentObject instance;
-
-        CSharpBuilder classBuilder;
-        Method pack;
+        private readonly FieldInfo[] publicFields;
+        private readonly Type dpoType;
+        readonly PersistentObject instance;
+        readonly CSharpBuilder classBuilder;
+        readonly Method pack;
 
         public Packing(Type dpoType)
         {

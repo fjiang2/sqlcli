@@ -23,7 +23,7 @@ namespace Sys.Data.Log
 {
     public class TransactionType
     {
-        string signature;
+        readonly string signature;
 
         public TransactionType(Type type)
         {

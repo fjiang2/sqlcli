@@ -10,8 +10,8 @@ namespace Sys.Data.Code
 {
     internal class Json2CSharp
     {
-        private Memory DS = new Memory();
-        private CSharpBuilder builder;
+        private readonly Memory DS = new Memory();
+        private readonly CSharpBuilder builder;
 
         public Json2CSharp(CSharpBuilder builder, string code, bool isExpression)
         {

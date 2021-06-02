@@ -11,7 +11,7 @@ namespace Sys.Data
 {
     class DbReader
     {
-        private DbDataReader reader;
+        private readonly DbDataReader reader;
 
         public DbReader(DbDataReader reader)
         {

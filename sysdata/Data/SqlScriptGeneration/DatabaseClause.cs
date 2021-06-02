@@ -25,7 +25,7 @@ namespace Sys.Data
 {
     class DatabaseClause
     {
-        DatabaseName databaseName;
+        readonly DatabaseName databaseName;
 
         public DatabaseClause(DatabaseName databaseName)
         {

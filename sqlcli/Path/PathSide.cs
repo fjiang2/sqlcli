@@ -21,8 +21,8 @@ namespace sqlcli
         private TreeNode<IDataPath> node;
         private TableName[] T;   //wildcard matched tables
 
-        private PathManager mgr;
-        private ApplicationCommand cmd;
+        private readonly PathManager mgr;
+        private readonly ApplicationCommand cmd;
 
         public PathSide(PathManager mgr, ApplicationCommand cmd)
         {

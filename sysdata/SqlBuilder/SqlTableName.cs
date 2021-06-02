@@ -20,7 +20,7 @@ namespace Sys.Data
 {
     public class SqlTableName
     {
-        private string tableName;
+        private readonly string tableName;
         public ConnectionProvider Provider { get; }
         
         public SqlTableName(TableName tableName)

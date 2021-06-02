@@ -32,7 +32,7 @@ namespace Sys.Data
         internal const int USER_HANDLE_BASE = DEFAULT_HANDLE + 1000;
 
         protected DbConnectionStringBuilder ConnectionBuilder;
-        private DatabaseName _defaultDatabaseName = null;
+        private readonly DatabaseName _defaultDatabaseName = null;
 
         protected ConnectionProvider(string name, ConnectionProviderType type, string connectionString)
         {
@@ -171,7 +171,7 @@ namespace Sys.Data
 
 
 
-        private static Dictionary<string, ServerName> _serverNames = new Dictionary<string, ServerName>();
+        private static readonly Dictionary<string, ServerName> _serverNames = new Dictionary<string, ServerName>();
         public ServerName ServerName
         {
             get

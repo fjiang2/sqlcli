@@ -25,9 +25,8 @@ namespace Sys.Data.Log
     class LogManager
     {
         static LogManager manager;
-
-        Dictionary<TableName, IRowLogee> rowLogees = new Dictionary<TableName, IRowLogee>();
-        Dictionary<TransactionLogeeType, ITransactionLogee> transactionLogees = new Dictionary<TransactionLogeeType, ITransactionLogee>();
+        readonly Dictionary<TableName, IRowLogee> rowLogees = new Dictionary<TableName, IRowLogee>();
+        readonly Dictionary<TransactionLogeeType, ITransactionLogee> transactionLogees = new Dictionary<TransactionLogeeType, ITransactionLogee>();
 
         private LogManager()
         { 

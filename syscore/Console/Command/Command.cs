@@ -45,10 +45,8 @@ namespace Sys.Stdio.Cli
         {
             if (string.IsNullOrEmpty(line))
                 return;
-
-            string _line;
-
-            if (!eval(line, out _line))
+            
+            if (!eval(line, out string _line))
             {
                 InvalidCommand = true;
                 return;

@@ -16,8 +16,8 @@ namespace sqlcli.Windows
 {
     public partial class SqlEditor : Window
     {
-        private TextBlock lblMessage = new TextBlock { Width = 300 };
-        private TextBlock lblCursorPosition = new TextBlock { Width = 200, HorizontalAlignment = HorizontalAlignment.Left };
+        private readonly TextBlock lblMessage = new TextBlock { Width = 300 };
+        private readonly TextBlock lblCursorPosition = new TextBlock { Width = 200, HorizontalAlignment = HorizontalAlignment.Left };
 
         private ComboBox comboPath;
         private TextBox textFilter;

@@ -9,7 +9,7 @@ namespace Sys.Data
 {
     class SqlScriptReader : IDisposable
     {
-        private StreamReader reader;
+        private readonly StreamReader reader;
         private int i = 0;
         private string line;
 

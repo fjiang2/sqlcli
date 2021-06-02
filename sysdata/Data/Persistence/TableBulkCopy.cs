@@ -14,7 +14,7 @@ namespace Sys.Data
     {
         public int MaxRowCount { get; set; } = 5000;
 
-        private TableReader tableReader;
+        private readonly TableReader tableReader;
 
         public TableBulkCopy(TableReader reader)
         {

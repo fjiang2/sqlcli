@@ -26,7 +26,7 @@ namespace Sys.Data
     {
     
 
-        private Locator locator = null;
+        private readonly Locator locator = null;
         public string OrderBy;
         public string Filter;
 

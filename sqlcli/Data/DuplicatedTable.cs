@@ -11,8 +11,8 @@ namespace sqlcli
     {
         public bool AllColumnsSelected { get; } = false;
 
-        private TableName tname;
-        private string[] _columns;
+        private readonly TableName tname;
+        private readonly string[] _columns;
         const string COUNT_COLUMN_NAME = "$Count";
         public DataTable group { get; }
 

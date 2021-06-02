@@ -14,7 +14,7 @@ namespace sqlcli
 {
     class Loader
     {
-        private ApplicationCommand cmd;
+        private readonly ApplicationCommand cmd;
         public Loader(ApplicationCommand cmd)
         {
             this.cmd = cmd;

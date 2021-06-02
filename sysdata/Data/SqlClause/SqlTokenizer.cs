@@ -6,7 +6,7 @@ namespace Sys.Data
 {
     class SqlTokenizer
     {
-        private token[] tokens;
+        private readonly token[] tokens;
         private int index = 0;
 
         public SqlTokenizer(string sql)

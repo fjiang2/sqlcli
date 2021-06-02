@@ -16,9 +16,9 @@ namespace Sys.Data.Resource
         };
 
 
-        private Dictionary<string, Token> stringTokens = new Dictionary<string, Token>();
+        private readonly Dictionary<string, Token> stringTokens = new Dictionary<string, Token>();
 
-        private StringDumper dumper;
+        private readonly StringDumper dumper;
 
         public StringExtractor(StringDumper dumper)
         {

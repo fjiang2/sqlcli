@@ -11,7 +11,7 @@ namespace Sys.Data
 {
     class DataLakeFile : DbFile
     {
-        DataLake data = new DataLake();
+        readonly DataLake data = new DataLake();
 
         public DataLakeFile(FileLink link)
             : base(link)

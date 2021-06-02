@@ -10,10 +10,10 @@ namespace sqlcli
 {
     public class OutputDataTable
     {
-        private DataTable dt;
-        private string[] headers;
-        private bool vertical;
-        private OutputDataLine line;
+        private readonly DataTable dt;
+        private readonly string[] headers;
+        private readonly bool vertical;
+        private readonly OutputDataLine line;
 
         public OutputDataTable(DataTable dt, TextWriter textWriter, bool vertical)
             : this(dt, textWriter.WriteLine, vertical)

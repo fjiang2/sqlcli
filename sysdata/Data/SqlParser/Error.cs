@@ -119,7 +119,7 @@ namespace Sys.Data.SqlParser
 
         #endregion
 
-        private Position pos;
+        private readonly Position pos;
 
         public Error(Position pos)
         {

@@ -14,7 +14,7 @@ namespace Sys.Data.Code
 {
     public class Linq2SQLClassBuilder : TheClassBuilder
     {
-        private TableName tname;
+        private readonly TableName tname;
 
         public Linq2SQLClassBuilder(IApplicationCommand cmd, TableName tname)
             : base(cmd)
@@ -31,7 +31,7 @@ namespace Sys.Data.Code
 
 
         
-        private Dictionary<DataColumn, TypeInfo> dict = new Dictionary<DataColumn, TypeInfo>();
+        private readonly Dictionary<DataColumn, TypeInfo> dict = new Dictionary<DataColumn, TypeInfo>();
 
 
         protected override void CreateClass()

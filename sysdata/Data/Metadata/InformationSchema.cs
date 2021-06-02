@@ -10,7 +10,7 @@ namespace Sys.Data
     static class InformationSchema
     {
 
-        private static string SQL_SCHEMA = @"
+        private static readonly string SQL_SCHEMA = @"
 SELECT 
 	{0} 
     c.name AS ColumnName,

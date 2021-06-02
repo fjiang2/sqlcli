@@ -9,7 +9,7 @@ namespace Sys.Data.Linq
 {
     class PropertyTranslator : ExpressionVisitor
     {
-        private List<string> properties = new List<string>();
+        private readonly List<string> properties = new List<string>();
 
         public PropertyTranslator()
         {

@@ -25,20 +25,16 @@ namespace Sys.Data.Log
 {
     class Logger
     {
-        private Transaction log_transaction;
+        private readonly Transaction log_transaction;
         private int log_row_id = -1;
-
-
-        TableName tableName;
-        int tableId;
+        readonly TableName tableName;
+        readonly int tableId;
 
         int rowID;
         bool logged = false;
-
-        Type dpoType;
-        string rowIdColumnName;
-
-        IRowLogee logee;
+        readonly Type dpoType;
+        readonly string rowIdColumnName;
+        readonly IRowLogee logee;
 
         public Logger(Transaction transaction, TableName tableName, string rowIdColumnName, int rowID)
         {

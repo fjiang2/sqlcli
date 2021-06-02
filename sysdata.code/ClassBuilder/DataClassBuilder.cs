@@ -15,7 +15,7 @@ namespace Sys.Data.Code
 
     public class DataClassBuilder : ClassMaker
     {
-        private DataTable dt;
+        private readonly DataTable dt;
 
         public DataClassBuilder(IApplicationCommand cmd, DataTable dt)
             : base(cmd)

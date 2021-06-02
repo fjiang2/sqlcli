@@ -33,7 +33,7 @@ namespace Sys.Data.SqlParser
         internal byte block;     // current code block
 
         private string moduleName;
-        private string codePiece;
+        private readonly string codePiece;
 
 
         /// <summary>
@@ -108,8 +108,8 @@ namespace Sys.Data.SqlParser
         
 
 #if DEBUG
-        private char[] linebuffer = new char[Constant.MAX_SRC_COL];
-        private List<string> lines = new List<string>();
+        private readonly char[] linebuffer = new char[Constant.MAX_SRC_COL];
+        private readonly List<string> lines = new List<string>();
 #endif
 
 

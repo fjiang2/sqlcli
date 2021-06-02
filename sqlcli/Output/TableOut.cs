@@ -12,7 +12,7 @@ namespace sqlcli
 {
     class TableOut
     {
-        private TableName tname;
+        private readonly TableName tname;
         private UniqueTable rTable = null;
 
         public TableOut(TableName tableName)

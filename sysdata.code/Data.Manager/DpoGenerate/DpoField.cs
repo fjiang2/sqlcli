@@ -29,9 +29,9 @@ namespace Sys.Data.Manager
 {
     class DpoField
     {
-        DpoClass dpoClass;
+        readonly DpoClass dpoClass;
 
-        private IColumn column;
+        private readonly IColumn column;
 
 
         public DpoField(DpoClass dpoClass, IColumn column)

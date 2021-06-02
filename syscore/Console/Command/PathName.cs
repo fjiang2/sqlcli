@@ -11,11 +11,11 @@ namespace Sys.Stdio.Cli
         public readonly string wildcard = null;
         public readonly string where = null;
         public readonly string name = null;
-        private string[] fullSegments = new string[0];
+        private readonly string[] fullSegments = new string[0];
         public readonly string[] segments = new string[0];
 
 
-        private string fullName;
+        private readonly string fullName;
         public PathName(string fullName)
         {
             this.fullName = fullName;

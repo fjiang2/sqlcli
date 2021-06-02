@@ -28,8 +28,8 @@ namespace Sys
     public class NTree<T> : Tree<T> where T : class
     {
 
-        private IEnumerable<INTreeNode<T>> collection;
-        private int parentID;
+        private readonly IEnumerable<INTreeNode<T>> collection;
+        private readonly int parentID;
 
         /// <summary>
         /// Initializes a new instance from a collection of class T implemeneted interface INTreeNode

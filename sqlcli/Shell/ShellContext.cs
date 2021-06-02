@@ -34,7 +34,7 @@ namespace sqlcli
                 theSide = new Side(pvd);
                 ChangeSide(theSide);
             }
-            else if (connection.Providers.Count() > 0)
+            else if (connection.Providers.Count > 0)
             {
                 theSide = new Side(connection.Providers.First());
                 ChangeSide(theSide);

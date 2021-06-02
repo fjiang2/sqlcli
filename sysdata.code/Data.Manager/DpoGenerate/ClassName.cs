@@ -27,9 +27,9 @@ namespace Sys.Data.Manager
 
     class ClassName
     {
-        string nameSpace;
-        string className;
-        Modifier modifier;
+        readonly string nameSpace;
+        readonly string className;
+        readonly Modifier modifier;
 
 
         public ClassName(string nameSpace, Modifier modifier, string className)

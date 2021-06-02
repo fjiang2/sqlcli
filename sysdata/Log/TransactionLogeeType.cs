@@ -23,7 +23,7 @@ namespace Sys.Data.Log
 {
     public class TransactionLogeeType
     {
-        string type;
+        readonly string type;
 
         public TransactionLogeeType(string type)
         {

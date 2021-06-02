@@ -21,7 +21,7 @@ namespace Sys.Data.SqlParser
 {
     class StringLex : Lexer
     {
-        private StringBuilder buffer;
+        private readonly StringBuilder buffer;
         private int index;
 
         public StringLex(string sourceCode, Error error)

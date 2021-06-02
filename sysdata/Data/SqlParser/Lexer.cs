@@ -29,7 +29,7 @@ namespace Sys.Data.SqlParser
         protected char ch;
 
         private Token tok;
-        private Error error;			//the positon of cursor in file
+        private readonly Error error;			//the positon of cursor in file
 
         public Lexer(Error error)
         {

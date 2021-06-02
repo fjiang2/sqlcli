@@ -9,7 +9,7 @@ namespace Sys
 {
     public class Wildcard<T> : Wildcard
     {
-        private Func<T, string> selector;
+        private readonly Func<T, string> selector;
 
         public Wildcard(Func<T, string> selector)
         {

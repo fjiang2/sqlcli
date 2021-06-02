@@ -18,16 +18,15 @@ namespace sqlcli
 {
     class Exporter
     {
-        private PathManager mgr;
-        private ApplicationCommand cmd;
-        private IApplicationConfiguration cfg;
+        private readonly PathManager mgr;
+        private readonly ApplicationCommand cmd;
+        private readonly IApplicationConfiguration cfg;
 
 
-        private TableName tname;
-        private DatabaseName dname;
-        private ServerName sname;
-
-        XmlDbCreator xmlDbFile;
+        private readonly TableName tname;
+        private readonly DatabaseName dname;
+        private readonly ServerName sname;
+        readonly XmlDbCreator xmlDbFile;
         public Exporter(PathManager mgr, TreeNode<IDataPath> pt, ApplicationCommand cmd, IApplicationConfiguration cfg)
         {
             this.mgr = mgr;

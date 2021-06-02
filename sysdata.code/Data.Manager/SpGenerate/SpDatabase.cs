@@ -31,8 +31,8 @@ namespace Sys.Data.Manager
         public const string SP_DEFINITION = "sp";
 
 
-        private DatabaseName databaseName;
-        private string path;
+        private readonly DatabaseName databaseName;
+        private readonly string path;
 
         public SpDatabase(DatabaseName databaseName, string path)
         {
