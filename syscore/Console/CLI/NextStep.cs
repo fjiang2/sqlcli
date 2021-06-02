@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sys.Stdio
+namespace Sys.Cli
 {
     public enum NextStep
     {

@@ -191,7 +191,8 @@ namespace sqlcli
                 case "run":
                     if (cmd.Arg1 != null)
                     {
-                        new Batch(cfg, cmd.Arg1).Call(this, cmd.Arguments);
+                        Batch batch = new Batch(cfg, cmd.Arg1);
+                        batch.Call(this, cmd.Arguments);
                     }
                     return NextStep.COMPLETED;
 
