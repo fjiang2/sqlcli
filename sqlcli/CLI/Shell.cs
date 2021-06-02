@@ -14,7 +14,7 @@ using Sys.Stdio;
 
 namespace sqlcli
 {
-    partial class Shell : ShellContext, IShell
+    class Shell : ShellContext, IShell
     {
 
         public Shell(IApplicationConfiguration cfg)
@@ -94,7 +94,7 @@ namespace sqlcli
                 {
                     case "help":
                     case "?":
-                        Help();
+                        ShellHelp.Help();
                         multipleLineBuilder.Clear();
                         return NextStep.COMPLETED;
 

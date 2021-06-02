@@ -7,10 +7,10 @@ using Sys.Stdio;
 
 namespace sqlcli
 {
-    partial class Shell
+    partial class ShellHelp
     {
 
-        private static void Help()
+        public static void Help()
         {
             cout.WriteLine("Path points to server, database,tables, data rows");
             cout.WriteLine(@"      \server\database\table\filter\filter\....");
