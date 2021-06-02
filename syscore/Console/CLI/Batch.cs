@@ -12,11 +12,10 @@ namespace Sys.Stdio.Cli
 {
     class Batch
     {
-        private const string EXT = ".sqc";
         private readonly string path;
         private readonly IWorkspace workspace;
 
-
+        public string EXT { get; set; } = ".sqc";
         public bool IsBatch { get; } = false;
 
         public Batch(IWorkspace workspace, string path)
@@ -50,7 +49,7 @@ namespace Sys.Stdio.Cli
                         return fullPath;
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     cerr.WriteLine($"invalid path:\"{_path}\", using ; as delimiter", ex);
                 }
