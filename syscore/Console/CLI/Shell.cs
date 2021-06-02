@@ -77,7 +77,7 @@ namespace Sys.Cli
         private bool multipleLineMode = false;
         private StringBuilder multipleLineBuilder = new StringBuilder();
 
-        internal NextStep Run(string line)
+        public NextStep Run(string line)
         {
 
             if (!multipleLineMode)
@@ -173,10 +173,16 @@ namespace Sys.Cli
 
         public static void RunBatch(IWorkspace workspace, string path, string[] args)
         {
-            Batch batch = new Batch(workspace, path);
-            batch.Call(null, args);
+            RunBatch(null, workspace, path, args);
         }
 
+        /// <summary>
+        /// Run batch file
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="workspace"></param>
+        /// <param name="path">batch file name</param>
+        /// <param name="args">batch file arguments, arguments is %1,%2,...</param>
         public static void RunBatch(IShellTask task, IWorkspace workspace, string path, string[] args)
         {
             Batch batch = new Batch(workspace, path);

@@ -14,7 +14,7 @@ namespace sqlcli
     {
 
         private ApplicationConfiguration cfg;
-        public Shell Shell { get; private set; }
+        private IShell shell;
 
         public Main(ApplicationConfiguration cfg)
         {
@@ -76,14 +76,14 @@ namespace sqlcli
             }
 
             ShellTask task = new ShellTask(cfg);
-            Shell = new Shell(task);
-            Context.DS.AddHostObject(Context.SHELL, Shell);
-            Shell.Run();
+            shell = new Shell(task);
+            Context.DS.AddHostObject(Context.SHELL, shell);
+            shell.Run();
         }
 
         public static void ShowHelp()
         {
-            cout.WriteLine("SQL Server Command Console");
+            cout.WriteLine("SQL Server Command Line Interface");
             cout.WriteLine("Usage: sqlcli");
             cout.WriteLine("     [/cfg configuration file name (.cfg)]");
             cout.WriteLine("     [/i sql script file name (.sql)]");
