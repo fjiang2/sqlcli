@@ -124,7 +124,7 @@ namespace sqlcli
         public bool HasRowId => hasRowId || Has("edit");
 
 
-        public string wildcard
+        public string Wildcard
         {
             get
             {
@@ -132,18 +132,18 @@ namespace sqlcli
                 {
                     var pathName = new PathName(path);
 
-                    if (pathName.wildcard != null)
-                        return pathName.wildcard;
+                    if (pathName.Wildcard != null)
+                        return pathName.Wildcard;
                 }
 
                 if (Path1 == null)
                     return null;
                 else
-                    return Path1.wildcard;
+                    return Path1.Wildcard;
             }
         }
 
-        public string where
+        public string Where
         {
             get
             {
@@ -151,14 +151,14 @@ namespace sqlcli
                 {
                     var pathName = new PathName(path);
 
-                    if (pathName.where != null)
-                        return pathName.where;
+                    if (pathName.Expression != null)
+                        return pathName.Expression;
                 }
 
                 if (Path1 == null)
                     return null;
                 else
-                    return Path1.where;
+                    return Path1.Expression;
             }
         }
 

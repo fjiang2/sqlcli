@@ -113,7 +113,7 @@ namespace sqlcli
                 return true;
             }
 
-            if (cmd.wildcard != null)
+            if (cmd.Wildcard != null)
             {
                 cerr.WriteLine("invalid path");
                 return false;
@@ -294,7 +294,7 @@ namespace sqlcli
                         var dname = mgr.GetPathFrom<DatabaseName>(node);
                         if (dname != null)
                         {
-                            if (cmd.wildcard != null)
+                            if (cmd.Wildcard != null)
                             {
                                 var m = new MatchedDatabase(dname, cmd);
                                 T = m.TableNames();
@@ -449,7 +449,7 @@ namespace sqlcli
             }
 
 
-            var nodes = pt.Nodes.Where(node => node.Item is Locator && (node.Item as Locator).Path == cmd.Path1.name).ToArray();
+            var nodes = pt.Nodes.Where(node => node.Item is Locator && (node.Item as Locator).Path == cmd.Path1.Name).ToArray();
             if (nodes.Length > 0)
             {
                 if (!cin.YesOrNo("are you sure to delete (y/n)?"))
@@ -463,7 +463,7 @@ namespace sqlcli
             }
             else
             {
-                if (int.TryParse(cmd.Path1.name, out int result))
+                if (int.TryParse(cmd.Path1.Name, out int result))
                 {
                     result--;
 

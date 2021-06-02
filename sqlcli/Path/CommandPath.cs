@@ -26,7 +26,7 @@ namespace sqlcli
                         var dname = mgr.GetPathFrom<DatabaseName>(node);
                         if (dname != null)
                         {
-                            if (cmd.wildcard != null)
+                            if (cmd.Wildcard != null)
                             {
                                 var m = new MatchedDatabase(dname, cmd);
                                 return m.TableNames();

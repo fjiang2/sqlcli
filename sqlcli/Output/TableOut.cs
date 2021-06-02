@@ -127,14 +127,14 @@ namespace sqlcli
             int top = cmd.Top;
             string[] columns = cmd.Columns;
 
-            if (cmd.wildcard != null)
+            if (cmd.Wildcard != null)
             {
-                Locator where = LikeExpr(cmd.wildcard, cmd.Columns);
+                Locator where = LikeExpr(cmd.Wildcard, cmd.Columns);
                 builder = new SqlBuilder().SELECT().ROWID(cmd.HasRowId).COLUMNS().FROM(tname).WHERE(where);
             }
-            else if (cmd.where != null)
+            else if (cmd.Where != null)
             {
-                var locator = new Locator(cmd.where);
+                var locator = new Locator(cmd.Where);
                 builder = new SqlBuilder().SELECT().TOP(top).ROWID(cmd.HasRowId).COLUMNS(columns).FROM(tname).WHERE(locator);
             }
             else if (cmd.Has("dup"))
@@ -167,7 +167,7 @@ namespace sqlcli
         public bool Display(ApplicationCommand cmd, string columns, Locator locator)
         {
             SqlBuilder builder;
-            if (cmd.wildcard == null)
+            if (cmd.Wildcard == null)
             {
                 builder = new SqlBuilder().SELECT().TOP(cmd.Top).COLUMNS(columns).FROM(tname);
                 if (locator != null)
@@ -175,7 +175,7 @@ namespace sqlcli
             }
             else
             {
-                Locator where = LikeExpr(cmd.wildcard, cmd.Columns);
+                Locator where = LikeExpr(cmd.Wildcard, cmd.Columns);
                 if (locator != null)
                     where = locator.And(where);
 

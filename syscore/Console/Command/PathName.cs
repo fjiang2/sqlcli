@@ -8,58 +8,53 @@ namespace Sys.Stdio.Cli
 {
     public class PathName
     {
-        public readonly string wildcard = null;
-        public readonly string where = null;
-        public readonly string name = null;
-        private readonly string[] fullSegments = new string[0];
-        public readonly string[] segments = new string[0];
+        public string Wildcard { get; }
+        public string Expression { get; }
+        public string Name { get; }
 
-
+        private readonly string[] segments = new string[0];
         private readonly string fullName;
+
         public PathName(string fullName)
         {
             this.fullName = fullName;
 
             if (string.IsNullOrEmpty(fullName))
-                fullSegments = new string[0];
+                segments = new string[0];
 
             else
             {
-                fullSegments = fullName.Split('\\');
+                segments = fullName.Split('\\');
                 int n1 = 0;
-                int n2 = fullSegments.Length - 1;
+                int n2 = segments.Length - 1;
 
-                if (string.IsNullOrEmpty(fullSegments[n1]))
-                    fullSegments[n1] = "\\";
+                if (string.IsNullOrEmpty(segments[n1]))
+                    segments[n1] = "\\";
 
-                if (fullSegments[n2] == "")
+                if (segments[n2] == "")
                 {
-                    fullSegments = fullSegments.Take(n2).ToArray();
-                    segments = fullSegments;
+                    segments = segments.Take(n2).ToArray();
                 }
-                else if (fullSegments[n2].IndexOf('*') >= 0 || fullSegments[n2].IndexOf('?') >= 0)
+                else if (segments[n2].IndexOf('*') >= 0 || segments[n2].IndexOf('?') >= 0)
                 {
-                    wildcard = fullSegments[n2];
-                    fullSegments = fullSegments.Take(n2).ToArray();
-                    segments = fullSegments;
+                    Wildcard = segments[n2];
+                    segments = segments.Take(n2).ToArray();
                 }
-                else if (IsWhere(fullSegments[n2]))
+                else if (IsExpression(segments[n2]))
                 {
-                    where = fullSegments[n2];
-                    fullSegments = fullSegments.Take(n2).ToArray();
-                    segments = fullSegments;
+                    Expression = segments[n2];
+                    segments = segments.Take(n2).ToArray();
                 }
                 else
                 {
-                    name = fullSegments[n2];
-                    segments = fullSegments.Take(n2).ToArray();
+                    Name = segments[n2];
                 }
             }
         }
 
 
 
-        private static bool IsWhere(string text)
+        private static bool IsExpression(string text)
         {
             string[] keys = new string[] { "(", ")", "=", ">", "<", " and ", " or ", " between ", " not ", " is " };
             text = text.ToLower();
@@ -77,7 +72,7 @@ namespace Sys.Stdio.Cli
         {
             get
             {
-                return this.fullSegments;
+                return this.segments;
             }
         }
 

@@ -74,9 +74,9 @@ namespace sqlcli
 
             T = new TableName[] { };
 
-            if (path.wildcard != null)
+            if (path.Wildcard != null)
             {
-                var m1 = new MatchedDatabase(dname, path.wildcard)
+                var m1 = new MatchedDatabase(dname, path.Wildcard)
                 {
                     Includedtables = cmd.Includes,
                     Excludedtables = cmd.Excludes

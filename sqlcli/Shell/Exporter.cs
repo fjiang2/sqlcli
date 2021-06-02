@@ -70,7 +70,7 @@ namespace sqlcli
         private TableName[] getTableNames(ApplicationCommand cmd)
         {
             TableName[] tnames;
-            if (cmd.wildcard != null)
+            if (cmd.Wildcard != null)
             {
                 var md = new MatchedDatabase(dname, cmd);
                 tnames = md.TableNames();
@@ -151,7 +151,7 @@ namespace sqlcli
 
             if (dname != null)
             {
-                if (cmd.wildcard != null)
+                if (cmd.Wildcard != null)
                 {
                     var md = new MatchedDatabase(dname, cmd);
                     TableName[] tnames = md.TableNames();
