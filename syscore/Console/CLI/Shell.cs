@@ -132,13 +132,9 @@ namespace Sys.Cli
                     cout.WriteLine();
                     return result;
                 }
-                catch (System.Data.SqlClient.SqlException ex1)
-                {
-                    cerr.WriteLine($"SQL:{ex1.AllMessages()}");
-                }
                 catch (Exception ex)
                 {
-                    cout.WriteLine(ex.Message);
+                    cout.WriteLine(ex.AllMessages());
                     return NextStep.ERROR;
                 }
 

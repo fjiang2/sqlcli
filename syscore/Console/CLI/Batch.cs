@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Sys.Stdio;
 using Sys;
+using Sys.IO;
 
 namespace Sys.Cli
 {

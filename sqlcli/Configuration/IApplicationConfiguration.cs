@@ -1,6 +1,6 @@
 ﻿using Tie;
 using Sys.Data;
-using Sys.Cli;
+using Sys.IO;
 
 namespace sqlcli
 {

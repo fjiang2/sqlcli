@@ -1,4 +1,4 @@
-﻿namespace Sys.Cli
+﻿namespace Sys.IO
 {
     public interface IWorkSpace
     {
