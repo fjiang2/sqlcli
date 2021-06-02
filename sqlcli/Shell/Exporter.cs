@@ -544,7 +544,7 @@ namespace sqlcli
             }
 
 
-            TheClassBuilder gen = null;
+            TheClassBuilder gen;
             if (version == 0)
                 gen = new DataContractClassBuilder(cmd, tnd.Name, dt, allowDbNull);
             else if (version == 1)

@@ -196,15 +196,15 @@ namespace sqlcli
                         return NextStep.COMPLETED;
 
                 case "import":
-                    commandee.import(cmd, cfg, this);
+                    commandee.import(cmd);
                     return NextStep.COMPLETED;
 
                 case "export":
-                    commandee.export(cmd, cfg, this);
+                    commandee.export(cmd, cfg);
                     return NextStep.COMPLETED;
 
                 case "load":
-                    commandee.load(cmd, cfg, this);
+                    commandee.load(cmd, cfg);
                     return NextStep.COMPLETED;
 
                 case "clean":
@@ -421,7 +421,7 @@ namespace sqlcli
                 case "connection":
                     {
                         var L = connection.Providers.OrderBy(x => x.ServerName.Path);
-                        if (L.Count() > 0)
+                        if (L.Any())
                         {
                             L.Select(pvd => new { Alias = pvd.ServerName.Path, Connection = pvd.ToSimpleString() })
                             .ToConsole();

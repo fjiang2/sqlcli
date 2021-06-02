@@ -260,7 +260,7 @@ namespace Sys
                 return;
 
             var link = FileLink.CreateLink(url);
-            bool exists = false;
+            bool exists;
             try
             {
                 exists = link.Exists;
@@ -277,7 +277,7 @@ namespace Sys
                 return;
             }
 
-            string code = null;
+            string code;
             try
             {
                 code = link.ReadAllText();

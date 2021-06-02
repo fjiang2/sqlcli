@@ -142,7 +142,6 @@ namespace Sys.Data.Code
             var sent = mtdUpdateRow.Body;
             foreach (DataColumn column in dt.Columns)
             {
-                var type = dict[column];
                 var NAME = COLUMN(column);
                 var name = PropertyName(column);
 
@@ -163,8 +162,6 @@ namespace Sys.Data.Code
 
             foreach (DataColumn column in dt.Columns)
             {
-                var type = dict[column];
-                var NAME = COLUMN(column);
                 var name = PropertyName(column);
 
                 var line = $"obj.{name} = this.{name};";
@@ -263,7 +260,7 @@ namespace Sys.Data.Code
             sent.AppendFormat("return string.Format({0});", sb);
             clss.AppendLine();
 
-            CreateTableSchemaFields(tname, dt, clss);
+            CreateTableSchemaFields(dt, clss);
             clss.AppendLine();
         }
 

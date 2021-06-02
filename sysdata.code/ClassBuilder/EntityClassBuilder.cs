@@ -58,7 +58,7 @@ namespace Sys.Data.Code
                 return;
 
             TableSchema schema = new TableSchema(tname);
-            Func<IColumn, string> COLUMN = column => "_" + column.ColumnName.ToUpper();
+            static string COLUMN(IColumn column) => "_" + column.ColumnName.ToUpper();
 
             TypeInfo[] baseClass = OptionalBaseType();
 

@@ -985,7 +985,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
             Locator locator = new Locator(setting.KeyName.ColumnName() == key);
             SqlBuilder builder = new SqlBuilder().SELECT().COLUMNS(setting.ValueName.ColumnName()).FROM(tname).WHERE(locator);
             var L = new SqlCmd(builder).FillDataColumn<string>(0);
-            if (L.Count() == 0)
+            if (L.Any())
             {
                 cerr.WriteLine($"undefined key: {key}");
                 return;
@@ -1099,7 +1099,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
             cerr.WriteLine("select database or table first");
         }
 
-        public void load(ApplicationCommand cmd, IApplicationConfiguration cfg, ShellContext context)
+        public void load(ApplicationCommand cmd, IApplicationConfiguration cfg)
         {
             if (cmd.HasHelp)
             {
@@ -1204,7 +1204,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
             }
         }
 
-        public void export(ApplicationCommand cmd, IApplicationConfiguration cfg, ShellContext context)
+        public void export(ApplicationCommand cmd, IApplicationConfiguration cfg)
         {
             if (cmd.HasHelp)
             {
@@ -1224,7 +1224,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
                 cerr.WriteLine("select server, database or table first");
         }
 
-        public void import(ApplicationCommand cmd, IApplicationConfiguration cfg, ShellContext context)
+        public void import(ApplicationCommand cmd)
         {
             if (cmd.HasHelp)
             {
@@ -1237,7 +1237,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
 
             if (pt.Item is TableName || pt.Item is Locator || pt.Item is DatabaseName || pt.Item is ServerName)
             {
-                var importer = new Importer(mgr, pt, cmd, cfg);
+                var importer = new Importer(mgr, pt, cmd);
                 importer.Run();
             }
             else

@@ -125,7 +125,7 @@ namespace Sys.Data.Code
        
 
 
-        public static void CreateTableSchemaFields(TableName tname, DataTable dt, Class clss)
+        public static void CreateTableSchemaFields(DataTable dt, Class clss)
         {
             Field field;
 

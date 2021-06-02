@@ -30,10 +30,6 @@ namespace Sys.Data.Code
         }
 
 
-        
-        private readonly Dictionary<DataColumn, TypeInfo> dict = new Dictionary<DataColumn, TypeInfo>();
-
-
         protected override void CreateClass()
         {
 
@@ -82,7 +78,7 @@ namespace Sys.Data.Code
             var fkBy = schema.ByForeignKeys.Keys.OrderBy(k => k.FK_Table);
 
             Constructor constructor = null;
-            if (fkBy.Count() > 0)
+            if (fkBy.Any())
             {
                 clss.AppendLine();
 

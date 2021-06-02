@@ -23,8 +23,7 @@ namespace Sys.Stdio.Cli
         /// </summary>
         public void Run()
         {
-
-            string line = null;
+            string line;
 
         L1:
             cout.Write($"{Task.CurrentPath}> ");

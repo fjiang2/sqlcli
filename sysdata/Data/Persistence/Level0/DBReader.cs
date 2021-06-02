@@ -39,7 +39,7 @@ namespace Sys.Data
                 var row = ReadRow(table);
                 progress.Report(row);
 
-                if (cancellationToken != null && cancellationToken.IsCancellationRequested)
+                if (cancellationToken.IsCancellationRequested)
                     break;
             }
 
@@ -60,7 +60,7 @@ namespace Sys.Data
                 var row = ReadRow(table);
                 table.Rows.Add(row);
 
-                if (cancellationToken != null && cancellationToken.IsCancellationRequested)
+                if (cancellationToken.IsCancellationRequested)
                     break;
             }
 
@@ -87,7 +87,7 @@ namespace Sys.Data
             return table;
         }
 
-        public void ReadDataSet(CancellationToken cancellationToken, IProgress<int> tableChanged, IProgress<DataRow> progress)
+        public void ReadDataSet(IProgress<int> tableChanged, IProgress<DataRow> progress, CancellationToken cancellationToken)
         {
             int step = 0;
             while (reader.HasRows)
@@ -98,7 +98,7 @@ namespace Sys.Data
             }
         }
 
-        public DataSet ReadDataSet(CancellationToken cancellationToken, IProgress<DataTable> tableChanged, IProgress<int> progress)
+        public DataSet ReadDataSet(IProgress<DataTable> tableChanged, IProgress<int> progress, CancellationToken cancellationToken)
         {
             DataSet ds = new DataSet();
             while (reader.HasRows)

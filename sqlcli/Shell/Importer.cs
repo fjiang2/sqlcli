@@ -19,23 +19,20 @@ namespace sqlcli
     {
         private readonly PathManager mgr;
         private readonly ApplicationCommand cmd;
-        private readonly IApplicationConfiguration cfg;
-
 
         private TableName tname;
         private readonly DatabaseName dname;
         private readonly ServerName sname;
         readonly XmlDbCreator xmlDbFile;
 
-        public Importer(PathManager mgr, TreeNode<IDataPath> pt, ApplicationCommand cmd, IApplicationConfiguration cfg)
+        public Importer(PathManager mgr, TreeNode<IDataPath> pt, ApplicationCommand cmd)
         {
             this.mgr = mgr;
             this.cmd = cmd;
-            this.cfg = cfg;
 
             this.xmlDbFile = new XmlDbCreator
             {
-                XmlDbFolder = cfg.XmlDbDirectory
+                XmlDbFolder = cmd.Configuration.XmlDbDirectory
             };
 
             if (pt.Item is Locator)

@@ -80,7 +80,7 @@ namespace Sys.Data.Code
             Class clss = new Class(ClassName + EXTENSION) { Modifier = Modifier.Public | Modifier.Static };
 
             //Const Field
-            CreateTableSchemaFields(tname, dt, clss);
+            CreateTableSchemaFields(dt, clss);
             index1 = clss.Index;
 
            
@@ -263,7 +263,6 @@ namespace Sys.Data.Code
             sent.AppendLine("var dt = CreateTable();");
             sent.AppendLine("ToDataTable(items, dt);");
             sent.AppendLine("return dt;");
-            sent = method.Body;
         }
 
         private void Method_ToDictionary(Class clss)

@@ -164,7 +164,7 @@ namespace sqlcli
             Expand(node, this.Refreshing);
 
             string seg = segment;
-            if (node.Item is DatabaseName && segment.IndexOf(".") == -1)
+            if (node.Item is DatabaseName && segment.Contains("."))
                 seg = SchemaName.dbo + "." + segment;
 
             var xnode = node.Nodes.Find(x => x.Item.Path.ToUpper() == seg.ToUpper());

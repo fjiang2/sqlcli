@@ -189,7 +189,7 @@ namespace sqlcli.Windows
                 return;
             }
 
-            if (wildcard.IndexOf('*') == -1 && wildcard.IndexOf('?') == -1)
+            if (wildcard.Contains('*') && wildcard.Contains('?'))
                 wildcard = $"*{wildcard}*";
 
             foreach (DbTreeNodeUI item in this.Items)

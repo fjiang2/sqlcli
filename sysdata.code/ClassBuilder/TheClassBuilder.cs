@@ -99,7 +99,7 @@ namespace Sys.Data.Code
         {
             string propertyName = column.ColumnName.ToFieldName("C");
             if (propertyName == ClassName)
-                propertyName = propertyName + "1";
+                propertyName += "1";
             return propertyName;
         }
     }
