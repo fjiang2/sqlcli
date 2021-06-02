@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Sys;
 using Sys.Stdio;
-using Sys.Cli;
+using Sys.Stdio.Cli;
 using Sys.Data;
 
 namespace sqlcli

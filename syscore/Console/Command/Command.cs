@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using Tie;
 
-namespace Sys.Stdio
+namespace Sys.Stdio.Cli
 {
     public class Command : ICommand
     {

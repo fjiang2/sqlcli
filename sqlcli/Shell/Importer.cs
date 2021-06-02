@@ -11,7 +11,7 @@ using Sys.Data.Comparison;
 using Sys.Data.Manager;
 using Sys.Data.Resource;
 using Sys.Stdio;
-using Sys.Cli;
+using Sys.Stdio.Cli;
 
 namespace sqlcli
 {

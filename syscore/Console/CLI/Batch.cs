@@ -8,7 +8,7 @@ using Sys.Stdio;
 using Sys;
 using Sys.IO;
 
-namespace Sys.Cli
+namespace Sys.Stdio.Cli
 {
     class Batch
     {

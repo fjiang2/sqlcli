@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Tie;
 using Sys.Stdio;
 
-namespace Sys.Cli
+namespace Sys.Stdio.Cli
 {
     class FlowControl
     {

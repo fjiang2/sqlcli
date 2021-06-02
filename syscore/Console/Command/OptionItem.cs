@@ -1,4 +1,4 @@
-﻿namespace Sys.Stdio
+﻿namespace Sys.Stdio.Cli
 {
     public class OptionItem
     {
