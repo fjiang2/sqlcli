@@ -12,9 +12,11 @@ using System.Text;
 using System.Threading;
 
 using Sys.Stdio;
+using Sys.Cli;
 using Sys.Data.Resource;
 using Sys.Data.Code;
 using Tie;
+
 
 namespace sqlcli
 {
@@ -171,7 +173,7 @@ namespace sqlcli
                 return;
             }
 
-            if (string.IsNullOrEmpty(cmd.args))
+            if (string.IsNullOrEmpty(cmd.Args))
             {
                 cerr.WriteLine("argument cannot be empty");
                 return;
@@ -187,7 +189,7 @@ namespace sqlcli
             Locator locator = mgr.GetCombinedLocator(pt);
             TableName tname = mgr.GetCurrentPath<TableName>();
 
-            SqlBuilder builder = new SqlBuilder().UPDATE(tname).SET(cmd.args);
+            SqlBuilder builder = new SqlBuilder().UPDATE(tname).SET(cmd.Args);
             if (locator != null)
             {
                 builder.WHERE(locator);
@@ -196,7 +198,7 @@ namespace sqlcli
             {
                 try
                 {
-                    var x = ParsePhysLocStatement(mgr.Tout.Table, cmd.args);
+                    var x = ParsePhysLocStatement(mgr.Tout.Table, cmd.Args);
                     if (x != null)
                         builder = x;
                 }
@@ -283,9 +285,9 @@ namespace sqlcli
             if (!(pt.Item is Locator) && !(pt.Item is TableName))
             {
                 TableName[] T = null;
-                if (cmd.arg1 != null)
+                if (cmd.Arg1 != null)
                 {
-                    PathName path = new PathName(cmd.arg1);
+                    PathName path = new PathName(cmd.Arg1);
                     var node = mgr.Navigate(path);
                     if (node != null)
                     {
@@ -352,15 +354,15 @@ namespace sqlcli
             {
                 locator = mgr.GetCombinedLocator(pt);
                 tname = mgr.GetCurrentPath<TableName>();
-                if (!string.IsNullOrEmpty(cmd.args))
-                    locator.And(new Locator(cmd.args));
+                if (!string.IsNullOrEmpty(cmd.Args))
+                    locator.And(new Locator(cmd.Args));
             }
 
             if (pt.Item is TableName)
             {
                 tname = (TableName)pt.Item;
-                if (!string.IsNullOrEmpty(cmd.args))
-                    locator = new Locator(cmd.args);
+                if (!string.IsNullOrEmpty(cmd.Args))
+                    locator = new Locator(cmd.Args);
             }
 
             if (locator == null)
@@ -413,7 +415,7 @@ namespace sqlcli
                 return;
             }
 
-            if (string.IsNullOrEmpty(cmd.args))
+            if (string.IsNullOrEmpty(cmd.Args))
                 return;
 
             var xnode = mgr.TryAddWhereOrColumns(pt, cmd);
@@ -670,7 +672,7 @@ namespace sqlcli
             if (!Navigate(cmd.Path1))
                 return;
 
-            string newName = cmd.arg1 ?? cmd.arg2;
+            string newName = cmd.Arg1 ?? cmd.Arg2;
             if (pt.Item is TableName && newName != null)
             {
                 TableName tname = (TableName)pt.Item;
@@ -904,7 +906,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
                 return;
             }
 
-            if (string.IsNullOrEmpty(cmd.args))
+            if (string.IsNullOrEmpty(cmd.Args))
             {
                 cerr.WriteLine("assignment cannot be empty");
                 return;
@@ -912,7 +914,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
 
             try
             {
-                Script.Execute($"{cmd.args};", Context.DS);
+                Script.Execute($"{cmd.Args};", Context.DS);
             }
             catch (Exception ex)
             {
@@ -931,7 +933,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
                 return;
             }
 
-            if (string.IsNullOrEmpty(cmd.args))
+            if (string.IsNullOrEmpty(cmd.Args))
             {
                 cerr.WriteLine("argument cannot be empty");
                 return;
@@ -959,7 +961,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
                 return;
             }
 
-            string[] kvp = cmd.args.Split('=');
+            string[] kvp = cmd.Args.Split('=');
 
             string key = null;
             string value = null;
@@ -1116,7 +1118,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
                 return;
             }
 
-            string file = cmd.arg1;
+            string file = cmd.Arg1;
             if (file == null)
             {
                 cerr.WriteLine("file name not specified");
@@ -1274,13 +1276,13 @@ sp_rename '{1}', '{2}', 'COLUMN'";
                 return;
             }
 
-            if (cmd.arg1 == null)
+            if (cmd.Arg1 == null)
             {
                 cerr.WriteLine("invalid arguments");
                 return;
             }
 
-            var items = cmd.arg1.Split('=');
+            var items = cmd.Arg1.Split('=');
             if (items.Length != 2)
             {
                 cerr.WriteLine("invalid arguments, correct format is alias=server_name");
@@ -1391,14 +1393,14 @@ sp_rename '{1}', '{2}', 'COLUMN'";
                 return;
             }
 
-            if (cmd.arg1 == null)
+            if (cmd.Arg1 == null)
             {
                 cerr.WriteLine("invalid arguments");
                 return;
             }
 
-            var items = cmd.arg1.Split('=');
-            string serverName = cmd.arg1;
+            var items = cmd.Arg1.Split('=');
+            string serverName = cmd.Arg1;
 
             var result = cfg.Providers.FirstOrDefault(row => row.ServerName.Path == serverName);
             if (result != null)
@@ -1570,8 +1572,8 @@ sp_rename '{1}', '{2}', 'COLUMN'";
             }
 
             string inputfile;
-            if (cmd.arg1 != null)
-                inputfile = cfg.WorkingDirectory.GetFullPath(cmd.arg1, ".sql");
+            if (cmd.Arg1 != null)
+                inputfile = cfg.WorkingDirectory.GetFullPath(cmd.Arg1, ".sql");
             else
             {
                 cerr.WriteLine("input undefined");
@@ -1605,9 +1607,9 @@ sp_rename '{1}', '{2}', 'COLUMN'";
             }
 
             FileLink fileLink = null;
-            if (cmd.arg1 != null)
+            if (cmd.Arg1 != null)
             {
-                string inputfile = cmd.arg1;
+                string inputfile = cmd.Arg1;
 
                 if (inputfile.IndexOf("://") < 0)
                 {
@@ -1684,7 +1686,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
 
             string path;
 
-            switch (cmd.arg1)
+            switch (cmd.Arg1)
             {
                 case "output":
                     stdio.OpenEditor(cfg.OutputFile);
@@ -1732,7 +1734,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
                     break;
 
                 default:
-                    if (open(cmd.arg1))
+                    if (open(cmd.Arg1))
                         return;
 
                     cerr.WriteLine("invalid arguments");
@@ -1825,7 +1827,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
                 return;
             }
 
-            string text = cmd.args;
+            string text = cmd.Args;
             if (string.IsNullOrEmpty(text))
             {
                 string status = "on";
@@ -1947,7 +1949,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
                 return;
             }
 
-            string file = cmd.arg1;
+            string file = cmd.Arg1;
             if (file == null && !cmd.Has("save"))
             {
                 DataSet ds = ShellHistory.LastDataSet();
@@ -2151,13 +2153,13 @@ sp_rename '{1}', '{2}', 'COLUMN'";
                 return true;
             }
 
-            if (cmd.arg1 == null)
+            if (cmd.Arg1 == null)
             {
                 cerr.WriteLine($"missing file name");
                 return true;
             }
 
-            string path = cmd.Configuration.WorkingDirectory.GetFullPath(cmd.arg1, ".sqt");
+            string path = cmd.Configuration.WorkingDirectory.GetFullPath(cmd.Arg1, ".sqt");
             if (!File.Exists(path))
             {
                 cerr.WriteLine($"cannot find the file: \"{path}\"");

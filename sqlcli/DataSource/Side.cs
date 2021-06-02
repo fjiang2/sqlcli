@@ -9,11 +9,11 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using Sys.Stdio;
-using Sys;
+using Sys.Cli;
 
 namespace sqlcli
 {
-    class Side : IDataPath
+    class Side : IDataPath 
     {
         public DatabaseName DatabaseName { get; private set; }
         private ConnectionProvider provider;

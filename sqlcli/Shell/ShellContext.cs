@@ -3,18 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using Sys.Data;
 using Sys.Stdio;
-using Sys;
+using Sys.Cli;
 
 namespace sqlcli
 {
     class ShellContext
     {
-        public Side theSide { get; set; }
-        public IApplicationConfiguration cfg { get; }
-        public IConnectionConfiguration connection { get; }
-        public PathManager mgr { get; }
-        public Commandee commandee { get; }
-        public const string THESIDE = "$TheSide";
+        protected Side theSide { get; set; }
+        protected PathManager mgr { get; }
+        protected IApplicationConfiguration cfg { get; }
+        protected IConnectionConfiguration connection { get; }
+        protected Commandee commandee { get; }
+        protected const string THESIDE = "$TheSide";
 
         public ShellContext(IApplicationConfiguration cfg)
         {
@@ -45,7 +45,7 @@ namespace sqlcli
             }
         }
 
-        public void ChangeSide(Side side)
+        protected void ChangeSide(Side side)
         {
             if (side == null)
             {
@@ -59,5 +59,9 @@ namespace sqlcli
             commandee.chdir(theSide.Provider.ServerName, theSide.DatabaseName);
         }
 
+        public void SwitchTask(IShellTask context)
+        {
+            ChangeSide((context as ShellContext).theSide);
+        }
     }
 }

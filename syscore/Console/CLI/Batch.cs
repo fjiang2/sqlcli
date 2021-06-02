@@ -6,39 +6,40 @@ using System.Threading.Tasks;
 using System.IO;
 using Sys.Stdio;
 using Sys;
+using Sys.IO;
 
-namespace sqlcli
+namespace Sys.Cli
 {
-    class Batch
+    public class Batch
     {
         private const string EXT = ".sqc";
         private readonly string path;
-        private readonly IApplicationConfiguration cfg;
+        private readonly IWorkSpace workspace;
 
 
         public bool IsBatch { get; } = false;
 
-        public Batch(IApplicationConfiguration cfg, string path)
+        public Batch(IWorkSpace workspace, string path)
         {
-            this.cfg = cfg;
+            this.workspace = workspace;
             this.path = GetFullPath(path);
             this.IsBatch = EXT == Path.GetExtension(this.path);
         }
 
         private string GetFullPath(string path)
         {
-            string fullPath = cfg.WorkingDirectory.GetFullPath(path, EXT);
+            string fullPath = workspace.WorkingDirectory.GetFullPath(path, EXT);
             if (File.Exists(fullPath))
             {
                 return fullPath;
             }
 
-            if (string.IsNullOrEmpty(cfg.Path))
+            if (string.IsNullOrEmpty(workspace.Path))
             {
                 return string.Empty;
             }
 
-            foreach (string _path in cfg.Path.Split(';'))
+            foreach (string _path in workspace.Path.Split(';'))
             {
                 WorkingDirectory working = new WorkingDirectory(_path);
                 try
@@ -59,7 +60,7 @@ namespace sqlcli
         }
 
 
-        public bool Call(Shell shell, string[] args)
+        public bool Call(IShellTask task, string[] args)
         {
             if (!IsBatch)
             {
@@ -71,11 +72,12 @@ namespace sqlcli
             {
                 var lines = ReadLines(args);
 
-                var _shell = new Shell(cfg);
+                IShellTask _task = task.CreateTask();
+                var _shell = new Shell(_task);
 
                 //go to current theSide
-                if (shell != null)
-                    _shell.ChangeSide(shell.theSide);
+                if (task != null)
+                    _task.SwitchTask(task);
 
                 _shell.DoBatch(lines);
 

@@ -30,8 +30,8 @@ namespace sqlcli
             ps1 = new PathSide(mgr, cmd);
             ps2 = new PathSide(mgr, cmd);
 
-            var f1 = ps1.SetSource(cmd.arg1);
-            var f2 = ps2.SetSink(cmd.arg2);
+            var f1 = ps1.SetSource(cmd.Arg1);
+            var f2 = ps2.SetSink(cmd.Arg2);
             valid = f1 && f2;
         }
 

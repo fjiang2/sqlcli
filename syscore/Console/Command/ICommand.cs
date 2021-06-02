@@ -3,7 +3,7 @@
     public interface ICommand
     {
         string Action { get; }
-        string arg1 { get; }
+        string Arg1 { get; }
         bool? GetBoolean(string name);
         bool GetBoolean(string name, bool defaultValue);
         double? GetDouble(string name);

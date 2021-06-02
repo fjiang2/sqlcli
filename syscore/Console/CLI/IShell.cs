@@ -1,4 +1,4 @@
-﻿namespace Sys.Stdio
+﻿namespace Sys.Cli
 {
     public interface IShell
     {

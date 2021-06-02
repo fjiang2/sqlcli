@@ -11,6 +11,7 @@ using Sys.Data.Comparison;
 using Sys.Data.Manager;
 using Sys.Data.Resource;
 using Sys.Stdio;
+using Sys.Cli;
 
 namespace sqlcli
 {
@@ -80,7 +81,7 @@ namespace sqlcli
 
         public void ProcessZipArchive()
         {
-            string file = cmd.arg1;
+            string file = cmd.Arg1;
             if (file == null)
             {
                 cerr.WriteLine("file name not specified");

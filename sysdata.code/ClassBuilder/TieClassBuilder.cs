@@ -36,7 +36,7 @@ namespace Sys.Data.Code
             };
 
             builder.AddClass(clss);
-            string code = ReadAllText(cmd.arg1);
+            string code = ReadAllText(cmd.Arg1);
 
             Memory DS = new Memory();
             try

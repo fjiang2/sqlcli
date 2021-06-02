@@ -1,194 +1,41 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.IO;
-
-using Sys;
 using Sys.Data;
 using Sys.Data.Comparison;
 using Tie;
 using Sys.Stdio;
+using Sys.Cli;
 
 namespace sqlcli
 {
-    partial class Shell : ShellContext, IShell
+    class ShellTask : ShellContext, IShellTask
     {
-
-        public Shell(IApplicationConfiguration cfg)
-            : base(cfg)
+        public ShellTask(IApplicationConfiguration cfg)
+            :base(cfg)
         {
         }
 
-        /// <summary>
-        /// read command line from console and run command
-        /// </summary>
-        public void DoConsole()
+        public void Help()
         {
-
-            string line = null;
-
-        L1:
-            cout.Write($"{mgr}> ");
-        L2:
-            line = cin.ReadLine();
-
-            if (Console.IsOutputRedirected)
-                Console.WriteLine(line);
-
-            //ctrl-c captured
-            if (line == null)
-                goto L1;
-
-            if (FlowControl.IsFlowStatement(line))
-            {
-                cerr.WriteLine($"use \"{line}\" on batch script file only");
-                goto L1;
-            }
-
-            switch (Run(line))
-            {
-                case NextStep.NEXT:
-                case NextStep.COMPLETED:
-                case NextStep.ERROR:
-                    goto L1;
-
-                case NextStep.CONTINUE:
-                    goto L2;
-
-                case NextStep.EXIT:
-                    return;
-
-            }
+            ShellHelp.Help();
         }
 
-        /// <summary>
-        /// process command batch file
-        /// </summary>
-        /// <param name="lines"></param>
-        public void DoBatch(string[] lines)
+        public IShellTask CreateTask()
         {
-            FlowControl flow = new FlowControl(lines);
-            NextStep next = flow.Execute(Run);
-            if (next == NextStep.EXIT)
-                cout.WriteLine(ConsoleColor.Green, "completed.");
-
-            cout.Write($"{mgr}> ");
+            return new ShellTask(cfg);
         }
 
-        private bool multipleLineMode = false;
-        private StringBuilder multipleLineBuilder = new StringBuilder();
+        public string CurrentPath => mgr.ToString();
 
-        public NextStep Run(string line)
-        {
-
-            if (!multipleLineMode)
-            {
-
-                if (line == "exit")
-                    return NextStep.EXIT;
-
-                switch (line)
-                {
-                    case "help":
-                    case "?":
-                        Help();
-                        multipleLineBuilder.Clear();
-                        return NextStep.COMPLETED;
-
-                    case "cls":
-                        Console.Clear();
-                        return NextStep.COMPLETED;
-
-                    default:
-                        {
-                            var _result = TrySingleLineCommand(line);
-                            if (_result == NextStep.COMPLETED)
-                            {
-                                cout.WriteLine();
-                                return NextStep.COMPLETED;
-                            }
-                            else if (_result == NextStep.ERROR)
-                                return NextStep.ERROR;
-
-                        }
-                        break;
-                }
-            }
-
-            if (!string.IsNullOrWhiteSpace(line) && line != ";")
-                multipleLineBuilder.AppendLine(line);
-
-            if (line.EndsWith(";"))
-            {
-                string text = multipleLineBuilder.ToString().Trim();
-                multipleLineBuilder.Clear();
-
-                if (text.EndsWith(";"))
-                    text = text.Substring(0, text.Length - 1);
-
-                try
-                {
-                    multipleLineMode = false;
-                    var result = DoMultipleLineCommand(text);
-                    cout.WriteLine();
-                    return result;
-                }
-                catch (System.Data.SqlClient.SqlException ex1)
-                {
-                    cerr.WriteLine($"SQL:{ex1.AllMessages()}");
-                }
-                catch (Exception ex)
-                {
-                    cout.WriteLine(ex.Message);
-                    return NextStep.ERROR;
-                }
-
-            }
-            else if (multipleLineBuilder.ToString() != "")
-            {
-                multipleLineMode = true;
-                cout.Write("...");
-                return NextStep.CONTINUE;
-            }
-
-            return NextStep.NEXT;
-        }
-
-        private NextStep TrySingleLineCommand(string text)
-        {
-
-#if DEBUG
-            return DoSingleLineCommand(text);
-#else
-            try
-            {
-                return DoSingleLineCommand(text);
-            }
-            catch (System.Data.SqlClient.SqlException ex1)
-            {
-                cerr.WriteLine($"SQL:{ex1.AllMessages()}");
-            }
-            catch (Exception ex2)
-            {
-                cerr.WriteLine(ex2.Message);
-            }
-
-            return NextStep.ERROR;
-#endif
-        }
-
-
-        private NextStep DoSingleLineCommand(string line)
+        public NextStep DoSingleLineCommand(string line)
         {
             line = line.Trim();
             if (line == string.Empty)
                 return NextStep.CONTINUE;
 
             ApplicationCommand cmd = new ApplicationCommand(cfg, line);
-            if (cmd.badcommand)
+            if (cmd.InvalidCommand)
                 return NextStep.ERROR;
 
             switch (cmd.Action)
@@ -222,7 +69,7 @@ namespace sqlcli
 
                 case "cd":
                 case "chdir":
-                    if (cmd.arg1 != null || cmd.HasHelp)
+                    if (cmd.Arg1 != null || cmd.HasHelp)
                         chdir(cmd);
                     else
                         cout.WriteLine(mgr.ToString());
@@ -258,14 +105,14 @@ namespace sqlcli
                     return NextStep.COMPLETED;
 
                 case "show":
-                    if (cmd.arg1 != null)
-                        Show(cmd.arg1.ToLower(), cmd.arg2);
+                    if (cmd.Arg1 != null)
+                        Show(cmd.Arg1.ToLower(), cmd.Arg2);
                     else
                         cerr.WriteLine("invalid argument");
                     return NextStep.COMPLETED;
 
                 case "find":
-                    commandee.find(cmd, cmd.arg1);
+                    commandee.find(cmd, cmd.Arg1);
                     return NextStep.COMPLETED;
 
                 case "save":
@@ -306,20 +153,20 @@ namespace sqlcli
                     return NextStep.COMPLETED;
 
                 case "lcd":
-                    if (cmd.arg1 != null)
-                        cfg.WorkingDirectory.ChangeDirectory(cmd.arg1);
+                    if (cmd.Arg1 != null)
+                        cfg.WorkingDirectory.ChangeDirectory(cmd.Arg1);
                     else
                         cout.WriteLine(cfg.WorkingDirectory.CurrentDirectory);
                     return NextStep.COMPLETED;
 
                 case "ldir":
-                    cfg.WorkingDirectory.ShowCurrentDirectory(cmd.arg1);
+                    cfg.WorkingDirectory.ShowCurrentDirectory(cmd.Arg1);
                     return NextStep.COMPLETED;
 
                 case "ltype":
-                    if (cmd.arg1 != null)
+                    if (cmd.Arg1 != null)
                     {
-                        string[] lines = cfg.WorkingDirectory.ReadAllLines(cmd.arg1);
+                        string[] lines = cfg.WorkingDirectory.ReadAllLines(cmd.Arg1);
                         if (lines != null)
                         {
                             foreach (var _line in lines)
@@ -331,20 +178,21 @@ namespace sqlcli
                     return NextStep.COMPLETED;
 
                 case "path":
-                    if (cmd.arg1 == null)
+                    if (cmd.Arg1 == null)
                     {
                         cout.WriteLine(cfg.Path);
                     }
                     else
                     {
-                        Context.SetValue("path", cmd.arg1);
+                        Context.SetValue("path", cmd.Arg1);
                     }
                     return NextStep.COMPLETED;
 
                 case "run":
-                    if (cmd.arg1 != null)
+                    if (cmd.Arg1 != null)
                     {
-                        new Batch(cfg, cmd.arg1).Call(this, cmd.Arguments);
+                        Batch batch = new Batch(cfg, cmd.Arg1);
+                        batch.Call(this, cmd.Arguments);
                     }
                     return NextStep.COMPLETED;
 
@@ -437,7 +285,7 @@ namespace sqlcli
             return string.Format("S={0} db={1} U={2} P={3}", cs.DataSource, cs.InitialCatalog, cs.UserId, cs.Password);
         }
 
-        private NextStep DoMultipleLineCommand(string text)
+        public NextStep DoMultipleLineCommand(string text)
         {
             text = text.Trim();
             if (text == string.Empty)

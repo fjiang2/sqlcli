@@ -12,6 +12,7 @@ using Sys.Data.Manager;
 using Sys.Data.Resource;
 using Sys.Stdio;
 using Sys.Data.Code;
+using Sys.Cli;
 
 namespace sqlcli
 {
