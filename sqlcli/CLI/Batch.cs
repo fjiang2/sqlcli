@@ -13,32 +13,32 @@ namespace Sys.Cli
     {
         private const string EXT = ".sqc";
         private readonly string path;
-        private readonly IApplicationConfiguration cfg;
+        private readonly IWorkSpace workspace;
 
 
         public bool IsBatch { get; } = false;
 
-        public Batch(IApplicationConfiguration cfg, string path)
+        public Batch(IWorkSpace workspace, string path)
         {
-            this.cfg = cfg;
+            this.workspace = workspace;
             this.path = GetFullPath(path);
             this.IsBatch = EXT == Path.GetExtension(this.path);
         }
 
         private string GetFullPath(string path)
         {
-            string fullPath = cfg.WorkingDirectory.GetFullPath(path, EXT);
+            string fullPath = workspace.WorkingDirectory.GetFullPath(path, EXT);
             if (File.Exists(fullPath))
             {
                 return fullPath;
             }
 
-            if (string.IsNullOrEmpty(cfg.Path))
+            if (string.IsNullOrEmpty(workspace.Path))
             {
                 return string.Empty;
             }
 
-            foreach (string _path in cfg.Path.Split(';'))
+            foreach (string _path in workspace.Path.Split(';'))
             {
                 WorkingDirectory working = new WorkingDirectory(_path);
                 try

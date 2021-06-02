@@ -1,14 +1,14 @@
 ﻿using Tie;
 using Sys.Data;
+using Sys.Cli;
 
-namespace Sys.Cli
+namespace sqlcli
 {
-    public interface IApplicationConfiguration 
+
+    public interface IApplicationConfiguration : IWorkSpace
     {
         string OutputFile { get; }
-        WorkingDirectory WorkingDirectory { get; }
         string XmlDbDirectory { get; }
-        string Path { get; }
         int TopLimit { get; }
         int MaxRows { get; }
         VAL GetValue(VAR variable);
