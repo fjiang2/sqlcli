@@ -4,12 +4,11 @@ namespace Sys.Cli
 {
     public interface IShellTask
     {
-        ISide TheSide { get; }
         string CurrentPath { get; }
         IShellTask CreateTask();
-        void Help();
-        void ChangeSide(ISide side);
+        void SwitchTask(IShellTask task);
         NextStep DoMultipleLineCommand(string text);
         NextStep DoSingleLineCommand(string line);
+        void Help();
     }
 }

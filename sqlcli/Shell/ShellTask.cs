@@ -120,7 +120,7 @@ namespace sqlcli
                     return NextStep.COMPLETED;
 
                 case "execute":
-                    commandee.execute(cmd, cfg, TheSide);
+                    commandee.execute(cmd, cfg, theSide);
                     if (commandee.ErrorCode == CommandState.OK)
                         return NextStep.COMPLETED;
                     else
@@ -226,7 +226,7 @@ namespace sqlcli
                     return NextStep.COMPLETED;
 
                 case "edit":
-                    commandee.edit(cmd, cfg, connection, TheSide);
+                    commandee.edit(cmd, cfg, connection, theSide);
                     return NextStep.COMPLETED;
 
                 case "last":
@@ -235,7 +235,7 @@ namespace sqlcli
 
                 case "chk":
                 case "check":
-                    commandee.check(cmd, TheSide);
+                    commandee.check(cmd, theSide);
                     return NextStep.COMPLETED;
 
                 default:
@@ -260,20 +260,20 @@ namespace sqlcli
                 var dname = mgr.GetCurrentPath<DatabaseName>();
                 if (dname != null)
                 {
-                    if (TheSide == null)
-                        TheSide = new Side(dname.Provider);
+                    if (theSide == null)
+                        theSide = new Side(dname.Provider);
                     else
-                        TheSide.UpdateDatabase(dname.Provider);
+                        theSide.UpdateDatabase(dname.Provider);
                 }
                 else
                 {
                     var sname = mgr.GetCurrentPath<ServerName>();
                     if (sname != null)
                     {
-                        if (TheSide == null)
-                            TheSide = new Side(dname.Provider);
+                        if (theSide == null)
+                            theSide = new Side(dname.Provider);
                         else
-                            TheSide.UpdateDatabase(sname.Provider);
+                            theSide.UpdateDatabase(sname.Provider);
                     }
                 }
             }
@@ -312,7 +312,7 @@ namespace sqlcli
                 case "select":
                     if (!Context.GetValue<bool>(Context.DATAREADER))
                     {
-                        DataSet ds = new SqlCmd(TheSide.Provider, text).FillDataSet();
+                        DataSet ds = new SqlCmd(theSide.Provider, text).FillDataSet();
                         if (ds != null)
                         {
                             foreach (DataTable dt in ds.Tables)
@@ -321,7 +321,7 @@ namespace sqlcli
                     }
                     else
                     {
-                        new SqlCmd(TheSide.Provider, text).Read(reader => reader.ToConsole(cfg.MaxRows));
+                        new SqlCmd(theSide.Provider, text).Read(reader => reader.ToConsole(cfg.MaxRows));
                     }
                     break;
 
@@ -334,7 +334,7 @@ namespace sqlcli
                 case "drop":
                     try
                     {
-                        int count = new SqlCmd(TheSide.Provider, text).ExecuteNonQuery();
+                        int count = new SqlCmd(theSide.Provider, text).ExecuteNonQuery();
                         if (count > 0)
                             cout.WriteLine("{0} of row(s) affected", count);
                         else if (count == 0)
@@ -359,7 +359,7 @@ namespace sqlcli
 
         private void Show(string arg1, string arg2)
         {
-            var dname = TheSide.DatabaseName;
+            var dname = theSide.DatabaseName;
             TableName[] vnames;
 
             switch (arg1)
@@ -438,7 +438,7 @@ namespace sqlcli
                     break;
 
                 case "current":
-                    cout.WriteLine("current: {0}({1})", TheSide.Provider.Name, showConnection(TheSide.Provider));
+                    cout.WriteLine("current: {0}({1})", theSide.Provider.Name, showConnection(theSide.Provider));
                     break;
 
                 case "var":

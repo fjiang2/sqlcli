@@ -76,7 +76,7 @@ namespace Sys.Cli
 
                 //go to current theSide
                 if (task != null)
-                    _shell.Task.ChangeSide(task.TheSide);
+                    _task.SwitchTask(task);
 
                 _shell.DoBatch(lines);
 
