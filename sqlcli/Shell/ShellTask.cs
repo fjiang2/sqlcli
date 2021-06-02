@@ -15,6 +15,8 @@ namespace sqlcli
         {
         }
 
+        public string CurrentPath => mgr.ToString();
+
         public NextStep DoSingleLineCommand(ApplicationCommand cmd)
         {
             switch (cmd.Action)
@@ -51,7 +53,7 @@ namespace sqlcli
                     if (cmd.arg1 != null || cmd.HasHelp)
                         chdir(cmd);
                     else
-                        cout.WriteLine(ThePath.ToString());
+                        cout.WriteLine(mgr.ToString());
                     return NextStep.COMPLETED;
 
                 case "type":
@@ -231,7 +233,7 @@ namespace sqlcli
         {
             if (commandee.chdir(cmd))
             {
-                var dname = ThePath.GetCurrentPath<DatabaseName>();
+                var dname = mgr.GetCurrentPath<DatabaseName>();
                 if (dname != null)
                 {
                     if (TheSide == null)
@@ -241,7 +243,7 @@ namespace sqlcli
                 }
                 else
                 {
-                    var sname = ThePath.GetCurrentPath<ServerName>();
+                    var sname = mgr.GetCurrentPath<ServerName>();
                     if (sname != null)
                     {
                         if (TheSide == null)

@@ -1555,7 +1555,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
             });
         }
 
-        public void execute(ApplicationCommand cmd, IApplicationConfiguration cfg, Side theSide)
+        public void execute(ApplicationCommand cmd, IApplicationConfiguration cfg, ISide theSide)
         {
             if (cmd.HasHelp)
             {
@@ -1580,13 +1580,13 @@ sp_rename '{1}', '{2}', 'COLUMN'";
 
             int batchSize = cmd.GetInt32("batch-size", 1);
             bool verbose = cmd.Has("verbose");
-            if (theSide.ExecuteScript(inputfile, batchSize, verbose))
+            if ((theSide as Side).ExecuteScript(inputfile, batchSize, verbose))
                 ErrorCode = CommandState.OK;
             else
                 ErrorCode = CommandState.SQL_FAILS;
         }
 
-        public void edit(ApplicationCommand cmd, IApplicationConfiguration cfg, IConnectionConfiguration connection, Side theSide)
+        public void edit(ApplicationCommand cmd, IApplicationConfiguration cfg, IConnectionConfiguration connection, ISide theSide)
         {
             if (cmd.HasHelp)
             {
@@ -1855,7 +1855,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
         }
 
 
-        public void check(ApplicationCommand cmd, Side theSide)
+        public void check(ApplicationCommand cmd, ISide theSide)
         {
             if (cmd.HasHelp)
             {

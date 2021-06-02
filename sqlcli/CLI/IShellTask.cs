@@ -4,9 +4,9 @@ namespace sqlcli
 {
     interface IShellTask
     {
-        Side TheSide { get; }
-        PathManager ThePath { get; }
-        void ChangeSide(Side side);
+        ISide TheSide { get; }
+        string CurrentPath { get; }
+        void ChangeSide(ISide side);
         NextStep DoMultipleLineCommand(string text);
         NextStep DoSingleLineCommand(ApplicationCommand cmd);
     }

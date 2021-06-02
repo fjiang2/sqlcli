@@ -13,7 +13,7 @@ using Sys;
 
 namespace sqlcli
 {
-    class Side : IDataPath
+    class Side : IDataPath, ISide
     {
         public DatabaseName DatabaseName { get; private set; }
         private ConnectionProvider provider;

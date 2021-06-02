@@ -9,9 +9,9 @@ namespace sqlcli
 {
     class ShellContext
     {
-        public Side TheSide { get; set; }
-        public PathManager ThePath { get; }
+        public ISide TheSide { get; set; }
 
+        protected PathManager mgr { get; }
         protected IApplicationConfiguration cfg { get; }
         protected IConnectionConfiguration connection { get; }
         protected Commandee commandee { get; }
@@ -21,8 +21,8 @@ namespace sqlcli
         {
             this.cfg = cfg;
             this.connection = cfg.Connection;
-            this.ThePath = new PathManager(connection);
-            this.commandee = new Commandee(ThePath);
+            this.mgr = new PathManager(connection);
+            this.commandee = new Commandee(mgr);
 
             string server = connection.Home;
 
@@ -46,7 +46,7 @@ namespace sqlcli
             }
         }
 
-        public void ChangeSide(Side side)
+        public void ChangeSide(ISide side)
         {
             if (side == null)
             {

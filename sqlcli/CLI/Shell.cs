@@ -29,7 +29,7 @@ namespace sqlcli
             string line = null;
 
         L1:
-            cout.Write($"{Task.ThePath}> ");
+            cout.Write($"{Task.CurrentPath}> ");
         L2:
             line = cin.ReadLine();
 
@@ -73,7 +73,7 @@ namespace sqlcli
             if (next == NextStep.EXIT)
                 cout.WriteLine(ConsoleColor.Green, "completed.");
 
-            cout.Write($"{Task.ThePath}> ");
+            cout.Write($"{Task.CurrentPath}> ");
         }
 
         private bool multipleLineMode = false;
