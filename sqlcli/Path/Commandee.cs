@@ -12,9 +12,11 @@ using System.Text;
 using System.Threading;
 
 using Sys.Stdio;
+using Sys.Stdio.Cli;
 using Sys.Data.Resource;
 using Sys.Data.Code;
 using Tie;
+
 
 namespace sqlcli
 {

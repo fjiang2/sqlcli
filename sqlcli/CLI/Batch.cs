@@ -7,7 +7,7 @@ using System.IO;
 using Sys.Stdio;
 using Sys;
 
-namespace sqlcli
+namespace Sys.Stdio.Cli
 {
     public class Batch
     {
@@ -59,7 +59,7 @@ namespace sqlcli
         }
 
 
-        public bool Call(Shell shell, string[] args)
+        public bool Call(IShellTask task, string[] args)
         {
             if (!IsBatch)
             {
@@ -71,12 +71,12 @@ namespace sqlcli
             {
                 var lines = ReadLines(args);
 
-                ShellTask task = new ShellTask(cfg);
-                var _shell = new Shell(cfg, task);
+                IShellTask _task = task.CreateTask();
+                var _shell = new Shell(_task);
 
                 //go to current theSide
-                if (shell != null)
-                    _shell.Task.ChangeSide(shell.Task.TheSide);
+                if (task != null)
+                    _shell.Task.ChangeSide(task.TheSide);
 
                 _shell.DoBatch(lines);
 

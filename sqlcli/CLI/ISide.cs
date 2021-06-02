@@ -1,6 +1,6 @@
 ﻿using Sys.Data;
 
-namespace sqlcli
+namespace Sys.Stdio.Cli
 {
     public interface ISide
     {

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Sys;
 using Sys.Stdio;
+using Sys.Stdio.Cli;
 using Sys.Data;
 
 namespace sqlcli
@@ -75,7 +76,7 @@ namespace sqlcli
             }
 
             ShellTask task = new ShellTask(cfg);
-            Shell = new Shell(cfg, task);
+            Shell = new Shell(task);
             Context.DS.AddHostObject(Context.SHELL, Shell);
             Shell.DoConsole();
         }

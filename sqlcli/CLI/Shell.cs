@@ -8,15 +8,13 @@ using Sys;
 using Sys.Data;
 using Sys.Stdio;
 
-namespace sqlcli
+namespace Sys.Stdio.Cli
 {
     public class Shell : IShell
     {
         public IShellTask Task { get; }
-        IApplicationConfiguration cfg;
-        public Shell(IApplicationConfiguration cfg, IShellTask task)
+        public Shell(IShellTask task)
         {
-            this.cfg = cfg;
             this.Task = task;
         }
 
@@ -92,7 +90,7 @@ namespace sqlcli
                 {
                     case "help":
                     case "?":
-                        ShellHelp.Help();
+                        Task.Help();
                         multipleLineBuilder.Clear();
                         return NextStep.COMPLETED;
 
@@ -157,25 +155,8 @@ namespace sqlcli
 
         private NextStep TrySingleLineCommand(string line)
         {
-            line = line.Trim();
-            if (line == string.Empty)
-                return NextStep.CONTINUE;
-
-            ApplicationCommand cmd = new ApplicationCommand(cfg, line);
-            if (cmd.InvalidCommand)
-                return NextStep.ERROR;
-            
-            switch (cmd.Action)
-            {
-                case "run":
-                    if (cmd.Arg1 != null)
-                    {
-                        new Batch(cfg, cmd.Arg1).Call(this, cmd.Arguments);
-                    }
-                    return NextStep.COMPLETED;
-            }
 #if DEBUG
-            return Task.DoSingleLineCommand(cmd);
+            return Task.DoSingleLineCommand(line);
 #else
             try
             {

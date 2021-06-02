@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Sys.Stdio;
 
-namespace sqlcli
+namespace Sys.Stdio.Cli
 {
     public class WorkingDirectory
     {

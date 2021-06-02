@@ -5,6 +5,7 @@ using Sys.Data;
 using Sys.Data.Comparison;
 using Tie;
 using Sys.Stdio;
+using Sys.Stdio.Cli;
 
 namespace sqlcli
 {
@@ -15,11 +16,28 @@ namespace sqlcli
         {
         }
 
+        public void Help()
+        {
+            ShellHelp.Help();
+        }
+
+        public IShellTask CreateTask()
+        {
+            return new ShellTask(cfg);
+        }
+
         public string CurrentPath => mgr.ToString();
 
-        public NextStep DoSingleLineCommand(IApplicationCommand command)
+        public NextStep DoSingleLineCommand(string line)
         {
-            ApplicationCommand cmd = command as ApplicationCommand;
+            line = line.Trim();
+            if (line == string.Empty)
+                return NextStep.CONTINUE;
+
+            ApplicationCommand cmd = new ApplicationCommand(cfg, line);
+            if (cmd.InvalidCommand)
+                return NextStep.ERROR;
+
             switch (cmd.Action)
             {
                 case "set":
@@ -170,7 +188,12 @@ namespace sqlcli
                     }
                     return NextStep.COMPLETED;
 
-             
+                case "run":
+                    if (cmd.Arg1 != null)
+                    {
+                        new Batch(cfg, cmd.Arg1).Call(this, cmd.Arguments);
+                    }
+                    return NextStep.COMPLETED;
 
                 case "call":
                     if (!commandee.call(cmd))
