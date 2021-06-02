@@ -1431,7 +1431,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
         }
 
 
-        public void OpenEditor()
+        public static void OpenEditor()
         {
             DataTable dt = ShellHistory.LastTable();
 

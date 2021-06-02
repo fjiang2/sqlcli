@@ -68,7 +68,7 @@ namespace Sys.Data.Code
 
             if (hasAssoc)
             {
-                var properties = base.CreateAssoicationClass(tname, clss);
+                var properties = CreateAssoicationClass(tname, clss);
                 Method_Association(clss3, index2, properties);
             }
 

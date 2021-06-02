@@ -87,7 +87,7 @@ namespace Sys.Data.Code
             }
 
         }
-        private void Constructor_Default(Class clss)
+        private static void Constructor_Default(Class clss)
         {
             Constructor constructor = new Constructor(clss.Name)
             {
@@ -97,7 +97,7 @@ namespace Sys.Data.Code
             clss.Add(constructor);
         }
 
-        private void Constructor_DataRow(Class clss)
+        private static void Constructor_DataRow(Class clss)
         {
             Constructor constructor = new Constructor(clss.Name)
             {
@@ -264,7 +264,7 @@ namespace Sys.Data.Code
             clss.AppendLine();
         }
 
-        public void Method_CRUD(DataTable dt, Class clss)
+        public static void Method_CRUD(DataTable dt, Class clss)
         {
             var provider = ConnectionProviderManager.DefaultProvider;
             TableName tname = new TableName(provider, dt.TableName);

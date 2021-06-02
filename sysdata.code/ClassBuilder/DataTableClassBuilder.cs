@@ -246,7 +246,7 @@ namespace Sys.Data.Code
             public string FK_Column { get; set; }
         }
 
-        protected List<AssociationPropertyInfo> CreateAssoicationClass(TableName tname, Class clss)
+        protected static List<AssociationPropertyInfo> CreateAssoicationClass(TableName tname, Class clss)
         {
             List<AssociationPropertyInfo> properties = new List<AssociationPropertyInfo>();
 
