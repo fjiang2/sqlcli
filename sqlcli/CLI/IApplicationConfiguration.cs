@@ -1,7 +1,7 @@
 ﻿using Tie;
 using Sys.Data;
 
-namespace Sys.Stdio.Cli
+namespace Sys.Cli
 {
     public interface IApplicationConfiguration 
     {

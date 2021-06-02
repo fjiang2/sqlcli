@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Sys.Stdio;
 
-namespace Sys.Stdio.Cli
+namespace Sys.Cli
 {
     public class WorkingDirectory
     {

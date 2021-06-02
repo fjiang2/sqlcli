@@ -8,7 +8,7 @@ using Sys;
 using Sys.Data;
 using Sys.Stdio;
 
-namespace Sys.Stdio.Cli
+namespace Sys.Cli
 {
     public class Shell : IShell
     {

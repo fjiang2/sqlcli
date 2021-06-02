@@ -1,6 +1,6 @@
 ﻿using Sys.Stdio;
 
-namespace Sys.Stdio.Cli
+namespace Sys.Cli
 {
     public interface IShellTask
     {

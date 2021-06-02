@@ -7,7 +7,7 @@ using System.IO;
 using Sys.Stdio;
 using Sys;
 
-namespace Sys.Stdio.Cli
+namespace Sys.Cli
 {
     public class Batch
     {

@@ -5,7 +5,7 @@ using Sys.Data;
 using Sys.Data.Comparison;
 using Tie;
 using Sys.Stdio;
-using Sys.Stdio.Cli;
+using Sys.Cli;
 
 namespace sqlcli
 {
