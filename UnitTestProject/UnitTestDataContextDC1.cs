@@ -16,11 +16,13 @@ namespace UnitTestProject
     /// Summary description for UnitTestDataContext
     /// </summary>
     [TestClass]
-    public class UnitTestDataContext
+    public class UnitTestDataContextDC1
     {
         readonly string connectionString;
-        public UnitTestDataContext()
+        public UnitTestDataContextDC1()
         {
+            DataContext.EntityClassType = EntityClassType.ExtensionClass;
+
             if (Environment.MachineName.StartsWith("XPS"))
             {
                 connectionString = "data source=localhost\\sqlexpress;initial catalog=Northwind;integrated security=SSPI;packet size=4096";

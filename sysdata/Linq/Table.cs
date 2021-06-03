@@ -20,7 +20,7 @@ namespace Sys.Data.Linq
         internal Table(DataContext context)
         {
             this.Context = context;
-            this.broker = BrokerOfDataContract<TEntity>.CreateBroker(context.ClassType);
+            this.broker = BrokerOfDataContract<TEntity>.CreateBroker(DataContext.EntityClassType);
             this.schema = broker.Schema;
             this.formalName = schema.FormalTableName();
 
