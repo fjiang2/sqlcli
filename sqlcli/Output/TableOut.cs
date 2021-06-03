@@ -60,7 +60,7 @@ namespace sqlcli
             return new Locator(wildcard, columns);
         }
 
-        private static void _DisplayTable(UniqueTable udt, bool more, ApplicationCommand cmd)
+        private static void DisplayTable(ApplicationCommand cmd, UniqueTable udt, bool more)
         {
             DataTable table = udt.Table;
 
@@ -110,7 +110,7 @@ namespace sqlcli
             try
             {
                 rTable = new UniqueTable(tname, table);
-                _DisplayTable(rTable, top > 0 && table.Rows.Count == top, cmd);
+                DisplayTable(cmd, rTable, top > 0 && table.Rows.Count == top);
             }
             catch (Exception ex)
             {

@@ -24,12 +24,14 @@ namespace sqlcli
     internal class Commandee : ITabCompletion
     {
         private readonly PathManager mgr;
+        private readonly IApplicationConfiguration cfg;
         private TreeNode<IDataPath> pt;
         public CommandState ErrorCode { get; private set; } = CommandState.OK;
 
-        public Commandee(PathManager mgr)
+        public Commandee(PathManager mgr, IApplicationConfiguration cfg)
         {
             this.mgr = mgr;
+            this.cfg = cfg;
         }
 
         public string[] TabCandidates(string argument)
@@ -108,8 +110,8 @@ namespace sqlcli
                 cout.WriteLine("cd \\                   : change to root directory");
                 cout.WriteLine("cd ..                  : change to the parent directory");
                 cout.WriteLine("cd ...                 : change to the grand parent directory");
-                cout.WriteLine("cd ~                  : change to default database (initial-catalog)");
-                cout.WriteLine("cd ~~                   : change to home directory");
+                cout.WriteLine("cd ~                   : change to default database (initial-catalog)");
+                cout.WriteLine("cd ~~                  : change to home directory");
                 return true;
             }
 
@@ -603,7 +605,7 @@ namespace sqlcli
             });
         }
 
-        public void compare(ApplicationCommand cmd, IApplicationConfiguration cfg)
+        public void compare(ApplicationCommand cmd)
         {
             if (cmd.HasHelp)
             {
@@ -1204,7 +1206,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
             }
         }
 
-        public void export(ApplicationCommand cmd, IApplicationConfiguration cfg)
+        public void export(ApplicationCommand cmd)
         {
             if (cmd.HasHelp)
             {
@@ -1557,7 +1559,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
             });
         }
 
-        public void execute(ApplicationCommand cmd, IApplicationConfiguration cfg, Side theSide)
+        public void execute(ApplicationCommand cmd, Side theSide)
         {
             if (cmd.HasHelp)
             {
@@ -1588,7 +1590,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
                 ErrorCode = CommandState.SQL_FAILS;
         }
 
-        public void edit(ApplicationCommand cmd, IApplicationConfiguration cfg, IConnectionConfiguration connection, Side theSide)
+        public void edit(ApplicationCommand cmd, IConnectionConfiguration connection, Side theSide)
         {
             if (cmd.HasHelp)
             {
@@ -1661,7 +1663,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
 #endif			
         }
 
-        public void open(ApplicationCommand cmd, IApplicationConfiguration cfg)
+        public void open(ApplicationCommand cmd)
         {
             if (cmd.HasHelp)
             {
@@ -1758,7 +1760,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
             }
         }
 
-        public void save(ApplicationCommand cmd, IApplicationConfiguration cfg)
+        public void save(ApplicationCommand cmd)
         {
             if (cmd.HasHelp)
             {

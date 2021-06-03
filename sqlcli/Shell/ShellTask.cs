@@ -116,22 +116,22 @@ namespace sqlcli
                     return NextStep.COMPLETED;
 
                 case "save":
-                    commandee.save(cmd, cfg);
+                    commandee.save(cmd);
                     return NextStep.COMPLETED;
 
                 case "execute":
-                    commandee.execute(cmd, cfg, theSide);
+                    commandee.execute(cmd, theSide);
                     if (commandee.ErrorCode == CommandState.OK)
                         return NextStep.COMPLETED;
                     else
                         return NextStep.ERROR;
 
                 case "open":
-                    commandee.open(cmd, cfg);
+                    commandee.open(cmd);
                     return NextStep.COMPLETED;
 
                 case "compare":
-                    commandee.compare(cmd, cfg);
+                    commandee.compare(cmd);
                     return NextStep.COMPLETED;
 
                 case "copy":
@@ -200,7 +200,7 @@ namespace sqlcli
                     return NextStep.COMPLETED;
 
                 case "export":
-                    commandee.export(cmd, cfg);
+                    commandee.export(cmd);
                     return NextStep.COMPLETED;
 
                 case "load":
@@ -220,7 +220,7 @@ namespace sqlcli
                     return NextStep.COMPLETED;
 
                 case "edit":
-                    commandee.edit(cmd, cfg, connection, theSide);
+                    commandee.edit(cmd, connection, theSide);
                     return NextStep.COMPLETED;
 
                 case "last":

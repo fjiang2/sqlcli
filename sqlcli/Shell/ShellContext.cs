@@ -21,7 +21,7 @@ namespace sqlcli
             this.cfg = cfg;
             this.connection = cfg.Connection;
             this.mgr = new PathManager(connection);
-            this.commandee = new Commandee(mgr);
+            this.commandee = new Commandee(mgr, cfg);
 
             string server = connection.Home;
 
