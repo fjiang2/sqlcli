@@ -45,17 +45,13 @@ namespace UnitTestProject.Northwind.dbo
 		public static List<EmployeeTerritories> ToEmployeeTerritoriesCollection(this DataTable dt)
 		{
 			return dt.AsEnumerable()
-			.Select(row => NewObject(row))
-			.ToList();
-		}
-		
-		public static EmployeeTerritories NewObject(DataRow row)
-		{
-			return new EmployeeTerritories
+			.Select(row =>
 			{
-				EmployeeID = row.GetField<int>(_EMPLOYEEID),
-				TerritoryID = row.GetField<string>(_TERRITORYID)
-			};
+				var obj = new EmployeeTerritories();
+				FillObject(obj, row);
+				return obj;
+			})
+			.ToList();
 		}
 		
 		public static void FillObject(this EmployeeTerritories item, DataRow row)
@@ -73,8 +69,8 @@ namespace UnitTestProject.Northwind.dbo
 		public static DataTable CreateTable()
 		{
 			DataTable dt = new DataTable();
-			dt.Columns.Add(new DataColumn(_EMPLOYEEID, typeof(System.Int32)));
-			dt.Columns.Add(new DataColumn(_TERRITORYID, typeof(System.String)));
+			dt.Columns.Add(new DataColumn(_EMPLOYEEID, typeof(int)));
+			dt.Columns.Add(new DataColumn(_TERRITORYID, typeof(string)));
 			
 			return dt;
 		}
@@ -88,13 +84,6 @@ namespace UnitTestProject.Northwind.dbo
 				dt.Rows.Add(row);
 			}
 			dt.AcceptChanges();
-		}
-		
-		public static DataTable ToDataTable(this IEnumerable<EmployeeTerritories> items)
-		{
-			var dt = CreateTable();
-			ToDataTable(items, dt);
-			return dt;
 		}
 		
 		public static IDictionary<string, object> ToDictionary(this EmployeeTerritories item)

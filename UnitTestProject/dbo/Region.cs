@@ -36,17 +36,13 @@ namespace UnitTestProject.Northwind.dbo
 		public static List<Region> ToRegionCollection(this DataTable dt)
 		{
 			return dt.AsEnumerable()
-			.Select(row => NewObject(row))
-			.ToList();
-		}
-		
-		public static Region NewObject(DataRow row)
-		{
-			return new Region
+			.Select(row =>
 			{
-				RegionID = row.GetField<int>(_REGIONID),
-				RegionDescription = row.GetField<string>(_REGIONDESCRIPTION)
-			};
+				var obj = new Region();
+				FillObject(obj, row);
+				return obj;
+			})
+			.ToList();
 		}
 		
 		public static void FillObject(this Region item, DataRow row)
@@ -64,8 +60,8 @@ namespace UnitTestProject.Northwind.dbo
 		public static DataTable CreateTable()
 		{
 			DataTable dt = new DataTable();
-			dt.Columns.Add(new DataColumn(_REGIONID, typeof(System.Int32)));
-			dt.Columns.Add(new DataColumn(_REGIONDESCRIPTION, typeof(System.String)));
+			dt.Columns.Add(new DataColumn(_REGIONID, typeof(int)));
+			dt.Columns.Add(new DataColumn(_REGIONDESCRIPTION, typeof(string)));
 			
 			return dt;
 		}
@@ -79,13 +75,6 @@ namespace UnitTestProject.Northwind.dbo
 				dt.Rows.Add(row);
 			}
 			dt.AcceptChanges();
-		}
-		
-		public static DataTable ToDataTable(this IEnumerable<Region> items)
-		{
-			var dt = CreateTable();
-			ToDataTable(items, dt);
-			return dt;
 		}
 		
 		public static IDictionary<string, object> ToDictionary(this Region item)

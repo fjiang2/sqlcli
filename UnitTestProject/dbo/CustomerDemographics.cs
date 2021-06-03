@@ -36,17 +36,13 @@ namespace UnitTestProject.Northwind.dbo
 		public static List<CustomerDemographics> ToCustomerDemographicsCollection(this DataTable dt)
 		{
 			return dt.AsEnumerable()
-			.Select(row => NewObject(row))
-			.ToList();
-		}
-		
-		public static CustomerDemographics NewObject(DataRow row)
-		{
-			return new CustomerDemographics
+			.Select(row =>
 			{
-				CustomerTypeID = row.GetField<string>(_CUSTOMERTYPEID),
-				CustomerDesc = row.GetField<string>(_CUSTOMERDESC)
-			};
+				var obj = new CustomerDemographics();
+				FillObject(obj, row);
+				return obj;
+			})
+			.ToList();
 		}
 		
 		public static void FillObject(this CustomerDemographics item, DataRow row)
@@ -64,8 +60,8 @@ namespace UnitTestProject.Northwind.dbo
 		public static DataTable CreateTable()
 		{
 			DataTable dt = new DataTable();
-			dt.Columns.Add(new DataColumn(_CUSTOMERTYPEID, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_CUSTOMERDESC, typeof(System.String)));
+			dt.Columns.Add(new DataColumn(_CUSTOMERTYPEID, typeof(string)));
+			dt.Columns.Add(new DataColumn(_CUSTOMERDESC, typeof(string)));
 			
 			return dt;
 		}
@@ -79,13 +75,6 @@ namespace UnitTestProject.Northwind.dbo
 				dt.Rows.Add(row);
 			}
 			dt.AcceptChanges();
-		}
-		
-		public static DataTable ToDataTable(this IEnumerable<CustomerDemographics> items)
-		{
-			var dt = CreateTable();
-			ToDataTable(items, dt);
-			return dt;
 		}
 		
 		public static IDictionary<string, object> ToDictionary(this CustomerDemographics item)

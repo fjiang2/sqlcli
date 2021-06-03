@@ -48,20 +48,13 @@ namespace UnitTestProject.Northwind.dbo
 		public static List<Order_Details> ToOrder_DetailsCollection(this DataTable dt)
 		{
 			return dt.AsEnumerable()
-			.Select(row => NewObject(row))
-			.ToList();
-		}
-		
-		public static Order_Details NewObject(DataRow row)
-		{
-			return new Order_Details
+			.Select(row =>
 			{
-				OrderID = row.GetField<int>(_ORDERID),
-				ProductID = row.GetField<int>(_PRODUCTID),
-				UnitPrice = row.GetField<decimal>(_UNITPRICE),
-				Quantity = row.GetField<short>(_QUANTITY),
-				Discount = row.GetField<float>(_DISCOUNT)
-			};
+				var obj = new Order_Details();
+				FillObject(obj, row);
+				return obj;
+			})
+			.ToList();
 		}
 		
 		public static void FillObject(this Order_Details item, DataRow row)
@@ -85,11 +78,11 @@ namespace UnitTestProject.Northwind.dbo
 		public static DataTable CreateTable()
 		{
 			DataTable dt = new DataTable();
-			dt.Columns.Add(new DataColumn(_ORDERID, typeof(System.Int32)));
-			dt.Columns.Add(new DataColumn(_PRODUCTID, typeof(System.Int32)));
-			dt.Columns.Add(new DataColumn(_UNITPRICE, typeof(System.Decimal)));
-			dt.Columns.Add(new DataColumn(_QUANTITY, typeof(System.Int16)));
-			dt.Columns.Add(new DataColumn(_DISCOUNT, typeof(System.Single)));
+			dt.Columns.Add(new DataColumn(_ORDERID, typeof(int)));
+			dt.Columns.Add(new DataColumn(_PRODUCTID, typeof(int)));
+			dt.Columns.Add(new DataColumn(_UNITPRICE, typeof(decimal)));
+			dt.Columns.Add(new DataColumn(_QUANTITY, typeof(short)));
+			dt.Columns.Add(new DataColumn(_DISCOUNT, typeof(float)));
 			
 			return dt;
 		}
@@ -103,13 +96,6 @@ namespace UnitTestProject.Northwind.dbo
 				dt.Rows.Add(row);
 			}
 			dt.AcceptChanges();
-		}
-		
-		public static DataTable ToDataTable(this IEnumerable<Order_Details> items)
-		{
-			var dt = CreateTable();
-			ToDataTable(items, dt);
-			return dt;
 		}
 		
 		public static IDictionary<string, object> ToDictionary(this Order_Details item)

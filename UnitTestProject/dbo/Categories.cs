@@ -39,19 +39,13 @@ namespace UnitTestProject.Northwind.dbo
 		public static List<Categories> ToCategoriesCollection(this DataTable dt)
 		{
 			return dt.AsEnumerable()
-			.Select(row => NewObject(row))
-			.ToList();
-		}
-		
-		public static Categories NewObject(DataRow row)
-		{
-			return new Categories
+			.Select(row =>
 			{
-				CategoryID = row.GetField<int>(_CATEGORYID),
-				CategoryName = row.GetField<string>(_CATEGORYNAME),
-				Description = row.GetField<string>(_DESCRIPTION),
-				Picture = row.GetField<byte[]>(_PICTURE)
-			};
+				var obj = new Categories();
+				FillObject(obj, row);
+				return obj;
+			})
+			.ToList();
 		}
 		
 		public static void FillObject(this Categories item, DataRow row)
@@ -73,10 +67,10 @@ namespace UnitTestProject.Northwind.dbo
 		public static DataTable CreateTable()
 		{
 			DataTable dt = new DataTable();
-			dt.Columns.Add(new DataColumn(_CATEGORYID, typeof(System.Int32)));
-			dt.Columns.Add(new DataColumn(_CATEGORYNAME, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_DESCRIPTION, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_PICTURE, typeof(System.Byte[])));
+			dt.Columns.Add(new DataColumn(_CATEGORYID, typeof(int)));
+			dt.Columns.Add(new DataColumn(_CATEGORYNAME, typeof(string)));
+			dt.Columns.Add(new DataColumn(_DESCRIPTION, typeof(string)));
+			dt.Columns.Add(new DataColumn(_PICTURE, typeof(byte[])));
 			
 			return dt;
 		}
@@ -90,13 +84,6 @@ namespace UnitTestProject.Northwind.dbo
 				dt.Rows.Add(row);
 			}
 			dt.AcceptChanges();
-		}
-		
-		public static DataTable ToDataTable(this IEnumerable<Categories> items)
-		{
-			var dt = CreateTable();
-			ToDataTable(items, dt);
-			return dt;
 		}
 		
 		public static IDictionary<string, object> ToDictionary(this Categories item)

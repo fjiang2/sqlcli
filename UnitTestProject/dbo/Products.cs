@@ -61,25 +61,13 @@ namespace UnitTestProject.Northwind.dbo
 		public static List<Products> ToProductsCollection(this DataTable dt)
 		{
 			return dt.AsEnumerable()
-			.Select(row => NewObject(row))
-			.ToList();
-		}
-		
-		public static Products NewObject(DataRow row)
-		{
-			return new Products
+			.Select(row =>
 			{
-				ProductID = row.GetField<int>(_PRODUCTID),
-				ProductName = row.GetField<string>(_PRODUCTNAME),
-				SupplierID = row.GetField<int>(_SUPPLIERID),
-				CategoryID = row.GetField<int>(_CATEGORYID),
-				QuantityPerUnit = row.GetField<string>(_QUANTITYPERUNIT),
-				UnitPrice = row.GetField<decimal>(_UNITPRICE),
-				UnitsInStock = row.GetField<short>(_UNITSINSTOCK),
-				UnitsOnOrder = row.GetField<short>(_UNITSONORDER),
-				ReorderLevel = row.GetField<short>(_REORDERLEVEL),
-				Discontinued = row.GetField<bool>(_DISCONTINUED)
-			};
+				var obj = new Products();
+				FillObject(obj, row);
+				return obj;
+			})
+			.ToList();
 		}
 		
 		public static void FillObject(this Products item, DataRow row)
@@ -113,16 +101,16 @@ namespace UnitTestProject.Northwind.dbo
 		public static DataTable CreateTable()
 		{
 			DataTable dt = new DataTable();
-			dt.Columns.Add(new DataColumn(_PRODUCTID, typeof(System.Int32)));
-			dt.Columns.Add(new DataColumn(_PRODUCTNAME, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_SUPPLIERID, typeof(System.Int32)));
-			dt.Columns.Add(new DataColumn(_CATEGORYID, typeof(System.Int32)));
-			dt.Columns.Add(new DataColumn(_QUANTITYPERUNIT, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_UNITPRICE, typeof(System.Decimal)));
-			dt.Columns.Add(new DataColumn(_UNITSINSTOCK, typeof(System.Int16)));
-			dt.Columns.Add(new DataColumn(_UNITSONORDER, typeof(System.Int16)));
-			dt.Columns.Add(new DataColumn(_REORDERLEVEL, typeof(System.Int16)));
-			dt.Columns.Add(new DataColumn(_DISCONTINUED, typeof(System.Boolean)));
+			dt.Columns.Add(new DataColumn(_PRODUCTID, typeof(int)));
+			dt.Columns.Add(new DataColumn(_PRODUCTNAME, typeof(string)));
+			dt.Columns.Add(new DataColumn(_SUPPLIERID, typeof(int)));
+			dt.Columns.Add(new DataColumn(_CATEGORYID, typeof(int)));
+			dt.Columns.Add(new DataColumn(_QUANTITYPERUNIT, typeof(string)));
+			dt.Columns.Add(new DataColumn(_UNITPRICE, typeof(decimal)));
+			dt.Columns.Add(new DataColumn(_UNITSINSTOCK, typeof(short)));
+			dt.Columns.Add(new DataColumn(_UNITSONORDER, typeof(short)));
+			dt.Columns.Add(new DataColumn(_REORDERLEVEL, typeof(short)));
+			dt.Columns.Add(new DataColumn(_DISCONTINUED, typeof(bool)));
 			
 			return dt;
 		}
@@ -136,13 +124,6 @@ namespace UnitTestProject.Northwind.dbo
 				dt.Rows.Add(row);
 			}
 			dt.AcceptChanges();
-		}
-		
-		public static DataTable ToDataTable(this IEnumerable<Products> items)
-		{
-			var dt = CreateTable();
-			ToDataTable(items, dt);
-			return dt;
 		}
 		
 		public static IDictionary<string, object> ToDictionary(this Products item)
