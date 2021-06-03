@@ -179,7 +179,7 @@ namespace Sys.Data.Code
 
         }
 
-        protected static Field CreateConstraintField(TableName tname)
+        protected static Field CreateConstraintField(TableName tname, string EXTENSION)
         {
             const string CONSTRAINT = nameof(Constraint);
             CodeString ToColumn(string table, string column)
@@ -235,7 +235,7 @@ namespace Sys.Data.Code
             return field;
         }
 
-
+       
         protected class AssociationPropertyInfo
         {
             public string PropertyType { get; set; }
