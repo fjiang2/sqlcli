@@ -70,6 +70,31 @@ namespace UnitTestProject.Northwind.dc2
 			this.CustomerDesc = (string)dict[_CUSTOMERDESC];
 		}
 		
+		public CustomerDemographicsAssociation GetAssociation()
+		{
+			return GetAssociation(new CustomerDemographics[] { this }).FirstOrDefault();
+		}
+		
+		public static IEnumerable<CustomerDemographicsAssociation> GetAssociation(IEnumerable<CustomerDemographics> entities)
+		{
+			var reader = entities.Expand();
+			
+			var associations = new List<CustomerDemographicsAssociation>();
+			
+			var _CustomerCustomerDemoes = reader.Read<CustomerCustomerDemo>();
+			
+			foreach (var entity in entities)
+			{
+				var association = new CustomerDemographicsAssociation
+				{
+					CustomerCustomerDemoes = new EntitySet<CustomerCustomerDemo>(_CustomerCustomerDemoes.Where(row => row.CustomerTypeID == entity.CustomerTypeID)),
+				};
+				associations.Add(association);
+			}
+			
+			return associations;
+		}
+		
 		public override string ToString()
 		{
 			return string.Format("{{CustomerTypeID:{0}, CustomerDesc:{1}}}", 
@@ -80,7 +105,22 @@ namespace UnitTestProject.Northwind.dc2
 		public const string TableName = "CustomerDemographics";
 		public static readonly string[] Keys = new string[] { _CUSTOMERTYPEID };
 		
+		public static readonly IConstraint[] Constraints = new IConstraint[]
+		{
+			new Constraint<CustomerCustomerDemo>
+			{
+				ThisKey = _CUSTOMERTYPEID,
+				OtherKey = CustomerCustomerDemo._CUSTOMERTYPEID,
+				OneToMany = true
+			}
+		};
+		
 		public const string _CUSTOMERTYPEID = "CustomerTypeID";
 		public const string _CUSTOMERDESC = "CustomerDesc";
+	}
+	
+	public class CustomerDemographicsAssociation
+	{
+		public EntitySet<CustomerCustomerDemo> CustomerCustomerDemoes { get; set; }
 	}
 }

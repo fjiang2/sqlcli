@@ -86,6 +86,31 @@ namespace UnitTestProject.Northwind.dc2
 			this.Picture = (byte[])dict[_PICTURE];
 		}
 		
+		public CategoriesAssociation GetAssociation()
+		{
+			return GetAssociation(new Categories[] { this }).FirstOrDefault();
+		}
+		
+		public static IEnumerable<CategoriesAssociation> GetAssociation(IEnumerable<Categories> entities)
+		{
+			var reader = entities.Expand();
+			
+			var associations = new List<CategoriesAssociation>();
+			
+			var _Products = reader.Read<Products>();
+			
+			foreach (var entity in entities)
+			{
+				var association = new CategoriesAssociation
+				{
+					Products = new EntitySet<Products>(_Products.Where(row => row.CategoryID == entity.CategoryID)),
+				};
+				associations.Add(association);
+			}
+			
+			return associations;
+		}
+		
 		public override string ToString()
 		{
 			return string.Format("{{CategoryID:{0}, CategoryName:{1}, Description:{2}, Picture:{3}}}", 
@@ -99,9 +124,24 @@ namespace UnitTestProject.Northwind.dc2
 		public static readonly string[] Keys = new string[] { _CATEGORYID };
 		public static readonly string[] Identity = new string[] { _CATEGORYID };
 		
+		public static readonly IConstraint[] Constraints = new IConstraint[]
+		{
+			new Constraint<Products>
+			{
+				ThisKey = _CATEGORYID,
+				OtherKey = Products._CATEGORYID,
+				OneToMany = true
+			}
+		};
+		
 		public const string _CATEGORYID = "CategoryID";
 		public const string _CATEGORYNAME = "CategoryName";
 		public const string _DESCRIPTION = "Description";
 		public const string _PICTURE = "Picture";
+	}
+	
+	public class CategoriesAssociation
+	{
+		public EntitySet<Products> Products { get; set; }
 	}
 }

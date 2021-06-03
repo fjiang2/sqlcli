@@ -142,6 +142,33 @@ namespace UnitTestProject.Northwind.dc2
 			this.Fax = (string)dict[_FAX];
 		}
 		
+		public CustomersAssociation GetAssociation()
+		{
+			return GetAssociation(new Customers[] { this }).FirstOrDefault();
+		}
+		
+		public static IEnumerable<CustomersAssociation> GetAssociation(IEnumerable<Customers> entities)
+		{
+			var reader = entities.Expand();
+			
+			var associations = new List<CustomersAssociation>();
+			
+			var _CustomerCustomerDemoes = reader.Read<CustomerCustomerDemo>();
+			var _Orders = reader.Read<Orders>();
+			
+			foreach (var entity in entities)
+			{
+				var association = new CustomersAssociation
+				{
+					CustomerCustomerDemoes = new EntitySet<CustomerCustomerDemo>(_CustomerCustomerDemoes.Where(row => row.CustomerID == entity.CustomerID)),
+					Orders = new EntitySet<Orders>(_Orders.Where(row => row.CustomerID == entity.CustomerID)),
+				};
+				associations.Add(association);
+			}
+			
+			return associations;
+		}
+		
 		public override string ToString()
 		{
 			return string.Format("{{CustomerID:{0}, CompanyName:{1}, ContactName:{2}, ContactTitle:{3}, Address:{4}, City:{5}, Region:{6}, PostalCode:{7}, Country:{8}, Phone:{9}, Fax:{10}}}", 
@@ -161,6 +188,22 @@ namespace UnitTestProject.Northwind.dc2
 		public const string TableName = "Customers";
 		public static readonly string[] Keys = new string[] { _CUSTOMERID };
 		
+		public static readonly IConstraint[] Constraints = new IConstraint[]
+		{
+			new Constraint<CustomerCustomerDemo>
+			{
+				ThisKey = _CUSTOMERID,
+				OtherKey = CustomerCustomerDemo._CUSTOMERID,
+				OneToMany = true
+			},
+			new Constraint<Orders>
+			{
+				ThisKey = _CUSTOMERID,
+				OtherKey = Orders._CUSTOMERID,
+				OneToMany = true
+			}
+		};
+		
 		public const string _CUSTOMERID = "CustomerID";
 		public const string _COMPANYNAME = "CompanyName";
 		public const string _CONTACTNAME = "ContactName";
@@ -172,5 +215,11 @@ namespace UnitTestProject.Northwind.dc2
 		public const string _COUNTRY = "Country";
 		public const string _PHONE = "Phone";
 		public const string _FAX = "Fax";
+	}
+	
+	public class CustomersAssociation
+	{
+		public EntitySet<CustomerCustomerDemo> CustomerCustomerDemoes { get; set; }
+		public EntitySet<Orders> Orders { get; set; }
 	}
 }

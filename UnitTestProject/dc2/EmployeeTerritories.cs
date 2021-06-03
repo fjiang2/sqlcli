@@ -70,6 +70,33 @@ namespace UnitTestProject.Northwind.dc2
 			this.TerritoryID = (string)dict[_TERRITORYID];
 		}
 		
+		public EmployeeTerritoriesAssociation GetAssociation()
+		{
+			return GetAssociation(new EmployeeTerritories[] { this }).FirstOrDefault();
+		}
+		
+		public static IEnumerable<EmployeeTerritoriesAssociation> GetAssociation(IEnumerable<EmployeeTerritories> entities)
+		{
+			var reader = entities.Expand();
+			
+			var associations = new List<EmployeeTerritoriesAssociation>();
+			
+			var _Employee = reader.Read<Employees>();
+			var _Territory = reader.Read<Territories>();
+			
+			foreach (var entity in entities)
+			{
+				var association = new EmployeeTerritoriesAssociation
+				{
+					Employee = new EntityRef<Employees>(_Employee.FirstOrDefault(row => row.EmployeeID == entity.EmployeeID)),
+					Territory = new EntityRef<Territories>(_Territory.FirstOrDefault(row => row.TerritoryID == entity.TerritoryID)),
+				};
+				associations.Add(association);
+			}
+			
+			return associations;
+		}
+		
 		public override string ToString()
 		{
 			return string.Format("{{EmployeeID:{0}, TerritoryID:{1}}}", 
@@ -80,7 +107,31 @@ namespace UnitTestProject.Northwind.dc2
 		public const string TableName = "EmployeeTerritories";
 		public static readonly string[] Keys = new string[] { _EMPLOYEEID, _TERRITORYID };
 		
+		public static readonly IConstraint[] Constraints = new IConstraint[]
+		{
+			new Constraint<Employees>
+			{
+				Name = "FK_EmployeeTerritories_Employees",
+				ThisKey = _EMPLOYEEID,
+				OtherKey = Employees._EMPLOYEEID,
+				IsForeignKey = true
+			},
+			new Constraint<Territories>
+			{
+				Name = "FK_EmployeeTerritories_Territories",
+				ThisKey = _TERRITORYID,
+				OtherKey = Territories._TERRITORYID,
+				IsForeignKey = true
+			}
+		};
+		
 		public const string _EMPLOYEEID = "EmployeeID";
 		public const string _TERRITORYID = "TerritoryID";
+	}
+	
+	public class EmployeeTerritoriesAssociation
+	{
+		public EntityRef<Employees> Employee { get; set; }
+		public EntityRef<Territories> Territory { get; set; }
 	}
 }

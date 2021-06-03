@@ -78,6 +78,31 @@ namespace UnitTestProject.Northwind.dc2
 			this.Phone = (string)dict[_PHONE];
 		}
 		
+		public ShippersAssociation GetAssociation()
+		{
+			return GetAssociation(new Shippers[] { this }).FirstOrDefault();
+		}
+		
+		public static IEnumerable<ShippersAssociation> GetAssociation(IEnumerable<Shippers> entities)
+		{
+			var reader = entities.Expand();
+			
+			var associations = new List<ShippersAssociation>();
+			
+			var _Orders = reader.Read<Orders>();
+			
+			foreach (var entity in entities)
+			{
+				var association = new ShippersAssociation
+				{
+					Orders = new EntitySet<Orders>(_Orders.Where(row => row.ShipVia == entity.ShipperID)),
+				};
+				associations.Add(association);
+			}
+			
+			return associations;
+		}
+		
 		public override string ToString()
 		{
 			return string.Format("{{ShipperID:{0}, CompanyName:{1}, Phone:{2}}}", 
@@ -90,8 +115,23 @@ namespace UnitTestProject.Northwind.dc2
 		public static readonly string[] Keys = new string[] { _SHIPPERID };
 		public static readonly string[] Identity = new string[] { _SHIPPERID };
 		
+		public static readonly IConstraint[] Constraints = new IConstraint[]
+		{
+			new Constraint<Orders>
+			{
+				ThisKey = _SHIPPERID,
+				OtherKey = Orders._SHIPVIA,
+				OneToMany = true
+			}
+		};
+		
 		public const string _SHIPPERID = "ShipperID";
 		public const string _COMPANYNAME = "CompanyName";
 		public const string _PHONE = "Phone";
+	}
+	
+	public class ShippersAssociation
+	{
+		public EntitySet<Orders> Orders { get; set; }
 	}
 }

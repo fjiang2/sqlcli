@@ -94,6 +94,33 @@ namespace UnitTestProject.Northwind.dc2
 			this.Discount = (float)dict[_DISCOUNT];
 		}
 		
+		public Order_DetailsAssociation GetAssociation()
+		{
+			return GetAssociation(new Order_Details[] { this }).FirstOrDefault();
+		}
+		
+		public static IEnumerable<Order_DetailsAssociation> GetAssociation(IEnumerable<Order_Details> entities)
+		{
+			var reader = entities.Expand();
+			
+			var associations = new List<Order_DetailsAssociation>();
+			
+			var _Order = reader.Read<Orders>();
+			var _Product = reader.Read<Products>();
+			
+			foreach (var entity in entities)
+			{
+				var association = new Order_DetailsAssociation
+				{
+					Order = new EntityRef<Orders>(_Order.FirstOrDefault(row => row.OrderID == entity.OrderID)),
+					Product = new EntityRef<Products>(_Product.FirstOrDefault(row => row.ProductID == entity.ProductID)),
+				};
+				associations.Add(association);
+			}
+			
+			return associations;
+		}
+		
 		public override string ToString()
 		{
 			return string.Format("{{OrderID:{0}, ProductID:{1}, UnitPrice:{2}, Quantity:{3}, Discount:{4}}}", 
@@ -107,10 +134,34 @@ namespace UnitTestProject.Northwind.dc2
 		public const string TableName = "Order Details";
 		public static readonly string[] Keys = new string[] { _ORDERID, _PRODUCTID };
 		
+		public static readonly IConstraint[] Constraints = new IConstraint[]
+		{
+			new Constraint<Orders>
+			{
+				Name = "FK_Order_Details_Orders",
+				ThisKey = _ORDERID,
+				OtherKey = Orders._ORDERID,
+				IsForeignKey = true
+			},
+			new Constraint<Products>
+			{
+				Name = "FK_Order_Details_Products",
+				ThisKey = _PRODUCTID,
+				OtherKey = Products._PRODUCTID,
+				IsForeignKey = true
+			}
+		};
+		
 		public const string _ORDERID = "OrderID";
 		public const string _PRODUCTID = "ProductID";
 		public const string _UNITPRICE = "UnitPrice";
 		public const string _QUANTITY = "Quantity";
 		public const string _DISCOUNT = "Discount";
+	}
+	
+	public class Order_DetailsAssociation
+	{
+		public EntityRef<Orders> Order { get; set; }
+		public EntityRef<Products> Product { get; set; }
 	}
 }

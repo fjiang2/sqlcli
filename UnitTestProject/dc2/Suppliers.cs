@@ -150,6 +150,31 @@ namespace UnitTestProject.Northwind.dc2
 			this.HomePage = (string)dict[_HOMEPAGE];
 		}
 		
+		public SuppliersAssociation GetAssociation()
+		{
+			return GetAssociation(new Suppliers[] { this }).FirstOrDefault();
+		}
+		
+		public static IEnumerable<SuppliersAssociation> GetAssociation(IEnumerable<Suppliers> entities)
+		{
+			var reader = entities.Expand();
+			
+			var associations = new List<SuppliersAssociation>();
+			
+			var _Products = reader.Read<Products>();
+			
+			foreach (var entity in entities)
+			{
+				var association = new SuppliersAssociation
+				{
+					Products = new EntitySet<Products>(_Products.Where(row => row.SupplierID == entity.SupplierID)),
+				};
+				associations.Add(association);
+			}
+			
+			return associations;
+		}
+		
 		public override string ToString()
 		{
 			return string.Format("{{SupplierID:{0}, CompanyName:{1}, ContactName:{2}, ContactTitle:{3}, Address:{4}, City:{5}, Region:{6}, PostalCode:{7}, Country:{8}, Phone:{9}, Fax:{10}, HomePage:{11}}}", 
@@ -171,6 +196,16 @@ namespace UnitTestProject.Northwind.dc2
 		public static readonly string[] Keys = new string[] { _SUPPLIERID };
 		public static readonly string[] Identity = new string[] { _SUPPLIERID };
 		
+		public static readonly IConstraint[] Constraints = new IConstraint[]
+		{
+			new Constraint<Products>
+			{
+				ThisKey = _SUPPLIERID,
+				OtherKey = Products._SUPPLIERID,
+				OneToMany = true
+			}
+		};
+		
 		public const string _SUPPLIERID = "SupplierID";
 		public const string _COMPANYNAME = "CompanyName";
 		public const string _CONTACTNAME = "ContactName";
@@ -183,5 +218,10 @@ namespace UnitTestProject.Northwind.dc2
 		public const string _PHONE = "Phone";
 		public const string _FAX = "Fax";
 		public const string _HOMEPAGE = "HomePage";
+	}
+	
+	public class SuppliersAssociation
+	{
+		public EntitySet<Products> Products { get; set; }
 	}
 }

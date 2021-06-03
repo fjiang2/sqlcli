@@ -198,6 +198,35 @@ namespace UnitTestProject.Northwind.dc2
 			this.PhotoPath = (string)dict[_PHOTOPATH];
 		}
 		
+		public EmployeesAssociation GetAssociation()
+		{
+			return GetAssociation(new Employees[] { this }).FirstOrDefault();
+		}
+		
+		public static IEnumerable<EmployeesAssociation> GetAssociation(IEnumerable<Employees> entities)
+		{
+			var reader = entities.Expand();
+			
+			var associations = new List<EmployeesAssociation>();
+			
+			var _EmployeeTerritories = reader.Read<EmployeeTerritories>();
+			var _Orders = reader.Read<Orders>();
+			var _Employee = reader.Read<Employees>();
+			
+			foreach (var entity in entities)
+			{
+				var association = new EmployeesAssociation
+				{
+					EmployeeTerritories = new EntitySet<EmployeeTerritories>(_EmployeeTerritories.Where(row => row.EmployeeID == entity.EmployeeID)),
+					Orders = new EntitySet<Orders>(_Orders.Where(row => row.EmployeeID == entity.EmployeeID)),
+					Employee = new EntityRef<Employees>(_Employee.FirstOrDefault(row => row.EmployeeID == entity.ReportsTo)),
+				};
+				associations.Add(association);
+			}
+			
+			return associations;
+		}
+		
 		public override string ToString()
 		{
 			return string.Format("{{EmployeeID:{0}, LastName:{1}, FirstName:{2}, Title:{3}, TitleOfCourtesy:{4}, BirthDate:{5}, HireDate:{6}, Address:{7}, City:{8}, Region:{9}, PostalCode:{10}, Country:{11}, HomePhone:{12}, Extension:{13}, Photo:{14}, Notes:{15}, ReportsTo:{16}, PhotoPath:{17}}}", 
@@ -225,6 +254,29 @@ namespace UnitTestProject.Northwind.dc2
 		public static readonly string[] Keys = new string[] { _EMPLOYEEID };
 		public static readonly string[] Identity = new string[] { _EMPLOYEEID };
 		
+		public static readonly IConstraint[] Constraints = new IConstraint[]
+		{
+			new Constraint<EmployeeTerritories>
+			{
+				ThisKey = _EMPLOYEEID,
+				OtherKey = EmployeeTerritories._EMPLOYEEID,
+				OneToMany = true
+			},
+			new Constraint<Orders>
+			{
+				ThisKey = _EMPLOYEEID,
+				OtherKey = Orders._EMPLOYEEID,
+				OneToMany = true
+			},
+			new Constraint<Employees>
+			{
+				Name = "FK_Employees_Employees",
+				ThisKey = _REPORTSTO,
+				OtherKey = Employees._EMPLOYEEID,
+				IsForeignKey = true
+			}
+		};
+		
 		public const string _EMPLOYEEID = "EmployeeID";
 		public const string _LASTNAME = "LastName";
 		public const string _FIRSTNAME = "FirstName";
@@ -243,5 +295,12 @@ namespace UnitTestProject.Northwind.dc2
 		public const string _NOTES = "Notes";
 		public const string _REPORTSTO = "ReportsTo";
 		public const string _PHOTOPATH = "PhotoPath";
+	}
+	
+	public class EmployeesAssociation
+	{
+		public EntitySet<EmployeeTerritories> EmployeeTerritories { get; set; }
+		public EntitySet<Orders> Orders { get; set; }
+		public EntityRef<Employees> Employee { get; set; }
 	}
 }

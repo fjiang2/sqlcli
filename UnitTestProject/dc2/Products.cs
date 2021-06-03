@@ -134,6 +134,35 @@ namespace UnitTestProject.Northwind.dc2
 			this.Discontinued = (bool)dict[_DISCONTINUED];
 		}
 		
+		public ProductsAssociation GetAssociation()
+		{
+			return GetAssociation(new Products[] { this }).FirstOrDefault();
+		}
+		
+		public static IEnumerable<ProductsAssociation> GetAssociation(IEnumerable<Products> entities)
+		{
+			var reader = entities.Expand();
+			
+			var associations = new List<ProductsAssociation>();
+			
+			var _Order_Details = reader.Read<Order_Details>();
+			var _Supplier = reader.Read<Suppliers>();
+			var _Category = reader.Read<Categories>();
+			
+			foreach (var entity in entities)
+			{
+				var association = new ProductsAssociation
+				{
+					Order_Details = new EntitySet<Order_Details>(_Order_Details.Where(row => row.ProductID == entity.ProductID)),
+					Supplier = new EntityRef<Suppliers>(_Supplier.FirstOrDefault(row => row.SupplierID == entity.SupplierID)),
+					Category = new EntityRef<Categories>(_Category.FirstOrDefault(row => row.CategoryID == entity.CategoryID)),
+				};
+				associations.Add(association);
+			}
+			
+			return associations;
+		}
+		
 		public override string ToString()
 		{
 			return string.Format("{{ProductID:{0}, ProductName:{1}, SupplierID:{2}, CategoryID:{3}, QuantityPerUnit:{4}, UnitPrice:{5}, UnitsInStock:{6}, UnitsOnOrder:{7}, ReorderLevel:{8}, Discontinued:{9}}}", 
@@ -153,6 +182,30 @@ namespace UnitTestProject.Northwind.dc2
 		public static readonly string[] Keys = new string[] { _PRODUCTID };
 		public static readonly string[] Identity = new string[] { _PRODUCTID };
 		
+		public static readonly IConstraint[] Constraints = new IConstraint[]
+		{
+			new Constraint<Order_Details>
+			{
+				ThisKey = _PRODUCTID,
+				OtherKey = Order_Details._PRODUCTID,
+				OneToMany = true
+			},
+			new Constraint<Suppliers>
+			{
+				Name = "FK_Products_Suppliers",
+				ThisKey = _SUPPLIERID,
+				OtherKey = Suppliers._SUPPLIERID,
+				IsForeignKey = true
+			},
+			new Constraint<Categories>
+			{
+				Name = "FK_Products_Categories",
+				ThisKey = _CATEGORYID,
+				OtherKey = Categories._CATEGORYID,
+				IsForeignKey = true
+			}
+		};
+		
 		public const string _PRODUCTID = "ProductID";
 		public const string _PRODUCTNAME = "ProductName";
 		public const string _SUPPLIERID = "SupplierID";
@@ -163,5 +216,12 @@ namespace UnitTestProject.Northwind.dc2
 		public const string _UNITSONORDER = "UnitsOnOrder";
 		public const string _REORDERLEVEL = "ReorderLevel";
 		public const string _DISCONTINUED = "Discontinued";
+	}
+	
+	public class ProductsAssociation
+	{
+		public EntitySet<Order_Details> Order_Details { get; set; }
+		public EntityRef<Suppliers> Supplier { get; set; }
+		public EntityRef<Categories> Category { get; set; }
 	}
 }

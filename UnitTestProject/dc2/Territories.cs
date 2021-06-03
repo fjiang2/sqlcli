@@ -78,6 +78,33 @@ namespace UnitTestProject.Northwind.dc2
 			this.RegionID = (int)dict[_REGIONID];
 		}
 		
+		public TerritoriesAssociation GetAssociation()
+		{
+			return GetAssociation(new Territories[] { this }).FirstOrDefault();
+		}
+		
+		public static IEnumerable<TerritoriesAssociation> GetAssociation(IEnumerable<Territories> entities)
+		{
+			var reader = entities.Expand();
+			
+			var associations = new List<TerritoriesAssociation>();
+			
+			var _EmployeeTerritories = reader.Read<EmployeeTerritories>();
+			var _Region = reader.Read<Region>();
+			
+			foreach (var entity in entities)
+			{
+				var association = new TerritoriesAssociation
+				{
+					EmployeeTerritories = new EntitySet<EmployeeTerritories>(_EmployeeTerritories.Where(row => row.TerritoryID == entity.TerritoryID)),
+					Region = new EntityRef<Region>(_Region.FirstOrDefault(row => row.RegionID == entity.RegionID)),
+				};
+				associations.Add(association);
+			}
+			
+			return associations;
+		}
+		
 		public override string ToString()
 		{
 			return string.Format("{{TerritoryID:{0}, TerritoryDescription:{1}, RegionID:{2}}}", 
@@ -89,8 +116,31 @@ namespace UnitTestProject.Northwind.dc2
 		public const string TableName = "Territories";
 		public static readonly string[] Keys = new string[] { _TERRITORYID };
 		
+		public static readonly IConstraint[] Constraints = new IConstraint[]
+		{
+			new Constraint<EmployeeTerritories>
+			{
+				ThisKey = _TERRITORYID,
+				OtherKey = EmployeeTerritories._TERRITORYID,
+				OneToMany = true
+			},
+			new Constraint<Region>
+			{
+				Name = "FK_Territories_Region",
+				ThisKey = _REGIONID,
+				OtherKey = Region._REGIONID,
+				IsForeignKey = true
+			}
+		};
+		
 		public const string _TERRITORYID = "TerritoryID";
 		public const string _TERRITORYDESCRIPTION = "TerritoryDescription";
 		public const string _REGIONID = "RegionID";
+	}
+	
+	public class TerritoriesAssociation
+	{
+		public EntitySet<EmployeeTerritories> EmployeeTerritories { get; set; }
+		public EntityRef<Region> Region { get; set; }
 	}
 }

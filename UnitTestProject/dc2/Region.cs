@@ -70,6 +70,31 @@ namespace UnitTestProject.Northwind.dc2
 			this.RegionDescription = (string)dict[_REGIONDESCRIPTION];
 		}
 		
+		public RegionAssociation GetAssociation()
+		{
+			return GetAssociation(new Region[] { this }).FirstOrDefault();
+		}
+		
+		public static IEnumerable<RegionAssociation> GetAssociation(IEnumerable<Region> entities)
+		{
+			var reader = entities.Expand();
+			
+			var associations = new List<RegionAssociation>();
+			
+			var _Territories = reader.Read<Territories>();
+			
+			foreach (var entity in entities)
+			{
+				var association = new RegionAssociation
+				{
+					Territories = new EntitySet<Territories>(_Territories.Where(row => row.RegionID == entity.RegionID)),
+				};
+				associations.Add(association);
+			}
+			
+			return associations;
+		}
+		
 		public override string ToString()
 		{
 			return string.Format("{{RegionID:{0}, RegionDescription:{1}}}", 
@@ -80,7 +105,22 @@ namespace UnitTestProject.Northwind.dc2
 		public const string TableName = "Region";
 		public static readonly string[] Keys = new string[] { _REGIONID };
 		
+		public static readonly IConstraint[] Constraints = new IConstraint[]
+		{
+			new Constraint<Territories>
+			{
+				ThisKey = _REGIONID,
+				OtherKey = Territories._REGIONID,
+				OneToMany = true
+			}
+		};
+		
 		public const string _REGIONID = "RegionID";
 		public const string _REGIONDESCRIPTION = "RegionDescription";
+	}
+	
+	public class RegionAssociation
+	{
+		public EntitySet<Territories> Territories { get; set; }
 	}
 }
