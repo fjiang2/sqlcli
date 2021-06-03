@@ -26,14 +26,14 @@ namespace Sys.Data.Linq
             return table.Expand<TSubEntity>(entities);
         }
 
-        public QueryResultReader Expand<TEntity>(TEntity entity)
+        public IQueryResultReader Expand<TEntity>(TEntity entity)
          where TEntity : class
         {
             ExpandOnSubmit(entity);
             return SumbitQueries();
         }
 
-        public QueryResultReader Expand<TEntity>(IEnumerable<TEntity> entities)
+        public IQueryResultReader Expand<TEntity>(IEnumerable<TEntity> entities)
          where TEntity : class
         {
             ExpandOnSubmit(entities);

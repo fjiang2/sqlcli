@@ -545,6 +545,8 @@ namespace UnitTestProject
         [TestMethod]
         public void Test2TableContains()
         {
+            Query.Select<Categories>(row => new { row.CategoryID, row.CategoryName }, row => row.CategoryName == "Beverages");
+
             using (var db = new DataContext(connectionString))
             {
                 //"SELECT * FROM [Products] WHERE CategoryID IN (SELECT CategoryID FROM Categories WHERE CategoryName == 'Beverages')"

@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace Sys.Data.Linq
 {
-    public class QueryResultReader
+    class QueryResultReader : IQueryResultReader
     {
         private readonly DataContext db;
         private readonly Type[] types;
         private readonly DataSet ds;
 
-        internal QueryResultReader(DataContext db, Type[] types, DataSet ds)
+        public QueryResultReader(DataContext db, Type[] types, DataSet ds)
         {
             this.db = db;
             this.types = types;

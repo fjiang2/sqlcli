@@ -109,7 +109,7 @@ namespace Sys.Data.Linq
             return cmd.FillDataSet(ds);
         }
 
-        public QueryResultReader SumbitQueries()
+        public IQueryResultReader SumbitQueries()
         {
             if (CodeBlock.Length == 0)
                 return null;
