@@ -205,7 +205,7 @@ namespace Sys.Data.Linq
                     return $"'{value}'";
 
                 case TypeCode.Object:
-                    return new SqlValue(value).ToString("N");
+                    return new SqlValue(value).ToScript();
 
                 default:
                     return value;

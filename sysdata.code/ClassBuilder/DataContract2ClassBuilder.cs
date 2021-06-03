@@ -350,7 +350,7 @@ namespace Sys.Data.Code
 
         private Method Method_Association(Class clss, int index, List<AssociationPropertyInfo> properties)
         {
-            string associationClassName = $"{ClassName}Association";
+            string associationClassName = ClassName + ASSOCIATION;
             Method method = new Method("GetAssociation")
             {
                 Modifier = Modifier.Public,
