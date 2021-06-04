@@ -15,7 +15,7 @@ namespace Sys.Data.Code
 
     public class DataClassBuilder : ClassMaker
     {
-        private DataTable dt;
+        private readonly DataTable dt;
 
         public DataClassBuilder(IApplicationCommand cmd, DataTable dt)
             : base(cmd)
@@ -49,16 +49,15 @@ namespace Sys.Data.Code
             get
             {
                 string _dataType = cmd.GetValue("type") ?? "list";
-                switch (_dataType)
+                return _dataType switch
                 {
-                    case "array": return DataClassType.Array;
-                    case "list": return DataClassType.List;
-                    case "dict": return DataClassType.Dictionary;
-                    case "enum": return DataClassType.Enum;
-                    case "const": return DataClassType.Constant;
-                }
-
-                return DataClassType.Undefined;
+                    "array" => DataClassType.Array,
+                    "list" => DataClassType.List,
+                    "dict" => DataClassType.Dictionary,
+                    "enum" => DataClassType.Enum,
+                    "const" => DataClassType.Constant,
+                    _ => DataClassType.Undefined,
+                };
             }
         }
 

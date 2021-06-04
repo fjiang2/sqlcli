@@ -25,11 +25,10 @@ namespace Sys.Data.Manager
 {
     class SpParam
     {
-        SpParamDpo param;
-        CType dbType;
-
-        string name;
-        string type;
+        readonly SpParamDpo param;
+        readonly CType dbType;
+        readonly string name;
+        readonly string type;
 
         public SpParam(SpParamDpo param)
         {

@@ -4,7 +4,7 @@ namespace Sys.Data
 {
     public class DataTableSchemaName
     {
-        private DataTable dt;
+        private readonly DataTable dt;
         public DataTableSchemaName(DataTable dt)
         {
             this.dt = dt;

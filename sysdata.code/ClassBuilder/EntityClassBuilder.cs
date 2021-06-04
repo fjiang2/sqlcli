@@ -14,7 +14,7 @@ namespace Sys.Data.Code
 
     public class EntityClassBuilder : TheClassBuilder
     {
-        private TableName tname;
+        private readonly TableName tname;
         public bool IsAssocication { get; private set; }
 
         public EntityClassBuilder(IApplicationCommand cmd, TableName tname)
@@ -58,7 +58,7 @@ namespace Sys.Data.Code
                 return;
 
             TableSchema schema = new TableSchema(tname);
-            Func<IColumn, string> COLUMN = column => "_" + column.ColumnName.ToUpper();
+            static string COLUMN(IColumn column) => "_" + column.ColumnName.ToUpper();
 
             TypeInfo[] baseClass = OptionalBaseType();
 

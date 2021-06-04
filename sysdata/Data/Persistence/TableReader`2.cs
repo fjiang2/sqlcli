@@ -33,8 +33,7 @@ namespace Sys.Data
         where T1 : class,  IDPObject, new() 
         where T2 : class,  IDPObject, new() 
     {
-
-        DataSet dataset;
+        readonly DataSet dataset;
 
         public TableReader(MappedColumn column1, MappedColumn column2, int value)
         {

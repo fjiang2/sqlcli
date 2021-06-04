@@ -29,7 +29,7 @@ namespace Sys.Data.Manager
 {
     public class DpoGenerator
     {
-        private TableName tableName;
+        private readonly TableName tableName;
 
         
         public DpoOption Option { get; set; }

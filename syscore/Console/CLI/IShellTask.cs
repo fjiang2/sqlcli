@@ -1,6 +1,6 @@
 ﻿using Sys.Stdio;
 
-namespace Sys.Cli
+namespace Sys.Stdio.Cli
 {
     /// <summary>
     /// The task of shell

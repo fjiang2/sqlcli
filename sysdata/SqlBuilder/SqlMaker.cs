@@ -19,7 +19,7 @@ namespace Sys.Data
         /// </summary>
         public string Where { get; set; } = string.Empty;
 
-        private SqlTemplate template;
+        private readonly SqlTemplate template;
 
         public SqlMaker(string formalName)
         {

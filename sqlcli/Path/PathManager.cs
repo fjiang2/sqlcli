@@ -16,8 +16,8 @@ namespace sqlcli
 
     partial class PathManager
     {
-        private IConnectionConfiguration cfg;
-        private Tree<IDataPath> tree;
+        private readonly IConnectionConfiguration cfg;
+        private readonly Tree<IDataPath> tree;
 
 
         public PathManager(IConnectionConfiguration cfg)

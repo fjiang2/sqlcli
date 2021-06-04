@@ -11,32 +11,28 @@ using Sys.Data.Comparison;
 using Sys.Data.Manager;
 using Sys.Data.Resource;
 using Sys.Stdio;
-using Sys.Cli;
+using Sys.Stdio.Cli;
 
 namespace sqlcli
 {
     class Importer
     {
-        private PathManager mgr;
-        private ApplicationCommand cmd;
-        private IApplicationConfiguration cfg;
-
+        private readonly PathManager mgr;
+        private readonly ApplicationCommand cmd;
 
         private TableName tname;
-        private DatabaseName dname;
-        private ServerName sname;
+        private readonly DatabaseName dname;
+        private readonly ServerName sname;
+        readonly XmlDbCreator xmlDbFile;
 
-        XmlDbCreator xmlDbFile;
-
-        public Importer(PathManager mgr, TreeNode<IDataPath> pt, ApplicationCommand cmd, IApplicationConfiguration cfg)
+        public Importer(PathManager mgr, TreeNode<IDataPath> pt, ApplicationCommand cmd)
         {
             this.mgr = mgr;
             this.cmd = cmd;
-            this.cfg = cfg;
 
             this.xmlDbFile = new XmlDbCreator
             {
-                XmlDbFolder = cfg.XmlDbDirectory
+                XmlDbFolder = cmd.Configuration.XmlDbDirectory
             };
 
             if (pt.Item is Locator)

@@ -5,7 +5,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 using System.Linq;
 
-using UnitTestProject.Northwind.dbo;
+using UnitTestProject.Northwind.dc2;
 using Sys;
 using Sys.Data.Linq;
 using Sys.Data;
@@ -16,11 +16,13 @@ namespace UnitTestProject
     /// Summary description for UnitTestDataContext
     /// </summary>
     [TestClass]
-    public class UnitTestDataContext
+    public class UnitTestDataContextDC2
     {
-        string connectionString;
-        public UnitTestDataContext()
+        readonly string connectionString;
+        public UnitTestDataContextDC2()
         {
+            DataContext.EntityClassType = EntityClassType.SingleClass;
+
             if (Environment.MachineName.StartsWith("XPS"))
             {
                 connectionString = "data source=localhost\\sqlexpress;initial catalog=Northwind;integrated security=SSPI;packet size=4096";
@@ -98,7 +100,7 @@ namespace UnitTestProject
 
                 table.InsertOnSubmit(product);
                 string SQL = db.GetNonQueryScript();
-                Debug.Assert(SQL.StartsWith("INSERT INTO [Products]([ProductName],[SupplierID],[CategoryID],[UnitPrice],[UnitsInStock],[UnitsOnOrder],[ReorderLevel],[Discontinued]) VALUES('iPhone',0,0,0,0,0,0,0)"));
+                Debug.Assert(SQL.StartsWith("INSERT INTO [Products]([ProductName],[SupplierID],[CategoryID],[UnitPrice],[UnitsInStock],[UnitsOnOrder],[ReorderLevel],[Discontinued]) VALUES(N'iPhone',0,0,0,0,0,0,0)"));
             }
         }
 
@@ -116,7 +118,7 @@ namespace UnitTestProject
 
                 table.PartialUpdateOnSubmit(product);
                 string SQL = db.GetNonQueryScript();
-                Debug.Assert(SQL.StartsWith("UPDATE [Products] SET [ProductName] = 'iPhone' WHERE [ProductID] = 100"));
+                Debug.Assert(SQL.StartsWith("UPDATE [Products] SET [ProductName] = N'iPhone' WHERE [ProductID] = 100"));
             }
 
             using (var db = new DataContext(connectionString))
@@ -129,7 +131,7 @@ namespace UnitTestProject
                 };
                 table.PartialUpdateOnSubmit(prod, row => new { row.ProductID, row.ProductName }, row => row.ProductID == 1);
                 string SQL = db.GetNonQueryScript();
-                Debug.Assert(SQL.StartsWith("UPDATE [Products] SET [ProductID] = 200,[ProductName] = 'iPhone' WHERE (ProductID = 1)"));
+                Debug.Assert(SQL.StartsWith("UPDATE [Products] SET [ProductID] = 200,[ProductName] = N'iPhone' WHERE (ProductID = 1)"));
             }
         }
 
@@ -147,7 +149,7 @@ namespace UnitTestProject
 
                 table.InsertOrUpdateOnSubmit(product);
                 string SQL = db.GetNonQueryScript();
-                Debug.Assert(SQL.StartsWith("IF EXISTS(SELECT * FROM [Products] WHERE [ProductID] = 100) UPDATE [Products] SET [ProductName] = 'iPhone',[SupplierID] = 0,[CategoryID] = 0,[QuantityPerUnit] = NULL,[UnitPrice] = 0,[UnitsInStock] = 0,[UnitsOnOrder] = 0,[ReorderLevel] = 0,[Discontinued] = 0 WHERE [ProductID] = 100 ELSE INSERT INTO [Products]([ProductName],[SupplierID],[CategoryID],[UnitPrice],[UnitsInStock],[UnitsOnOrder],[ReorderLevel],[Discontinued]) VALUES('iPhone',0,0,0,0,0,0,0)"));
+                Debug.Assert(SQL.StartsWith("IF EXISTS(SELECT * FROM [Products] WHERE [ProductID] = 100) UPDATE [Products] SET [ProductName] = N'iPhone',[SupplierID] = 0,[CategoryID] = 0,[QuantityPerUnit] = NULL,[UnitPrice] = 0,[UnitsInStock] = 0,[UnitsOnOrder] = 0,[ReorderLevel] = 0,[Discontinued] = 0 WHERE [ProductID] = 100 ELSE INSERT INTO [Products]([ProductName],[SupplierID],[CategoryID],[UnitPrice],[UnitsInStock],[UnitsOnOrder],[ReorderLevel],[Discontinued]) VALUES(N'iPhone',0,0,0,0,0,0,0)"));
             }
         }
 

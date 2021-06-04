@@ -5,7 +5,7 @@ using System.Linq;
 using Sys.Data;
 using Sys.Data.Linq;
 
-namespace UnitTestProject.Northwind.dbo
+namespace UnitTestProject.Northwind.dc1
 {
 	public partial class Orders
 	{
@@ -73,29 +73,13 @@ namespace UnitTestProject.Northwind.dbo
 		public static List<Orders> ToOrdersCollection(this DataTable dt)
 		{
 			return dt.AsEnumerable()
-			.Select(row => NewObject(row))
-			.ToList();
-		}
-		
-		public static Orders NewObject(DataRow row)
-		{
-			return new Orders
+			.Select(row =>
 			{
-				OrderID = row.GetField<int>(_ORDERID),
-				CustomerID = row.GetField<string>(_CUSTOMERID),
-				EmployeeID = row.GetField<int>(_EMPLOYEEID),
-				OrderDate = row.GetField<DateTime>(_ORDERDATE),
-				RequiredDate = row.GetField<DateTime>(_REQUIREDDATE),
-				ShippedDate = row.GetField<DateTime>(_SHIPPEDDATE),
-				ShipVia = row.GetField<int>(_SHIPVIA),
-				Freight = row.GetField<decimal>(_FREIGHT),
-				ShipName = row.GetField<string>(_SHIPNAME),
-				ShipAddress = row.GetField<string>(_SHIPADDRESS),
-				ShipCity = row.GetField<string>(_SHIPCITY),
-				ShipRegion = row.GetField<string>(_SHIPREGION),
-				ShipPostalCode = row.GetField<string>(_SHIPPOSTALCODE),
-				ShipCountry = row.GetField<string>(_SHIPCOUNTRY)
-			};
+				var obj = new Orders();
+				FillObject(obj, row);
+				return obj;
+			})
+			.ToList();
 		}
 		
 		public static void FillObject(this Orders item, DataRow row)
@@ -137,20 +121,20 @@ namespace UnitTestProject.Northwind.dbo
 		public static DataTable CreateTable()
 		{
 			DataTable dt = new DataTable();
-			dt.Columns.Add(new DataColumn(_ORDERID, typeof(System.Int32)));
-			dt.Columns.Add(new DataColumn(_CUSTOMERID, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_EMPLOYEEID, typeof(System.Int32)));
-			dt.Columns.Add(new DataColumn(_ORDERDATE, typeof(System.DateTime)));
-			dt.Columns.Add(new DataColumn(_REQUIREDDATE, typeof(System.DateTime)));
-			dt.Columns.Add(new DataColumn(_SHIPPEDDATE, typeof(System.DateTime)));
-			dt.Columns.Add(new DataColumn(_SHIPVIA, typeof(System.Int32)));
-			dt.Columns.Add(new DataColumn(_FREIGHT, typeof(System.Decimal)));
-			dt.Columns.Add(new DataColumn(_SHIPNAME, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_SHIPADDRESS, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_SHIPCITY, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_SHIPREGION, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_SHIPPOSTALCODE, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_SHIPCOUNTRY, typeof(System.String)));
+			dt.Columns.Add(new DataColumn(_ORDERID, typeof(int)));
+			dt.Columns.Add(new DataColumn(_CUSTOMERID, typeof(string)));
+			dt.Columns.Add(new DataColumn(_EMPLOYEEID, typeof(int)));
+			dt.Columns.Add(new DataColumn(_ORDERDATE, typeof(DateTime)));
+			dt.Columns.Add(new DataColumn(_REQUIREDDATE, typeof(DateTime)));
+			dt.Columns.Add(new DataColumn(_SHIPPEDDATE, typeof(DateTime)));
+			dt.Columns.Add(new DataColumn(_SHIPVIA, typeof(int)));
+			dt.Columns.Add(new DataColumn(_FREIGHT, typeof(decimal)));
+			dt.Columns.Add(new DataColumn(_SHIPNAME, typeof(string)));
+			dt.Columns.Add(new DataColumn(_SHIPADDRESS, typeof(string)));
+			dt.Columns.Add(new DataColumn(_SHIPCITY, typeof(string)));
+			dt.Columns.Add(new DataColumn(_SHIPREGION, typeof(string)));
+			dt.Columns.Add(new DataColumn(_SHIPPOSTALCODE, typeof(string)));
+			dt.Columns.Add(new DataColumn(_SHIPCOUNTRY, typeof(string)));
 			
 			return dt;
 		}
@@ -164,13 +148,6 @@ namespace UnitTestProject.Northwind.dbo
 				dt.Rows.Add(row);
 			}
 			dt.AcceptChanges();
-		}
-		
-		public static DataTable ToDataTable(this IEnumerable<Orders> items)
-		{
-			var dt = CreateTable();
-			ToDataTable(items, dt);
-			return dt;
 		}
 		
 		public static IDictionary<string, object> ToDictionary(this Orders item)

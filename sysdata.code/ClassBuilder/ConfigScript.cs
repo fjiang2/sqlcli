@@ -17,7 +17,7 @@ namespace Sys.Data.Code
 
     internal class ConfigScript
     {
-        private Memory DS = new Memory();
+        private readonly Memory DS = new Memory();
 
         /// <summary>
         /// create hierachical property or field?

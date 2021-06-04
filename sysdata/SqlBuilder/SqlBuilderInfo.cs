@@ -24,7 +24,7 @@ namespace Sys.Data
     public abstract class SqlBuilderInfo
     {
         //<parameter, column>
-        private Dictionary<string, string> parameters = new Dictionary<string,string>();
+        private readonly Dictionary<string, string> parameters = new Dictionary<string,string>();
 
         public SqlBuilderInfo()
         { 

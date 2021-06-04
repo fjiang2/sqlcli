@@ -30,7 +30,7 @@ namespace Sys
 
     class PoolItem<T> where T : class
     {
-        T t;
+        readonly T t;
         public DateTime age;
         public long hit;
 
@@ -70,10 +70,10 @@ namespace Sys
     public class DataPool<K, T>
         where T : class
     {
-        private Dictionary<K, PoolItem<T>> pool = new Dictionary<K, PoolItem<T>>();
-        private int count;
+        private readonly Dictionary<K, PoolItem<T>> pool = new Dictionary<K, PoolItem<T>>();
+        private readonly int count;
 
-        private Policy policy;
+        private readonly Policy policy;
         public Func<K, T> CreateInstance { get; set; }
 
         public DataPool(int maxCount)

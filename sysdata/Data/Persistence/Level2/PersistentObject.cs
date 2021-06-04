@@ -41,7 +41,7 @@ namespace Sys.Data
         }
 
 
-        private TableAttribute dataTableAttribute;
+        private readonly TableAttribute dataTableAttribute;
         private readonly PropertyInfo[] columnProperties;
 
         private bool insertIdentityOn = false;      //used for re-create table data during SQL Server updating

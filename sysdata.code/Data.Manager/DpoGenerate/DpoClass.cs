@@ -29,12 +29,12 @@ namespace Sys.Data.Manager
 
     class DpoClass
     {
-        private string nameSpace;
-        private string className;
+        private readonly string nameSpace;
+        private readonly string className;
 
-        private ITableSchema metaTable;
-        private List<string> nonvalized;
-        private List<string> nullableFields;
+        private readonly ITableSchema metaTable;
+        private readonly List<string> nonvalized;
+        private readonly List<string> nullableFields;
 
         public Dictionary<string, PropertyDefinition> dict_column_field = new Dictionary<string, PropertyDefinition>();
 

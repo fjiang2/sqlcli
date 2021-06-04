@@ -31,7 +31,7 @@ namespace Sys.Data
     {
         private static ConnectionProviderManager instance = null;
 
-        private Dictionary<int, ConnectionProvider> providers = new Dictionary<int, ConnectionProvider>();
+        private readonly Dictionary<int, ConnectionProvider> providers = new Dictionary<int, ConnectionProvider>();
 
         private ConnectionProviderManager()
         {

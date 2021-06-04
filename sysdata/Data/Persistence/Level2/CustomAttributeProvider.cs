@@ -8,7 +8,7 @@ namespace Sys.Data
 {
     class CustomAttributeProvider
     {
-        static Dictionary<Type, Dictionary<MemberInfo, Attribute[]>> cache = new Dictionary<Type, Dictionary<MemberInfo, Attribute[]>>();
+        static readonly Dictionary<Type, Dictionary<MemberInfo, Attribute[]>> cache = new Dictionary<Type, Dictionary<MemberInfo, Attribute[]>>();
 
         public static T[] GetAttributes<T>(MemberInfo memberInfo) where T : Attribute
         {

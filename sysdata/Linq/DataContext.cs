@@ -20,7 +20,10 @@ namespace Sys.Data.Linq
         public event EventHandler<RowEventArgs> RowChanging;
         public event EventHandler<RowEventArgs> RowChanged;
 
-        public EntityClassType ClassType { get; set; } = EntityClassType.ExtensionClass;
+        /// <summary>
+        /// DataContext using extension class (dc1) or single class (dc2)
+        /// </summary>
+        public static EntityClassType EntityClassType { get; set; } = EntityClassType.ExtensionClass;
 
         public DataContext()
         {
@@ -106,7 +109,7 @@ namespace Sys.Data.Linq
             return cmd.FillDataSet(ds);
         }
 
-        public QueryResultReader SumbitQueries()
+        public IQueryResultReader SumbitQueries()
         {
             if (CodeBlock.Length == 0)
                 return null;

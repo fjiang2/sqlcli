@@ -11,7 +11,7 @@ namespace Sys.Data
     class FileDbSchemaProvider : DbSchemaProvider, IDisposable
     {
         private DataSet dbSchema = new DataSet();
-        private IDbFile dbFile;
+        private readonly IDbFile dbFile;
 
         public FileDbSchemaProvider(FileDbConnectionProvider provider)
                     : base(provider)

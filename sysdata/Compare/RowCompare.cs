@@ -9,7 +9,7 @@ namespace Sys.Data.Comparison
 {
     class RowCompare
     {
-        private TableCompare table;
+        private readonly TableCompare table;
         private List<ColumnPair> L1;
         private List<ColumnPair> L2;
 

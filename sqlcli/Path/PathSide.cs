@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Sys.Data;
 using Sys;
 using Sys.Stdio;
+using Sys.Stdio.Cli;
 
 namespace sqlcli
 {
@@ -20,8 +21,8 @@ namespace sqlcli
         private TreeNode<IDataPath> node;
         private TableName[] T;   //wildcard matched tables
 
-        private PathManager mgr;
-        private ApplicationCommand cmd;
+        private readonly PathManager mgr;
+        private readonly ApplicationCommand cmd;
 
         public PathSide(PathManager mgr, ApplicationCommand cmd)
         {
@@ -73,9 +74,9 @@ namespace sqlcli
 
             T = new TableName[] { };
 
-            if (path.wildcard != null)
+            if (path.Wildcard != null)
             {
-                var m1 = new MatchedDatabase(dname, path.wildcard)
+                var m1 = new MatchedDatabase(dname, path.Wildcard)
                 {
                     Includedtables = cmd.Includes,
                     Excludedtables = cmd.Excludes

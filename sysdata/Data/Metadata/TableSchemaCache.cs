@@ -8,7 +8,7 @@ namespace Sys.Data
 {
     public class TableSchemaCache
     {
-        private static Dictionary<TableName, TableSchema> schemas = new Dictionary<TableName, TableSchema>();
+        private static readonly Dictionary<TableName, TableSchema> schemas = new Dictionary<TableName, TableSchema>();
 
         public static TableSchema GetSchema(TableName tname)
         {

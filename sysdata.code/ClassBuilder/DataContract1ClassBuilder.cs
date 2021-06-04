@@ -30,13 +30,13 @@ namespace Sys.Data.Code
         protected override void CreateClass()
         {
             Class_TableSchema();
-            Class clss3 = Class_Extension(out int index1, out int index2);
+            Class clssExt = Class_Extension(out int index1, out int index2);
 
-            Class clss2 = Class_Assoication(clss3, index1, index2);
-            if (clss2.Index > 0)
-                builder.AddClass(clss2);
+            Class clssAssoc = Class_Assoication(clssExt, index1, index2);
+            if (clssAssoc.Index > 0)
+                builder.AddClass(clssAssoc);
 
-            builder.AddClass(clss3);
+            builder.AddClass(clssExt);
         }
 
         private void Class_TableSchema()
@@ -50,9 +50,9 @@ namespace Sys.Data.Code
             }
         }
 
-        private Class Class_Assoication(Class clss3, int index1, int index2)
+        private Class Class_Assoication(Class clss, int index1, int index2)
         {
-            Class clss = new Class(ClassName + ASSOCIATION) { Modifier = Modifier.Public };
+            Class clssAssoc = new Class(ClassName + ASSOCIATION) { Modifier = Modifier.Public };
 
             bool hasFK = cmd.Has("fk");
             bool hasAssoc = cmd.Has("assoc");
@@ -61,54 +61,54 @@ namespace Sys.Data.Code
 
             if (hasFK)
             {
-                var field = CreateConstraintField(tname);
+                var field = CreateConstraintField(tname, EXTENSION);
                 if (field != null)
-                    clss3.Insert(index1, field);
+                    clss.Insert(index1, field);
             }
 
             if (hasAssoc)
             {
-                var properties = base.CreateAssoicationClass(tname, clss);
-                Method_Association(clss3, index2, properties);
+                var properties = CreateAssoicationClass(tname, clssAssoc);
+                Method_Association(clss, index2, properties);
             }
 
-            return clss;
+            return clssAssoc;
         }
 
         private Class Class_Extension(out int index1, out int index2)
         {
-            Class clss = new Class(ClassName + EXTENSION) { Modifier = Modifier.Public | Modifier.Static };
+            Class clssExt = new Class(ClassName + EXTENSION) { Modifier = Modifier.Public | Modifier.Static };
 
             //Const Field
-            CreateTableSchemaFields(tname, dt, clss);
-            index1 = clss.Index;
+            CreateTableSchemaFields(dt, clssExt);
+            index1 = clssExt.Index;
 
            
             if (ContainsMethod("FillObject"))
             {
-                Method_ToCollection(clss);
+                Method_ToCollection(clssExt);
 
                 //deprecated code
                 //if (ContainsMethod("NewObject"))
                 //    Method_NewObject(clss);
 
-                Method_FillObject(clss);
+                Method_FillObject(clssExt);
             }
 
             if (ContainsMethod("UpdateRow"))
             {
-                Method_UpdateRow(clss);
+                Method_UpdateRow(clssExt);
             }
 
 
             if (ContainsMethod("CreateTable"))
             {
-                Method_CreateTable(clss);
+                Method_CreateTable(clssExt);
             }
             
             if (ContainsMethod("ToDataTable"))
             {
-                Method_ToDataTable1(clss);
+                Method_ToDataTable1(clssExt);
                 
                 //deprecated code
                 //Method_ToDataTable2(clss);
@@ -116,12 +116,12 @@ namespace Sys.Data.Code
 
             if (ContainsMethod("ToDictionary"))
             {
-                Method_ToDictionary(clss);
+                Method_ToDictionary(clssExt);
             }
             
             if (ContainsMethod("FromDictionary"))
             {
-                Method_FromDictionary(clss);
+                Method_FromDictionary(clssExt);
             }
 
             UtilsStaticMethod option = UtilsStaticMethod.Undefined;
@@ -134,9 +134,9 @@ namespace Sys.Data.Code
             if (ContainsMethod("ToSimpleString"))
                 option |= UtilsStaticMethod.ToSimpleString;
 
-            clss.AddUtilsMethod(ClassName, dict.Keys.Select(column => new PropertyInfo { PropertyName = PropertyName(column) }), option);
-            index2 = clss.Index;
-            clss.AppendLine();
+            clssExt.AddUtilsMethod(ClassName, dict.Keys.Select(column => new PropertyInfo { PropertyName = PropertyName(column) }), option);
+            index2 = clssExt.Index;
+            clssExt.AppendLine();
 
             Field field;
             foreach (DataColumn column in dt.Columns)
@@ -145,10 +145,10 @@ namespace Sys.Data.Code
                 {
                     Modifier = Modifier.Public | Modifier.Const
                 };
-                clss.Add(field);
+                clssExt.Add(field);
             }
 
-            return clss;
+            return clssExt;
         }
 
         private void Method_ToCollection(Class clss)
@@ -263,7 +263,6 @@ namespace Sys.Data.Code
             sent.AppendLine("var dt = CreateTable();");
             sent.AppendLine("ToDataTable(items, dt);");
             sent.AppendLine("return dt;");
-            sent = method.Body;
         }
 
         private void Method_ToDictionary(Class clss)
@@ -324,7 +323,7 @@ namespace Sys.Data.Code
 
         private Method Method_Association(Class clss, int index, List<AssociationPropertyInfo> properties)
         {
-            string associationClassName = $"{ClassName}Association";
+            string associationClassName = ClassName + ASSOCIATION;
             Method method = new Method("GetAssociation")
             {
                 Modifier = Modifier.Public | Modifier.Static,

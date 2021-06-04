@@ -9,9 +9,9 @@ namespace Sys.Data
 {
     public class TableClause
     {
-        private ITableSchema schema;
-        private TableName tableName;
-        private SqlTemplate template;
+        private readonly ITableSchema schema;
+        private readonly TableName tableName;
+        private readonly SqlTemplate template;
 
         public TableClause(ITableSchema schema)
         {

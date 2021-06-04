@@ -46,8 +46,8 @@ namespace sqlcli
                         foreach (TableName tname in dname.GetTableNames())
                         {
                             cout.WriteLine($"[{tname.ShortName}]");
-                            tout = new TableOut(tname);
-                            tout.Display(cmd);
+                            tout = new TableOut(cmd, tname);
+                            tout.Display();
                         }
                     }
 
@@ -62,8 +62,8 @@ namespace sqlcli
                 {
                     cout.WriteLine();
                     cout.WriteLine($"[{tname.ShortName}]");
-                    tout = new TableOut(tname);
-                    tout.Display(cmd);
+                    tout = new TableOut(cmd, tname);
+                    tout.Display();
                 }
                 return true;
             }
@@ -74,8 +74,8 @@ namespace sqlcli
 
                 if (tname.Type == TableNameType.Table || tname.Type == TableNameType.View)
                 {
-                    tout = new TableOut(tname);
-                    return tout.Display(cmd);
+                    tout = new TableOut(cmd, tname);
+                    return tout.Display();
                 }
                 else
                 {
@@ -107,8 +107,8 @@ namespace sqlcli
                 locator.And((Locator)xnode.Item);
             }
 
-            tout = new TableOut(tname);
-            return tout.Display(cmd, "*", locator);
+            tout = new TableOut(cmd, tname);
+            return tout.Display("*", locator);
 
         }
 
@@ -129,8 +129,8 @@ namespace sqlcli
             else
                 tname = (TableName)pt.Parent.Item;
 
-            tout = new TableOut(tname);
-            return tout.Display(cmd, column.Columns, locator);
+            tout = new TableOut(cmd, tname);
+            return tout.Display(column.Columns, locator);
         }
 
     }

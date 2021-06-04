@@ -9,12 +9,12 @@ namespace Sys.Data
 {
     class TableDataClause
     {
-        private ITableSchema schema;
-        private TableName tableName;
-        private SqlTemplate template;
-        private string[] pk;
-        private string[] ik;
-        private string[] ck;
+        private readonly ITableSchema schema;
+        private readonly TableName tableName;
+        private readonly SqlTemplate template;
+        private readonly string[] pk;
+        private readonly string[] ik;
+        private readonly string[] ck;
 
 
         public TableDataClause(ITableSchema schema)

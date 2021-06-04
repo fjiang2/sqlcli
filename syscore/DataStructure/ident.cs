@@ -24,7 +24,7 @@ namespace Sys
 {
     public sealed class ident : IComparable, IComparable<string>, IEquatable<ident>
     {
-        private string id;
+        private readonly string id;
 
         public ident(string id)
         {

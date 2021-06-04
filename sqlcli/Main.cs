@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using System.IO;
 using Sys;
 using Sys.Stdio;
-using Sys.Cli;
+using Sys.Stdio.Cli;
 using Sys.Data;
 
 namespace sqlcli
@@ -13,8 +13,8 @@ namespace sqlcli
     class Main
     {
 
-        private ApplicationConfiguration cfg;
-        public Shell Shell { get; private set; }
+        private readonly ApplicationConfiguration cfg;
+        private IShell shell;
 
         public Main(ApplicationConfiguration cfg)
         {
@@ -67,7 +67,7 @@ namespace sqlcli
 
                     default:
                         if (!string.IsNullOrEmpty(arg))
-                            RunBatch(arg, args);
+                            Shell.RunBatch(cfg, arg, args);
                         else
                             ShowHelp();
 
@@ -76,24 +76,14 @@ namespace sqlcli
             }
 
             ShellTask task = new ShellTask(cfg);
-            Shell = new Shell(task);
-            Context.DS.AddHostObject(Context.SHELL, Shell);
-            Shell.DoConsole();
+            shell = new Shell(task);
+            Context.DS.AddHostObject(Context.SHELL, shell);
+            shell.Run();
         }
-
-
-
-        private void RunBatch(string path, params string[] args)
-        {
-            Batch batch = new Batch(cfg, path);
-            batch.Call(null, args);
-        }
-
-     
 
         public static void ShowHelp()
         {
-            cout.WriteLine("SQL Server Command Console");
+            cout.WriteLine("SQL Server Command Line Interface");
             cout.WriteLine("Usage: sqlcli");
             cout.WriteLine("     [/cfg configuration file name (.cfg)]");
             cout.WriteLine("     [/i sql script file name (.sql)]");

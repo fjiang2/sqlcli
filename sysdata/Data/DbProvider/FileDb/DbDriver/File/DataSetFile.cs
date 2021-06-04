@@ -11,7 +11,7 @@ namespace Sys.Data
 {
     class DataSetFile : DbFile
     {
-        DataSet data = new DataSet();
+        readonly DataSet data = new DataSet();
 
         public DataSetFile(FileLink link)
             : base(link)

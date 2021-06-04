@@ -21,7 +21,7 @@ namespace Sys.Data
         protected override DbTransaction DbTransaction { get; set; }
 
 
-        private RemoteInvoke agent;
+        private readonly RemoteInvoke agent;
 
         public RiaDbCommand(string cmdText, RiaDbConnection connection)
         {

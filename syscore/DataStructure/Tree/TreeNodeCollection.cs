@@ -28,7 +28,7 @@ namespace Sys
     /// <typeparam name="T"></typeparam>
     public class TreeNodeCollection<T> : List<TreeNode<T>> where T : class
     {
-        private TreeNode<T> parent;
+        private readonly TreeNode<T> parent;
 
         internal TreeNodeCollection(TreeNode<T> parent)
         {

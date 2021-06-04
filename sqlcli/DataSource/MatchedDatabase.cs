@@ -11,14 +11,14 @@ namespace sqlcli
 {
     class MatchedDatabase
     {
-        private string Pattern;
-        private DatabaseName DatabaseName;
+        private readonly string Pattern;
+        private readonly DatabaseName DatabaseName;
 
         public string[] Includedtables { get; set; }
         public string[] Excludedtables { get; set; }
 
         public MatchedDatabase(DatabaseName databaseName, ApplicationCommand cmd)
-            : this(databaseName, cmd.wildcard)
+            : this(databaseName, cmd.Wildcard)
         {
             this.Includedtables = cmd.Includes;
             this.Excludedtables = cmd.Excludes;
@@ -57,10 +57,10 @@ namespace sqlcli
 
         public static Wildcard<TableName> CreateWildcard(ApplicationCommand cmd)
         {
-            var selector = KeySelector(cmd.wildcard);
+            var selector = KeySelector(cmd.Wildcard);
             Wildcard<TableName> match = new Wildcard<TableName>(selector)
             {
-                Pattern = cmd.wildcard,
+                Pattern = cmd.Wildcard,
                 Includes = cmd.Includes,
                 Excludes = cmd.Excludes,
             };

@@ -12,22 +12,21 @@ using Sys.Data.Manager;
 using Sys.Data.Resource;
 using Sys.Stdio;
 using Sys.Data.Code;
-using Sys.Cli;
+using Sys.Stdio.Cli;
 
 namespace sqlcli
 {
     class Exporter
     {
-        private PathManager mgr;
-        private ApplicationCommand cmd;
-        private IApplicationConfiguration cfg;
+        private readonly PathManager mgr;
+        private readonly ApplicationCommand cmd;
+        private readonly IApplicationConfiguration cfg;
 
 
-        private TableName tname;
-        private DatabaseName dname;
-        private ServerName sname;
-
-        XmlDbCreator xmlDbFile;
+        private readonly TableName tname;
+        private readonly DatabaseName dname;
+        private readonly ServerName sname;
+        readonly XmlDbCreator xmlDbFile;
         public Exporter(PathManager mgr, TreeNode<IDataPath> pt, ApplicationCommand cmd, IApplicationConfiguration cfg)
         {
             this.mgr = mgr;
@@ -71,7 +70,7 @@ namespace sqlcli
         private TableName[] getTableNames(ApplicationCommand cmd)
         {
             TableName[] tnames;
-            if (cmd.wildcard != null)
+            if (cmd.Wildcard != null)
             {
                 var md = new MatchedDatabase(dname, cmd);
                 tnames = md.TableNames();
@@ -152,7 +151,7 @@ namespace sqlcli
 
             if (dname != null)
             {
-                if (cmd.wildcard != null)
+                if (cmd.Wildcard != null)
                 {
                     var md = new MatchedDatabase(dname, cmd);
                     TableName[] tnames = md.TableNames();
@@ -545,7 +544,7 @@ namespace sqlcli
             }
 
 
-            TheClassBuilder gen = null;
+            TheClassBuilder gen;
             if (version == 0)
                 gen = new DataContractClassBuilder(cmd, tnd.Name, dt, allowDbNull);
             else if (version == 1)

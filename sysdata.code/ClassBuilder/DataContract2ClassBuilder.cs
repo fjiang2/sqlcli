@@ -71,10 +71,16 @@ namespace Sys.Data.Code
                 Method_ToDictionary(clss);
             if (ContainsMethod("FromDictionary"))
                 Constructor_FromDictionary(clss);
+
             //Method_CRUD(dt, clss);
+            int index2 = clss.Index;
+
             if (ContainsMethod("ToString"))
                 Method_ToString(clss);
 
+            CreateTableSchemaFields(dt, clss);
+            int index1 = clss.Index;
+            clss.AppendLine();
 
             //Const Field
             foreach (DataColumn column in dt.Columns)
@@ -86,8 +92,13 @@ namespace Sys.Data.Code
                 clss.Add(field);
             }
 
+            var clssAssoc = Class_Assoication(clss, index1, index2);
+            if (clssAssoc.Index > 0)
+                builder.AddClass(clssAssoc);
+
         }
-        private void Constructor_Default(Class clss)
+
+        private static void Constructor_Default(Class clss)
         {
             Constructor constructor = new Constructor(clss.Name)
             {
@@ -97,7 +108,7 @@ namespace Sys.Data.Code
             clss.Add(constructor);
         }
 
-        private void Constructor_DataRow(Class clss)
+        private static void Constructor_DataRow(Class clss)
         {
             Constructor constructor = new Constructor(clss.Name)
             {
@@ -142,7 +153,6 @@ namespace Sys.Data.Code
             var sent = mtdUpdateRow.Body;
             foreach (DataColumn column in dt.Columns)
             {
-                var type = dict[column];
                 var NAME = COLUMN(column);
                 var name = PropertyName(column);
 
@@ -163,8 +173,6 @@ namespace Sys.Data.Code
 
             foreach (DataColumn column in dt.Columns)
             {
-                var type = dict[column];
-                var NAME = COLUMN(column);
                 var name = PropertyName(column);
 
                 var line = $"obj.{name} = this.{name};";
@@ -263,11 +271,9 @@ namespace Sys.Data.Code
             sent.AppendFormat("return string.Format({0});", sb);
             clss.AppendLine();
 
-            CreateTableSchemaFields(tname, dt, clss);
-            clss.AppendLine();
         }
 
-        public void Method_CRUD(DataTable dt, Class clss)
+        public static void Method_CRUD(DataTable dt, Class clss)
         {
             var provider = ConnectionProviderManager.DefaultProvider;
             TableName tname = new TableName(provider, dt.TableName);
@@ -314,6 +320,88 @@ namespace Sys.Data.Code
             };
             method.Body.AppendLine("return $\"" + gen.Delete() + "\";");
             clss.Add(method);
+        }
+
+
+        private Class Class_Assoication(Class clss, int index1, int index2)
+        {
+            Class clssAssoc = new Class(ClassName + ASSOCIATION) { Modifier = Modifier.Public };
+
+            bool hasFK = cmd.Has("fk");
+            bool hasAssoc = cmd.Has("assoc");
+            if (hasAssoc)
+                hasFK = true;
+
+            if (hasFK)
+            {
+                var field = CreateConstraintField(tname, string.Empty);
+                if (field != null)
+                    clss.Insert(index1, field);
+            }
+
+            if (hasAssoc)
+            {
+                var properties = CreateAssoicationClass(tname, clssAssoc);
+                Method_Association(clss, index2, properties);
+            }
+
+            return clssAssoc;
+        }
+
+        private Method Method_Association(Class clss, int index, List<AssociationPropertyInfo> properties)
+        {
+            string associationClassName = ClassName + ASSOCIATION;
+            Method method = new Method("GetAssociation")
+            {
+                Modifier = Modifier.Public,
+                Type = new TypeInfo { UserType = associationClassName },
+            };
+            Statement sent = method.Body;
+
+            sent.Return($"GetAssociation(new {ClassName}[] {{ this }}).FirstOrDefault()");
+            clss.Insert(index++, method);
+
+
+            method = new Method("GetAssociation")
+            {
+                Modifier = Modifier.Public | Modifier.Static,
+                Type = new TypeInfo { UserType = $"IEnumerable<{associationClassName}>" },
+                Params = new Parameters().Add($"IEnumerable<{ClassName}>", "entities"),
+            };
+            clss.Insert(index++, method);
+
+            sent = method.Body;
+            sent.AppendLine("var reader = entities.Expand();");
+            sent.AppendLine();
+            sent.AppendLine($"var associations = new List<{associationClassName}>();");
+            sent.AppendLine();
+
+            foreach (var property in properties)
+            {
+                sent.AppendLine($"var _{property.PropertyName} = reader.Read<{property.PropertyType}>();");
+            }
+            sent.AppendLine();
+
+            sent.AppendLine("foreach (var entity in entities)");
+            sent.Begin();
+            sent.AppendLine($"var association = new {associationClassName}");
+            sent.Begin();
+
+            foreach (var p in properties)
+            {
+                if (p.OneToMany)
+                    sent.AppendLine($"{p.PropertyName} = new EntitySet<{p.PropertyType}>(_{p.PropertyName}.Where(row => row.{p.FK_Column} == entity.{p.PK_Column})),");
+                else
+                    sent.AppendLine($"{p.PropertyName} = new EntityRef<{p.PropertyType}>(_{p.PropertyName}.FirstOrDefault(row => row.{p.FK_Column} == entity.{p.PK_Column})),");
+            }
+
+            sent.End(";");
+            sent.AppendLine("associations.Add(association);");
+            sent.End();
+
+            sent.AppendLine();
+            sent.AppendLine($"return associations;");
+            return method;
         }
     }
 }

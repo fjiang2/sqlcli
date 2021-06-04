@@ -30,9 +30,9 @@ namespace Sys.Data
     /// </summary>
     public class TableReader
     {
-        private TableName tableName;
-        private Lazy<DataTable> table;
-        private Locator locator;
+        private readonly TableName tableName;
+        private readonly Lazy<DataTable> table;
+        private readonly Locator locator;
 
         public bool CaseSensitive { get; set; } = false;
         public int Top { get; set; }

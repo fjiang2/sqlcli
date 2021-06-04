@@ -1,6 +1,6 @@
 ﻿namespace Sys.IO
 {
-    public interface IWorkSpace
+    public interface IWorkspace
     {
         WorkingDirectory WorkingDirectory { get; }
         string Path { get; }

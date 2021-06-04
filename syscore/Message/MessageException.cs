@@ -29,7 +29,7 @@ namespace Sys
     public class MessageException : Exception
     {
         
-        private Message msg;
+        private readonly Message msg;
 
 
         /// <summary>

@@ -12,33 +12,29 @@ namespace sqlcli
 {
     class TableOut
     {
-        private TableName tname;
-        private UniqueTable rTable = null;
+        private readonly ApplicationCommand cmd;
+        private readonly TableName tname;
 
-        public TableOut(TableName tableName)
+        private UniqueTable uniqueTable = null;
+
+        public TableOut(ApplicationCommand cmd, TableName tableName)
         {
+            this.cmd = cmd;
             this.tname = tableName;
         }
 
-        public TableName TableName
-        {
-            get { return this.tname; }
-        }
+        public TableName TableName => this.tname;
 
-        public UniqueTable Table
-        {
-            get { return this.rTable; }
-        }
-
+        public UniqueTable Table => this.uniqueTable;
 
         public bool HasPhysloc
         {
             get
             {
-                if (this.rTable == null)
+                if (this.uniqueTable == null)
                     return false;
 
-                return rTable.HasPhysloc;
+                return uniqueTable.HasPhysloc;
             }
         }
 
@@ -60,7 +56,7 @@ namespace sqlcli
             return new Locator(wildcard, columns);
         }
 
-        private static void _DisplayTable(UniqueTable udt, bool more, ApplicationCommand cmd)
+        private static void DisplayTable(ApplicationCommand cmd, UniqueTable udt, bool more)
         {
             DataTable table = udt.Table;
 
@@ -88,7 +84,7 @@ namespace sqlcli
         }
 
 
-        private bool Display(ApplicationCommand cmd, SqlBuilder builder, TableName tname, int top)
+        private bool Display(SqlBuilder builder, int top)
         {
             try
             {
@@ -96,7 +92,7 @@ namespace sqlcli
                 table.SetSchemaAndTableName(tname);
                 ShellHistory.SetLastResult(table);
 
-                return Display(cmd, table, top);
+                return Display(table, top);
             }
             catch (Exception ex)
             {
@@ -105,12 +101,12 @@ namespace sqlcli
             }
         }
 
-        private bool Display(ApplicationCommand cmd, DataTable table, int top)
+        private bool Display(DataTable table, int top)
         {
             try
             {
-                rTable = new UniqueTable(tname, table);
-                _DisplayTable(rTable, top > 0 && table.Rows.Count == top, cmd);
+                uniqueTable = new UniqueTable(tname, table);
+                DisplayTable(cmd, uniqueTable, top > 0 && table.Rows.Count == top);
             }
             catch (Exception ex)
             {
@@ -121,20 +117,20 @@ namespace sqlcli
             return true;
         }
 
-        public bool Display(ApplicationCommand cmd)
+        public bool Display()
         {
             SqlBuilder builder;
             int top = cmd.Top;
             string[] columns = cmd.Columns;
 
-            if (cmd.wildcard != null)
+            if (cmd.Wildcard != null)
             {
-                Locator where = LikeExpr(cmd.wildcard, cmd.Columns);
+                Locator where = LikeExpr(cmd.Wildcard, cmd.Columns);
                 builder = new SqlBuilder().SELECT().ROWID(cmd.HasRowId).COLUMNS().FROM(tname).WHERE(where);
             }
-            else if (cmd.where != null)
+            else if (cmd.Where != null)
             {
-                var locator = new Locator(cmd.where);
+                var locator = new Locator(cmd.Where);
                 builder = new SqlBuilder().SELECT().TOP(top).ROWID(cmd.HasRowId).COLUMNS(columns).FROM(tname).WHERE(locator);
             }
             else if (cmd.Has("dup"))
@@ -148,11 +144,11 @@ namespace sqlcli
 
                 if (cmd.IsSchema)
                 {
-                    Display(cmd, dup.group, 0);
+                    Display(dup.group, 0);
                 }
                 else
                 {
-                    dup.Dispaly(dt => Display(cmd, dt, 0));
+                    dup.Dispaly(dt => Display(dt, 0));
                 }
 
                 return true;
@@ -160,14 +156,14 @@ namespace sqlcli
             else
                 builder = new SqlBuilder().SELECT().TOP(top).ROWID(cmd.HasRowId).COLUMNS(columns).FROM(tname);
 
-            return Display(cmd, builder, tname, top);
+            return Display(builder, top);
         }
 
 
-        public bool Display(ApplicationCommand cmd, string columns, Locator locator)
+        public bool Display(string columns, Locator locator)
         {
             SqlBuilder builder;
-            if (cmd.wildcard == null)
+            if (cmd.Wildcard == null)
             {
                 builder = new SqlBuilder().SELECT().TOP(cmd.Top).COLUMNS(columns).FROM(tname);
                 if (locator != null)
@@ -175,14 +171,14 @@ namespace sqlcli
             }
             else
             {
-                Locator where = LikeExpr(cmd.wildcard, cmd.Columns);
+                Locator where = LikeExpr(cmd.Wildcard, cmd.Columns);
                 if (locator != null)
                     where = locator.And(where);
 
                 builder = new SqlBuilder().SELECT().COLUMNS(columns).FROM(tname).WHERE(where);
             }
 
-            return Display(cmd, builder, tname, cmd.Top);
+            return Display(builder, cmd.Top);
         }
 
 

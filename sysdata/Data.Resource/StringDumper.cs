@@ -17,7 +17,7 @@ namespace Sys.Data.Resource
         public string Name { get; set; } = "Name";
         public string Value { get; set; } = "Value";
 
-        private TableName tname;
+        private readonly TableName tname;
         private DataTable dt;
 
         public StringDumper(TableName tname)

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using Sys.Data;
 using Sys.Stdio;
+using Sys.Stdio.Cli;
 
 namespace sqlcli
 {
@@ -25,7 +26,7 @@ namespace sqlcli
                         var dname = mgr.GetPathFrom<DatabaseName>(node);
                         if (dname != null)
                         {
-                            if (cmd.wildcard != null)
+                            if (cmd.Wildcard != null)
                             {
                                 var m = new MatchedDatabase(dname, cmd);
                                 return m.TableNames();

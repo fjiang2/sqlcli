@@ -15,8 +15,8 @@ namespace sqlcli
         private const char HOR = '-';
         private const char DOT = '.';
 
-        private int[] W;
-        private Action<string> writeLine;
+        private readonly int[] W;
+        private readonly Action<string> writeLine;
         public int MaxColumnWidth { get; set; } = -1;
         public bool Escape { get; set; } = true;
 

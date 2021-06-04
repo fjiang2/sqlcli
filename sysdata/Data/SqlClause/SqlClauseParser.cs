@@ -10,8 +10,8 @@ namespace Sys.Data
 {
     class SqlClauseParser
     {
-        private ConnectionProvider provider;
-        private string sql;
+        private readonly ConnectionProvider provider;
+        private readonly string sql;
 
         public SqlClauseParser(ConnectionProvider provider, string sql)
         {

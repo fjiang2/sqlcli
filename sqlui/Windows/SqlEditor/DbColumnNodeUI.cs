@@ -11,7 +11,7 @@ namespace sqlcli.Windows
 {
     public class DbColumnNodeUI : DbTreeNodeUI
     {
-        private DbTreeUI tree;
+        private readonly DbTreeUI tree;
 
         public DbColumnNodeUI(DbTreeUI tree, ColumnSchema column)
             : base(GetSQLField(column), GetImage(column))

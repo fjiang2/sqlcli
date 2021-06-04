@@ -27,7 +27,7 @@ namespace Sys.Data.Manager
 {
     public class Manager
     {
-        Assembly assembly;
+        readonly Assembly assembly;
 
         public Manager(Assembly assembly)
         {

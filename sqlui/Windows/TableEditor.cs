@@ -14,9 +14,9 @@ namespace sqlcli.Windows
 {
     public class TableEditor : Window
     {
-        private Grid grid = new Grid();
-        private DataGrid dataGrid;
-        private UniqueTable udt;
+        private readonly Grid grid = new Grid();
+        private readonly DataGrid dataGrid;
+        private readonly UniqueTable udt;
 
         public TableEditor(UniqueTable udt)
         {

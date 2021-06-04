@@ -62,7 +62,7 @@ namespace sqlcli
                     ServerName sname = (ServerName)node.Item;
                     ++i;
 
-                    if (IsMatch(cmd.wildcard, sname.Path))
+                    if (IsMatch(cmd.Wildcard, sname.Path))
                     {
                         count++;
                         if (node.Nodes.Count == 0)
@@ -106,7 +106,7 @@ namespace sqlcli
                     DatabaseName dname = (DatabaseName)node.Item;
                     ++i;
 
-                    if (IsMatch(cmd.wildcard, dname.Path))
+                    if (IsMatch(cmd.Wildcard, dname.Path))
                     {
                         count++;
                         if (node.Nodes.Count == 0)
@@ -149,7 +149,7 @@ namespace sqlcli
                 TableName tname = (TableName)node.Item;
                 ++i;
 
-                if (IsMatch(cmd.wildcard, tname.Path) || (tname.SchemaName == SchemaName.dbo && IsMatch(cmd.wildcard, tname.Name)))
+                if (IsMatch(cmd.Wildcard, tname.Path) || (tname.SchemaName == SchemaName.dbo && IsMatch(cmd.Wildcard, tname.Name)))
                 {
                     string desc = "TABLE";
                     switch (tname.Type)
@@ -300,7 +300,7 @@ namespace sqlcli
             int h = 0;
             foreach (IColumn column in schema.Columns)
             {
-                if (IsMatch(cmd.wildcard, column.ColumnName))
+                if (IsMatch(cmd.Wildcard, column.ColumnName))
                 {
                     count++;
 
@@ -350,7 +350,7 @@ namespace sqlcli
                 IDataPath item = node.Item;
                 ++i;
 
-                if (IsMatch(cmd.wildcard, item.Path))
+                if (IsMatch(cmd.Wildcard, item.Path))
                 {
                     count++;
 
@@ -390,7 +390,7 @@ namespace sqlcli
             foreach (DataRow row in schema.Rows)
             {
                 string columnName = string.Format("{0}", row["COLUMN_NAME"]);
-                if (IsMatch(cmd.wildcard, columnName))
+                if (IsMatch(cmd.Wildcard, columnName))
                 {
                     count++;
 

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Sys;
 using Sys.Data;
 using Sys.Stdio;
+using Sys.Stdio.Cli;
 
 
 namespace sqlcli
@@ -163,7 +164,7 @@ namespace sqlcli
             Expand(node, this.Refreshing);
 
             string seg = segment;
-            if (node.Item is DatabaseName && segment.IndexOf(".") == -1)
+            if (node.Item is DatabaseName && !segment.Contains("."))
                 seg = SchemaName.dbo + "." + segment;
 
             var xnode = node.Nodes.Find(x => x.Item.Path.ToUpper() == seg.ToUpper());
@@ -171,8 +172,7 @@ namespace sqlcli
                 return xnode;
             else
             {
-                int result;
-                if (int.TryParse(segment, out result))
+                if (int.TryParse(segment, out int result))
                 {
                     result--;
 

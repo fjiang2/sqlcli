@@ -5,7 +5,7 @@ using System.Linq;
 using Sys.Data;
 using Sys.Data.Linq;
 
-namespace UnitTestProject.Northwind.dbo
+namespace UnitTestProject.Northwind.dc1
 {
 	public partial class Suppliers
 	{
@@ -47,27 +47,13 @@ namespace UnitTestProject.Northwind.dbo
 		public static List<Suppliers> ToSuppliersCollection(this DataTable dt)
 		{
 			return dt.AsEnumerable()
-			.Select(row => NewObject(row))
-			.ToList();
-		}
-		
-		public static Suppliers NewObject(DataRow row)
-		{
-			return new Suppliers
+			.Select(row =>
 			{
-				SupplierID = row.GetField<int>(_SUPPLIERID),
-				CompanyName = row.GetField<string>(_COMPANYNAME),
-				ContactName = row.GetField<string>(_CONTACTNAME),
-				ContactTitle = row.GetField<string>(_CONTACTTITLE),
-				Address = row.GetField<string>(_ADDRESS),
-				City = row.GetField<string>(_CITY),
-				Region = row.GetField<string>(_REGION),
-				PostalCode = row.GetField<string>(_POSTALCODE),
-				Country = row.GetField<string>(_COUNTRY),
-				Phone = row.GetField<string>(_PHONE),
-				Fax = row.GetField<string>(_FAX),
-				HomePage = row.GetField<string>(_HOMEPAGE)
-			};
+				var obj = new Suppliers();
+				FillObject(obj, row);
+				return obj;
+			})
+			.ToList();
 		}
 		
 		public static void FillObject(this Suppliers item, DataRow row)
@@ -105,18 +91,18 @@ namespace UnitTestProject.Northwind.dbo
 		public static DataTable CreateTable()
 		{
 			DataTable dt = new DataTable();
-			dt.Columns.Add(new DataColumn(_SUPPLIERID, typeof(System.Int32)));
-			dt.Columns.Add(new DataColumn(_COMPANYNAME, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_CONTACTNAME, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_CONTACTTITLE, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_ADDRESS, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_CITY, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_REGION, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_POSTALCODE, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_COUNTRY, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_PHONE, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_FAX, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_HOMEPAGE, typeof(System.String)));
+			dt.Columns.Add(new DataColumn(_SUPPLIERID, typeof(int)));
+			dt.Columns.Add(new DataColumn(_COMPANYNAME, typeof(string)));
+			dt.Columns.Add(new DataColumn(_CONTACTNAME, typeof(string)));
+			dt.Columns.Add(new DataColumn(_CONTACTTITLE, typeof(string)));
+			dt.Columns.Add(new DataColumn(_ADDRESS, typeof(string)));
+			dt.Columns.Add(new DataColumn(_CITY, typeof(string)));
+			dt.Columns.Add(new DataColumn(_REGION, typeof(string)));
+			dt.Columns.Add(new DataColumn(_POSTALCODE, typeof(string)));
+			dt.Columns.Add(new DataColumn(_COUNTRY, typeof(string)));
+			dt.Columns.Add(new DataColumn(_PHONE, typeof(string)));
+			dt.Columns.Add(new DataColumn(_FAX, typeof(string)));
+			dt.Columns.Add(new DataColumn(_HOMEPAGE, typeof(string)));
 			
 			return dt;
 		}
@@ -130,13 +116,6 @@ namespace UnitTestProject.Northwind.dbo
 				dt.Rows.Add(row);
 			}
 			dt.AcceptChanges();
-		}
-		
-		public static DataTable ToDataTable(this IEnumerable<Suppliers> items)
-		{
-			var dt = CreateTable();
-			ToDataTable(items, dt);
-			return dt;
 		}
 		
 		public static IDictionary<string, object> ToDictionary(this Suppliers item)

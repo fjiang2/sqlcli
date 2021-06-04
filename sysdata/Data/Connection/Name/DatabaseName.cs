@@ -23,8 +23,8 @@ namespace Sys.Data
 {
     public class DatabaseName : IComparable<DatabaseName>, IComparable, IDataPath
     {
-        private ConnectionProvider provider;
-        private string name;
+        private readonly ConnectionProvider provider;
+        private readonly string name;
         public string NameSpace { get; set; }
 
         public DatabaseName(ConnectionProvider provider, string databaseName)

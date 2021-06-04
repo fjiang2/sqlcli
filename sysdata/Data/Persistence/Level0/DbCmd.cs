@@ -229,7 +229,7 @@ namespace Sys.Data
 
             foreach (DbParameter parameter in command.Parameters)
             {
-                text = text.Replace(parameter.ParameterName, new SqlValue(parameter.Value).ToString("N"));
+                text = text.Replace(parameter.ParameterName, new SqlValue(parameter.Value).ToScript());
             }
 
             return text;

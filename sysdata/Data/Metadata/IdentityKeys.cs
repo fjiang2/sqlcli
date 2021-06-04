@@ -26,7 +26,7 @@ namespace Sys.Data
 
     public class IdentityKeys : IIdentityKeys
     {
-        private string[] columnNames;
+        private readonly string[] columnNames;
 
         public IdentityKeys()
         {

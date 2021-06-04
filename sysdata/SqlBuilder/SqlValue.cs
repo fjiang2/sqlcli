@@ -54,7 +54,7 @@ namespace Sys.Data
         }
 
         public bool IsNull => value == null || value == DBNull.Value;
-        public string ToString(string format)
+        public string ToScript()
         {
             if (IsNull)
                 return NULL;
@@ -64,10 +64,8 @@ namespace Sys.Data
             if (value is string)
             {
                 //N: used for SQL Type nvarchar
-                if (format != null || gb2312text(value as string))
-                    sb.Append("N");
-
-                sb.Append(DELIMETER)
+                sb.Append("N")
+                  .Append(DELIMETER)
                   .Append((value as string).Replace("'", "''"))
                   .Append(DELIMETER);
             }
@@ -104,7 +102,7 @@ namespace Sys.Data
                 List<string> list = new List<string>();
                 foreach (var x in value as IEnumerable)
                 {
-                    list.Add(new SqlValue(x).ToString(format));
+                    list.Add(new SqlValue(x).ToScript());
                 }
                 return $"({string.Join(",", list)})";
             }
@@ -118,7 +116,7 @@ namespace Sys.Data
 
         public override string ToString()
         {
-            return this.ToString(null);
+            return this.ToScript();
         }
 
     }

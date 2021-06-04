@@ -29,7 +29,7 @@ namespace Sys.Data
     [System.AttributeUsage(System.AttributeTargets.Class)]
     public class LocatorAttribute : Attribute
     {
-        private Locator locator = null;
+        private readonly Locator locator = null;
         public bool Unique = true;
 
         public LocatorAttribute(string any)

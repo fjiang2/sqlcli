@@ -19,8 +19,8 @@ namespace Sys.Data.Comparison
         private string[] compareColumns;
         public string[] ExceptColumns { get; set; }//don't compare these columns
 
-        private ITableSchema schema1;
-        private ITableSchema schema2;
+        private readonly ITableSchema schema1;
+        private readonly ITableSchema schema2;
 
         public TableCompare(ITableSchema schema1, ITableSchema schema2)
         {

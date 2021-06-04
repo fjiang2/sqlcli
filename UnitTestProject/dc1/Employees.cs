@@ -5,7 +5,7 @@ using System.Linq;
 using Sys.Data;
 using Sys.Data.Linq;
 
-namespace UnitTestProject.Northwind.dbo
+namespace UnitTestProject.Northwind.dc1
 {
 	public partial class Employees
 	{
@@ -68,33 +68,13 @@ namespace UnitTestProject.Northwind.dbo
 		public static List<Employees> ToEmployeesCollection(this DataTable dt)
 		{
 			return dt.AsEnumerable()
-			.Select(row => NewObject(row))
-			.ToList();
-		}
-		
-		public static Employees NewObject(DataRow row)
-		{
-			return new Employees
+			.Select(row =>
 			{
-				EmployeeID = row.GetField<int>(_EMPLOYEEID),
-				LastName = row.GetField<string>(_LASTNAME),
-				FirstName = row.GetField<string>(_FIRSTNAME),
-				Title = row.GetField<string>(_TITLE),
-				TitleOfCourtesy = row.GetField<string>(_TITLEOFCOURTESY),
-				BirthDate = row.GetField<DateTime>(_BIRTHDATE),
-				HireDate = row.GetField<DateTime>(_HIREDATE),
-				Address = row.GetField<string>(_ADDRESS),
-				City = row.GetField<string>(_CITY),
-				Region = row.GetField<string>(_REGION),
-				PostalCode = row.GetField<string>(_POSTALCODE),
-				Country = row.GetField<string>(_COUNTRY),
-				HomePhone = row.GetField<string>(_HOMEPHONE),
-				Extension = row.GetField<string>(_EXTENSION),
-				Photo = row.GetField<byte[]>(_PHOTO),
-				Notes = row.GetField<string>(_NOTES),
-				ReportsTo = row.GetField<int>(_REPORTSTO),
-				PhotoPath = row.GetField<string>(_PHOTOPATH)
-			};
+				var obj = new Employees();
+				FillObject(obj, row);
+				return obj;
+			})
+			.ToList();
 		}
 		
 		public static void FillObject(this Employees item, DataRow row)
@@ -144,24 +124,24 @@ namespace UnitTestProject.Northwind.dbo
 		public static DataTable CreateTable()
 		{
 			DataTable dt = new DataTable();
-			dt.Columns.Add(new DataColumn(_EMPLOYEEID, typeof(System.Int32)));
-			dt.Columns.Add(new DataColumn(_LASTNAME, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_FIRSTNAME, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_TITLE, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_TITLEOFCOURTESY, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_BIRTHDATE, typeof(System.DateTime)));
-			dt.Columns.Add(new DataColumn(_HIREDATE, typeof(System.DateTime)));
-			dt.Columns.Add(new DataColumn(_ADDRESS, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_CITY, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_REGION, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_POSTALCODE, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_COUNTRY, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_HOMEPHONE, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_EXTENSION, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_PHOTO, typeof(System.Byte[])));
-			dt.Columns.Add(new DataColumn(_NOTES, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_REPORTSTO, typeof(System.Int32)));
-			dt.Columns.Add(new DataColumn(_PHOTOPATH, typeof(System.String)));
+			dt.Columns.Add(new DataColumn(_EMPLOYEEID, typeof(int)));
+			dt.Columns.Add(new DataColumn(_LASTNAME, typeof(string)));
+			dt.Columns.Add(new DataColumn(_FIRSTNAME, typeof(string)));
+			dt.Columns.Add(new DataColumn(_TITLE, typeof(string)));
+			dt.Columns.Add(new DataColumn(_TITLEOFCOURTESY, typeof(string)));
+			dt.Columns.Add(new DataColumn(_BIRTHDATE, typeof(DateTime)));
+			dt.Columns.Add(new DataColumn(_HIREDATE, typeof(DateTime)));
+			dt.Columns.Add(new DataColumn(_ADDRESS, typeof(string)));
+			dt.Columns.Add(new DataColumn(_CITY, typeof(string)));
+			dt.Columns.Add(new DataColumn(_REGION, typeof(string)));
+			dt.Columns.Add(new DataColumn(_POSTALCODE, typeof(string)));
+			dt.Columns.Add(new DataColumn(_COUNTRY, typeof(string)));
+			dt.Columns.Add(new DataColumn(_HOMEPHONE, typeof(string)));
+			dt.Columns.Add(new DataColumn(_EXTENSION, typeof(string)));
+			dt.Columns.Add(new DataColumn(_PHOTO, typeof(byte[])));
+			dt.Columns.Add(new DataColumn(_NOTES, typeof(string)));
+			dt.Columns.Add(new DataColumn(_REPORTSTO, typeof(int)));
+			dt.Columns.Add(new DataColumn(_PHOTOPATH, typeof(string)));
 			
 			return dt;
 		}
@@ -175,13 +155,6 @@ namespace UnitTestProject.Northwind.dbo
 				dt.Rows.Add(row);
 			}
 			dt.AcceptChanges();
-		}
-		
-		public static DataTable ToDataTable(this IEnumerable<Employees> items)
-		{
-			var dt = CreateTable();
-			ToDataTable(items, dt);
-			return dt;
 		}
 		
 		public static IDictionary<string, object> ToDictionary(this Employees item)

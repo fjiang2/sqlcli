@@ -125,7 +125,7 @@ namespace Sys.Data.Code
        
 
 
-        public static void CreateTableSchemaFields(TableName tname, DataTable dt, Class clss)
+        public static void CreateTableSchemaFields(DataTable dt, Class clss)
         {
             Field field;
 
@@ -179,7 +179,7 @@ namespace Sys.Data.Code
 
         }
 
-        protected static Field CreateConstraintField(TableName tname)
+        protected static Field CreateConstraintField(TableName tname, string EXTENSION)
         {
             const string CONSTRAINT = nameof(Constraint);
             CodeString ToColumn(string table, string column)
@@ -235,7 +235,7 @@ namespace Sys.Data.Code
             return field;
         }
 
-
+       
         protected class AssociationPropertyInfo
         {
             public string PropertyType { get; set; }
@@ -246,7 +246,7 @@ namespace Sys.Data.Code
             public string FK_Column { get; set; }
         }
 
-        protected List<AssociationPropertyInfo> CreateAssoicationClass(TableName tname, Class clss)
+        protected static List<AssociationPropertyInfo> CreateAssoicationClass(TableName tname, Class clss)
         {
             List<AssociationPropertyInfo> properties = new List<AssociationPropertyInfo>();
 

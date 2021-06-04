@@ -8,7 +8,7 @@ namespace Sys.Data.Log
     public class Log
     {
         private LogTransaction logTransaction = null;
-        private TransactionType type;
+        private readonly TransactionType type;
 
         public Log(TransactionType type)
         {

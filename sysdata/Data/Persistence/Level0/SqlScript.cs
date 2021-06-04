@@ -11,8 +11,8 @@ namespace Sys.Data
     {
         public const string GO = "GO";
 
-        private string scriptFile;
-        private ConnectionProvider provider;
+        private readonly string scriptFile;
+        private readonly ConnectionProvider provider;
 
         public event EventHandler<SqlExecutionEventArgs> Reported;
         public event EventHandler<EventArgs> Completed;

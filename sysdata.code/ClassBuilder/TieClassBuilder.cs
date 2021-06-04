@@ -103,7 +103,7 @@ namespace Sys.Data.Code
             clss.Add(prop);
         }
 
-        private Property createProperty(string name, TypeInfo ty, string var)
+        private static Property createProperty(string name, TypeInfo ty, string var)
         {
             Comment comment = new Comment(var) { Alignment = Alignment.Top };
             return new Property(ty, name)

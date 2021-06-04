@@ -11,9 +11,9 @@ namespace Sys.Data
     {
         public List<SqlClause> Clauses { get; } = new List<SqlClause>();
 
-        private Position pos;
-        private Error error;
-        private StringLex lex;
+        private readonly Position pos;
+        private readonly Error error;
+        private readonly StringLex lex;
 
         public SqlCode(string sql)
         {

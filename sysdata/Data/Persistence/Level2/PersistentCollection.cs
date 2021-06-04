@@ -520,7 +520,7 @@ namespace Sys.Data
         private class DpcEnumerator : IDisposable, IEnumerator<T>, IEnumerator
         //where T : class, IDataPersistentObject, new()
         {
-            PersistentCollection<T> dpc;
+            readonly PersistentCollection<T> dpc;
             int cursor = -1;
 
             public DpcEnumerator(PersistentCollection<T> dpc)

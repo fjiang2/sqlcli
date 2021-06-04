@@ -14,9 +14,9 @@ namespace Sys.Networking.WebSockets
 {
     public class WebSocketServer
     {
-        private CancellationTokenSource cts;
-        private HttpListener listener;
-        private Uri prefix;
+        private readonly CancellationTokenSource cts;
+        private readonly HttpListener listener;
+        private readonly Uri prefix;
 
         public string Name { get; set; }
 
@@ -153,7 +153,7 @@ namespace Sys.Networking.WebSockets
             }
         }
 
-        private BlockingCollection<WebSocketMessage> queue = new BlockingCollection<WebSocketMessage>();
+        private readonly BlockingCollection<WebSocketMessage> queue = new BlockingCollection<WebSocketMessage>();
 
         private void Enque(WebSocket ws, WebSocketMessage message)
         {

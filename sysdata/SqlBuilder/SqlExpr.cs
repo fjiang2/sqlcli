@@ -29,7 +29,7 @@ namespace Sys.Data
         internal const string PHYSLOC = "%%physloc%%";
         internal const string ROWID = "%%RowId%%";
 
-        private StringBuilder script = new StringBuilder();
+        private readonly StringBuilder script = new StringBuilder();
 
         private SqlExpr()
         {

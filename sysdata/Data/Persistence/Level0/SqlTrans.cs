@@ -27,8 +27,8 @@ namespace Sys.Data
    
     public sealed class SqlTrans
     {
-        private SqlConnection connection;
-        private SqlTransaction sqlTransaction;
+        private readonly SqlConnection connection;
+        private readonly SqlTransaction sqlTransaction;
 
         public SqlTrans()
         {

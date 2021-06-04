@@ -13,7 +13,7 @@ namespace Sys.Networking
         public string Application { get; set; }
 
         private RemoteInvoke remoteInvoke;
-        private object map;
+        private readonly object map;
 
         public RemoteAgent()
             : this(null)

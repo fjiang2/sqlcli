@@ -8,8 +8,8 @@ namespace Sys.Data.Comparison
 {
     class TableSchemaCompare
     {
-        TableName tableName1;
-        TableName tableName2;
+        readonly TableName tableName1;
+        readonly TableName tableName2;
 
         public TableSchemaCompare(TableName name1, TableName name2)
         {

@@ -32,7 +32,7 @@ namespace Sys.Data.Code
             JsonDataContract = 0x2000,
         }
 
-        private DataTable dt;
+        private readonly DataTable dt;
 
         public ConfClassBuilder(IApplicationCommand cmd, DataTable dt)
             : base(cmd)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using Tie;
 
-namespace Sys.Stdio
+namespace Sys.Stdio.Cli
 {
     public class Command : ICommand
     {
@@ -45,10 +45,8 @@ namespace Sys.Stdio
         {
             if (string.IsNullOrEmpty(line))
                 return;
-
-            string _line;
-
-            if (!eval(line, out _line))
+            
+            if (!eval(line, out string _line))
             {
                 InvalidCommand = true;
                 return;

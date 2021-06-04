@@ -19,7 +19,7 @@ namespace Sys.Data
 
         public string ToScript()
         {
-            return new SqlValue(Value).ToString("N");
+            return new SqlValue(Value).ToScript();
         }
 
         public static string ToScript(IColumn column)

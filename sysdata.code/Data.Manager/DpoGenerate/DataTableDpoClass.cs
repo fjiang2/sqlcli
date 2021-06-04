@@ -10,13 +10,11 @@ namespace Sys.Data.Manager
 {
     class DataTableDpoClass : ITableSchema
     {
-
-        DataTable table;
-        ClassTableName tableName;
-
-        ColumnCollection _columns;
-        IdentityKeys _identity;
-        ComputedColumns _computedColumns;
+        readonly DataTable table;
+        readonly ClassTableName tableName;
+        readonly ColumnCollection _columns;
+        readonly IdentityKeys _identity;
+        readonly ComputedColumns _computedColumns;
 
         public DataTableDpoClass(DataTable table)
         {
@@ -96,7 +94,7 @@ namespace Sys.Data.Manager
 
     class DtColumn : IColumn
     {
-        DataColumn column;
+        readonly DataColumn column;
         public DtColumn(DataColumn column)
         { 
             this.column = column;

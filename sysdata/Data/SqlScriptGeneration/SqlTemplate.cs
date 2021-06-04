@@ -9,7 +9,7 @@ namespace Sys.Data
 
     class SqlTemplate
     {
-        private string formalName;
+        private readonly string formalName;
         private SqlTemplateFormat format = SqlTemplateFormat.SingleLine;
         private string NewLine = string.Empty;
 
@@ -99,7 +99,7 @@ namespace Sys.Data
 
         public string AddColumn(string column, object defaultValue)
         {
-            string value = new SqlValue(defaultValue).ToString("N");
+            string value = new SqlValue(defaultValue).ToScript();
             return $"ALTER TABLE {formalName} ADD {column} DEFAULT({value})";
         }
 

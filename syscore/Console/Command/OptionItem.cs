@@ -1,6 +1,6 @@
-﻿namespace Sys.Stdio
+﻿namespace Sys.Stdio.Cli
 {
-    public class OptionItem
+    class OptionItem
     {
         public char Prefix { get; set; }
 

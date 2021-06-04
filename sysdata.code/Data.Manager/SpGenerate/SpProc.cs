@@ -28,10 +28,10 @@ namespace Sys.Data.Manager
 {
     class SpProc
     {
-        DatabaseName databaseName;
-        string spName;
-        string spDef;
-        string spDefVariable; //const variable name points to stored procedure definition
+        readonly DatabaseName databaseName;
+        readonly string spName;
+        readonly string spDef;
+        readonly string spDefVariable; //const variable name points to stored procedure definition
 
         public SpProc(DatabaseName databaseName, string spName, string spDef)
         {

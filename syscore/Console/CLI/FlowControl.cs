@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Tie;
 using Sys.Stdio;
 
-namespace Sys.Cli
+namespace Sys.Stdio.Cli
 {
     class FlowControl
     {
@@ -15,8 +15,8 @@ namespace Sys.Cli
         private const string IF = "if";
 
 
-        private string[] lines;
-        private Dictionary<string, int> anchors = new Dictionary<string, int>();
+        private readonly string[] lines;
+        private readonly Dictionary<string, int> anchors = new Dictionary<string, int>();
 
         private int SP = 0;
 

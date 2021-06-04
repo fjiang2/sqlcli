@@ -15,7 +15,7 @@ namespace Sys
         private const string _FUNC_CONFIG = "config";
         private const string _FUNC_CFG = "cfg";
 
-        private static TextWriter cerr = Console.Error;
+        private static readonly TextWriter cerr = Console.Error;
 
         protected Memory DS = new Memory();
 
@@ -260,7 +260,7 @@ namespace Sys
                 return;
 
             var link = FileLink.CreateLink(url);
-            bool exists = false;
+            bool exists;
             try
             {
                 exists = link.Exists;
@@ -277,7 +277,7 @@ namespace Sys
                 return;
             }
 
-            string code = null;
+            string code;
             try
             {
                 code = link.ReadAllText();

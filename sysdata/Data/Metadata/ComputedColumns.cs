@@ -24,7 +24,7 @@ namespace Sys.Data
 {
     public class ComputedColumns
     {
-        private string[] columnNames;
+        private readonly string[] columnNames;
 
         public ComputedColumns()
         {

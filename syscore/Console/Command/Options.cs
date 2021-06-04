@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sys.Stdio
+namespace Sys.Stdio.Cli
 {
 
     public class Options
     {
-        private List<OptionItem> list = new List<OptionItem>();
+        private readonly List<OptionItem> list = new List<OptionItem>();
 
         internal Options()
         {

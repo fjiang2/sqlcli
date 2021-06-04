@@ -7,7 +7,7 @@ namespace Sys.Data
 {
     public class DataContractTable<T> where T : IDataContractRow, new()
     {
-        private DataTable dt;
+        private readonly DataTable dt;
 
         public DataContractTable(DataTable dt)
         {

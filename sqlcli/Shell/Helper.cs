@@ -7,6 +7,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using Sys.Stdio;
+using Sys.Stdio.Cli;
 
 namespace sqlcli
 {

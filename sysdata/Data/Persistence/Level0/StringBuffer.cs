@@ -4,8 +4,8 @@ namespace Sys.Data
 {
     class StringBuffer
     {
-        private int batchSize;
-        private List<string> list = new List<string>();
+        private readonly int batchSize;
+        private readonly List<string> list = new List<string>();
 
         public int Line { get; set; }
         public int BatchLine { get; set; }

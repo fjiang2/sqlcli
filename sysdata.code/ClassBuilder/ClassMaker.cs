@@ -186,7 +186,7 @@ namespace Sys.Data.Code
             return ReadAllText(path);
         }
 
-        protected string ReadAllText(string path)
+        protected static string ReadAllText(string path)
         {
             if (!File.Exists(path))
             {

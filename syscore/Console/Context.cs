@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tie;
-using Sys.Cli;
+using Sys.Stdio.Cli;
 
 namespace Sys.Stdio
 {
@@ -86,7 +86,7 @@ namespace Sys.Stdio
 
                         if (line != null)
                         {
-                            IShell shell = DS[SHELL].Value as IShell;
+                            Shell shell = DS[SHELL].Value as Shell;
                             if (shell != null)
                             {
                                 int result = (int)shell.Run(line);

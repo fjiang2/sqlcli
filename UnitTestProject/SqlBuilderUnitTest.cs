@@ -8,9 +8,9 @@ namespace UnitTestProject
     [TestClass]
     public class SqlBuilderUnitTest
     {
-        SqlExpr ProductId = "ProductId".ColumnName();
-        string Products = "Products";
-        string Categories = "Categories";
+        readonly SqlExpr ProductId = "ProductId".ColumnName();
+        readonly string Products = "Products";
+        readonly string Categories = "Categories";
 
         public SqlBuilderUnitTest()
         {
@@ -82,7 +82,7 @@ WHERE Products.[Discontinued] <> 1 ";
         [TestMethod]
         public void UPDATE_TestMethod()
         {
-            string sql = "UPDATE Products SET [ProductName] = 'Apple', [UnitPrice] = 20 WHERE [ProductId] BETWEEN 10 AND 30";
+            string sql = "UPDATE Products SET [ProductName] = N'Apple', [UnitPrice] = 20 WHERE [ProductId] BETWEEN 10 AND 30";
             string query = new SqlBuilder()
                 .UPDATE(Products)
                 .SET("ProductName".ColumnName() == "Apple", "UnitPrice".ColumnName() == 20)

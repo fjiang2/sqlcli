@@ -10,7 +10,7 @@ namespace Sys.Networking.WebSockets
     public class WebSocketMessage
     {
         private static readonly Encoding encoding = Encoding.UTF8;
-        private byte[] bytes;
+        private readonly byte[] bytes;
 
         public NetworkCredential Credential { get; set; }
 

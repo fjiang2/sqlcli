@@ -24,7 +24,7 @@ namespace Sys.Data
 {
     public class ForeignKeys : IForeignKeys
     {
-        private IForeignKey[] keys;
+        private readonly IForeignKey[] keys;
 
         public ForeignKeys(IForeignKey[] columns)
         {

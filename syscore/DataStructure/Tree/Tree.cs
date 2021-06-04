@@ -27,7 +27,7 @@ namespace Sys
     /// <typeparam name="T"></typeparam>
     public class Tree<T> where T : class
     {
-        private TreeNode<T> root;
+        private readonly TreeNode<T> root;
 
         /// <summary>
         /// Create a empty tree

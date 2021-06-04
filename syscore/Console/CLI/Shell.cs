@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using System.IO;
 
 using Sys;
-using Sys.Data;
+using Sys.IO;
 using Sys.Stdio;
 
-namespace Sys.Cli
+namespace Sys.Stdio.Cli
 {
     public class Shell : IShell
     {
@@ -21,10 +21,9 @@ namespace Sys.Cli
         /// <summary>
         /// read command line from console and run command
         /// </summary>
-        public void DoConsole()
+        public void Run()
         {
-
-            string line = null;
+            string line;
 
         L1:
             cout.Write($"{Task.CurrentPath}> ");
@@ -64,7 +63,7 @@ namespace Sys.Cli
         /// process command batch file
         /// </summary>
         /// <param name="lines"></param>
-        public void DoBatch(string[] lines)
+        internal void DoBatch(string[] lines)
         {
             FlowControl flow = new FlowControl(lines);
             NextStep next = flow.Execute(Run);
@@ -75,7 +74,7 @@ namespace Sys.Cli
         }
 
         private bool multipleLineMode = false;
-        private StringBuilder multipleLineBuilder = new StringBuilder();
+        private readonly StringBuilder multipleLineBuilder = new StringBuilder();
 
         public NextStep Run(string line)
         {
@@ -171,5 +170,22 @@ namespace Sys.Cli
 #endif
         }
 
+        public static void RunBatch(IWorkspace workspace, string path, string[] args)
+        {
+            RunBatch(null, workspace, path, args);
+        }
+
+        /// <summary>
+        /// Run batch file
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="workspace"></param>
+        /// <param name="path">batch file name</param>
+        /// <param name="args">batch file arguments, arguments is %1,%2,...</param>
+        public static void RunBatch(IShellTask task, IWorkspace workspace, string path, string[] args)
+        {
+            Batch batch = new Batch(workspace, path);
+            batch.Call(task, args);
+        }
     }
 }

@@ -46,7 +46,7 @@ namespace Sys.Data
 
         public ConnectionProvider Provider => provider;
 
-        private List<string> script = new List<string>();
+        private readonly List<string> script = new List<string>();
         public string Query
         {
             get

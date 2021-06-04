@@ -9,7 +9,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.IO;
 using Sys.Stdio;
-using Sys.Cli;
+using Sys.Stdio.Cli;
 
 namespace sqlcli
 {
@@ -85,10 +85,10 @@ namespace sqlcli
                 cerr.WriteLine($"line:{e.Line}, {e.Exception.Message}, SQL:{e.Command}");
             };
 
-            Func<bool> stopOnError = () =>
+            static bool stopOnError()
             {
                 return !cin.YesOrNo("are you sure to continue (yes/no)?");
-            };
+            }
 
             script.Execute(stopOnError);
             cout.WriteLine("completed.");

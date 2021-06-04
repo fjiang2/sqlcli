@@ -5,7 +5,7 @@ using System.Linq;
 using Sys.Data;
 using Sys.Data.Linq;
 
-namespace UnitTestProject.Northwind.dbo
+namespace UnitTestProject.Northwind.dc1
 {
 	public partial class Territories
 	{
@@ -45,18 +45,13 @@ namespace UnitTestProject.Northwind.dbo
 		public static List<Territories> ToTerritoriesCollection(this DataTable dt)
 		{
 			return dt.AsEnumerable()
-			.Select(row => NewObject(row))
-			.ToList();
-		}
-		
-		public static Territories NewObject(DataRow row)
-		{
-			return new Territories
+			.Select(row =>
 			{
-				TerritoryID = row.GetField<string>(_TERRITORYID),
-				TerritoryDescription = row.GetField<string>(_TERRITORYDESCRIPTION),
-				RegionID = row.GetField<int>(_REGIONID)
-			};
+				var obj = new Territories();
+				FillObject(obj, row);
+				return obj;
+			})
+			.ToList();
 		}
 		
 		public static void FillObject(this Territories item, DataRow row)
@@ -76,9 +71,9 @@ namespace UnitTestProject.Northwind.dbo
 		public static DataTable CreateTable()
 		{
 			DataTable dt = new DataTable();
-			dt.Columns.Add(new DataColumn(_TERRITORYID, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_TERRITORYDESCRIPTION, typeof(System.String)));
-			dt.Columns.Add(new DataColumn(_REGIONID, typeof(System.Int32)));
+			dt.Columns.Add(new DataColumn(_TERRITORYID, typeof(string)));
+			dt.Columns.Add(new DataColumn(_TERRITORYDESCRIPTION, typeof(string)));
+			dt.Columns.Add(new DataColumn(_REGIONID, typeof(int)));
 			
 			return dt;
 		}
@@ -92,13 +87,6 @@ namespace UnitTestProject.Northwind.dbo
 				dt.Rows.Add(row);
 			}
 			dt.AcceptChanges();
-		}
-		
-		public static DataTable ToDataTable(this IEnumerable<Territories> items)
-		{
-			var dt = CreateTable();
-			ToDataTable(items, dt);
-			return dt;
 		}
 		
 		public static IDictionary<string, object> ToDictionary(this Territories item)

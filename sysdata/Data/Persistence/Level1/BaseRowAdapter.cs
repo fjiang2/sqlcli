@@ -27,12 +27,12 @@ namespace Sys.Data
         protected ColumnAdapterCollection columns;
         protected DataFieldCollection fields;
 
-        private TableName tableName;
+        private readonly TableName tableName;
         protected Locator locator;
 
         private DataRow loadedRow = null;    //existing row
         private bool? exists = null;
-        private SqlTemplate template;
+        private readonly SqlTemplate template;
 
         public BaseRowAdapter(TableName tname, Locator locator)
         {

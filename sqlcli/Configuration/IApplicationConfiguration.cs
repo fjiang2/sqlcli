@@ -5,7 +5,7 @@ using Sys.IO;
 namespace sqlcli
 {
 
-    public interface IApplicationConfiguration : IWorkSpace
+    public interface IApplicationConfiguration : IWorkspace
     {
         string OutputFile { get; }
         string XmlDbDirectory { get; }

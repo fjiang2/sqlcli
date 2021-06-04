@@ -16,7 +16,7 @@ namespace Sys.Collections
         private const string _KEY = "KEY";
         private const string _VALUE = "VALUE";
 
-        private DataTable dt;
+        private readonly DataTable dt;
         private bool isDirty = false;
 
         /// <summary>

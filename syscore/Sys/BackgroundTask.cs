@@ -35,7 +35,7 @@ namespace Sys
 
     public class BackgroundTask : BackgroundWorker
     {
-        private UserState state = new UserState();
+        private readonly UserState state = new UserState();
         private bool cancelled = false;
 
         public BackgroundTask()

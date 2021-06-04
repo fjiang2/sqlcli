@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Sys.Data;
 using Sys.Stdio;
-using Sys.Cli;
+using Sys.Stdio.Cli;
 
 namespace sqlcli
 {
@@ -21,7 +21,7 @@ namespace sqlcli
             this.cfg = cfg;
             this.connection = cfg.Connection;
             this.mgr = new PathManager(connection);
-            this.commandee = new Commandee(mgr);
+            this.commandee = new Commandee(mgr, cfg);
 
             string server = connection.Home;
 
@@ -34,7 +34,7 @@ namespace sqlcli
                 theSide = new Side(pvd);
                 ChangeSide(theSide);
             }
-            else if (connection.Providers.Count() > 0)
+            else if (connection.Providers.Count > 0)
             {
                 theSide = new Side(connection.Providers.First());
                 ChangeSide(theSide);

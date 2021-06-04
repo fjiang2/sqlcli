@@ -14,7 +14,7 @@ namespace Sys.Data.Code
 {
     public class Linq2SQLClassBuilder : TheClassBuilder
     {
-        private TableName tname;
+        private readonly TableName tname;
 
         public Linq2SQLClassBuilder(IApplicationCommand cmd, TableName tname)
             : base(cmd)
@@ -28,10 +28,6 @@ namespace Sys.Data.Code
             builder.AddUsing("System.Data.Linq");
             builder.AddUsing("System.Data.Linq.Mapping");
         }
-
-
-        
-        private Dictionary<DataColumn, TypeInfo> dict = new Dictionary<DataColumn, TypeInfo>();
 
 
         protected override void CreateClass()
@@ -82,7 +78,7 @@ namespace Sys.Data.Code
             var fkBy = schema.ByForeignKeys.Keys.OrderBy(k => k.FK_Table);
 
             Constructor constructor = null;
-            if (fkBy.Count() > 0)
+            if (fkBy.Any())
             {
                 clss.AppendLine();
 

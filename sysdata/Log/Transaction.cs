@@ -23,7 +23,7 @@ namespace Sys.Data.Log
 {
     public class Transaction
     {
-        int transactionId;
+        readonly int transactionId;
 
         public Transaction(int transactionId)
         {

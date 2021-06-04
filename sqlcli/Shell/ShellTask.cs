@@ -5,14 +5,14 @@ using Sys.Data;
 using Sys.Data.Comparison;
 using Tie;
 using Sys.Stdio;
-using Sys.Cli;
+using Sys.Stdio.Cli;
 
 namespace sqlcli
 {
     class ShellTask : ShellContext, IShellTask
     {
         public ShellTask(IApplicationConfiguration cfg)
-            :base(cfg)
+            : base(cfg)
         {
         }
 
@@ -116,25 +116,23 @@ namespace sqlcli
                     return NextStep.COMPLETED;
 
                 case "save":
-                    commandee.save(cmd, cfg);
+                    commandee.save(cmd);
                     return NextStep.COMPLETED;
 
                 case "execute":
-                    commandee.execute(cmd, cfg, theSide);
+                    commandee.execute(cmd, theSide);
                     if (commandee.ErrorCode == CommandState.OK)
                         return NextStep.COMPLETED;
                     else
                         return NextStep.ERROR;
 
                 case "open":
-                    commandee.open(cmd, cfg);
+                    commandee.open(cmd);
                     return NextStep.COMPLETED;
 
                 case "compare":
-                    {
-                        commandee.compare(cmd, cfg);
-                        return NextStep.COMPLETED;
-                    }
+                    commandee.compare(cmd);
+                    return NextStep.COMPLETED;
 
                 case "copy":
                     commandee.copy(cmd, CompareSideType.copy);
@@ -179,21 +177,16 @@ namespace sqlcli
 
                 case "path":
                     if (cmd.Arg1 == null)
-                    {
                         cout.WriteLine(cfg.Path);
-                    }
                     else
-                    {
                         Context.SetValue("path", cmd.Arg1);
-                    }
                     return NextStep.COMPLETED;
 
                 case "run":
                     if (cmd.Arg1 != null)
-                    {
-                        Batch batch = new Batch(cfg, cmd.Arg1);
-                        batch.Call(this, cmd.Arguments);
-                    }
+                        Shell.RunBatch(this, cfg, cmd.Arg1, cmd.Arguments);
+                    else
+                        cout.WriteLine("invalid arguments");
                     return NextStep.COMPLETED;
 
                 case "call":
@@ -203,19 +196,19 @@ namespace sqlcli
                         return NextStep.COMPLETED;
 
                 case "import":
-                    commandee.import(cmd, cfg, this);
+                    commandee.import(cmd);
                     return NextStep.COMPLETED;
 
                 case "export":
-                    commandee.export(cmd, cfg, this);
+                    commandee.export(cmd);
                     return NextStep.COMPLETED;
 
                 case "load":
-                    commandee.load(cmd, cfg, this);
+                    commandee.load(cmd);
                     return NextStep.COMPLETED;
 
                 case "clean":
-                    commandee.clean(cmd, cfg);
+                    commandee.clean(cmd);
                     return NextStep.COMPLETED;
 
                 case "mount":
@@ -227,16 +220,16 @@ namespace sqlcli
                     return NextStep.COMPLETED;
 
                 case "edit":
-                    commandee.edit(cmd, cfg, connection, theSide);
+                    commandee.edit(cmd, connection, theSide);
                     return NextStep.COMPLETED;
 
                 case "last":
-                    commandee.last(cmd, cfg);
+                    commandee.last(cmd);
                     return NextStep.COMPLETED;
 
                 case "chk":
                 case "check":
-                    commandee.check(cmd, theSide);
+                    commandee.check(cmd);
                     return NextStep.COMPLETED;
 
                 default:
@@ -428,7 +421,7 @@ namespace sqlcli
                 case "connection":
                     {
                         var L = connection.Providers.OrderBy(x => x.ServerName.Path);
-                        if (L.Count() > 0)
+                        if (L.Any())
                         {
                             L.Select(pvd => new { Alias = pvd.ServerName.Path, Connection = pvd.ToSimpleString() })
                             .ToConsole();

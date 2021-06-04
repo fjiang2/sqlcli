@@ -16,7 +16,7 @@ namespace Sys.Networking
     /// </summary>
     public class RemoteInvoke
     {
-        private Uri uri;
+        private readonly Uri uri;
 
         private Memory DS  {get ;set;}
 

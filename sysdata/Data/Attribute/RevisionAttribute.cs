@@ -23,7 +23,7 @@ namespace Sys.Data
 {
     public class RevisionAttribute :Attribute
     {
-        long revision;
+        readonly long revision;
 
         public RevisionAttribute(int ver)
         {

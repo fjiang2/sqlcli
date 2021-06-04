@@ -10,7 +10,7 @@ namespace Sys.Stdio
 {
     public class clog
     {
-        private static TextWriter writer = null;
+        private static readonly TextWriter writer = null;
 
         static clog()
         {

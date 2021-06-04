@@ -15,8 +15,8 @@ namespace sqlcli
 {
     class ConnectionConfiguration : IConnectionConfiguration
     {
-        private string home;
-        private VAL machines;
+        private readonly string home;
+        private readonly VAL machines;
         public ConnectionConfiguration(string home, VAL machines)
         {
             this.home = home;
