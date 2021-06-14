@@ -16,37 +16,32 @@ namespace sqlcli
     class Side : IDataPath 
     {
         public DatabaseName DatabaseName { get; private set; }
-        private ConnectionProvider provider;
 
         public Side(ConnectionProvider provider)
         {
-            this.provider = provider;
-            this.DatabaseName = new DatabaseName(provider, Provider.InitialCatalog);
+            this.DatabaseName = new DatabaseName(provider, provider.InitialCatalog);
+            UpdateDatabase(provider);
         }
 
 
-        public Side(ConnectionProvider provider, DatabaseName dname)
+        public Side(DatabaseName dname)
         {
-            this.provider = provider;
+            UpdateDatabase(dname);
+        }
+
+        public void UpdateDatabase(DatabaseName dname)
+        {
             this.DatabaseName = dname;
         }
 
         public void UpdateDatabase(ConnectionProvider provider)
         {
-            this.provider = provider;
             this.DatabaseName = new DatabaseName(provider, Provider.InitialCatalog);
         }
 
-        public ConnectionProvider Provider
-        {
-            get { return this.provider; }
-        }
+        public ConnectionProvider Provider => this.DatabaseName.Provider;
 
-
-        public string Path
-        {
-            get { return this.provider.Name; }
-        }
+        public string Path => this.Provider.Name;
 
         public string GenerateScript()
         {

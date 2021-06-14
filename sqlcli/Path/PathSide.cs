@@ -70,7 +70,7 @@ namespace sqlcli
             }
 
             var server = mgr.GetPathFrom<ServerName>(node);
-            side = new Side(server.Provider, dname);
+            side = new Side(dname);
 
             T = new TableName[] { };
 
@@ -123,7 +123,7 @@ namespace sqlcli
                 T = dname.GetTableNames();
 
             var server = mgr.GetPathFrom<ServerName>(node);
-            side = new Side(server.Provider, dname);
+            side = new Side(dname);
 
             return true;
         }

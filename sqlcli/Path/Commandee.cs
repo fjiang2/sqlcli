@@ -2209,7 +2209,10 @@ sp_rename '{1}', '{2}', 'COLUMN'";
             return true; // NextStep.COMPLETED;
         }
 
-
+        public override string ToString()
+        {
+            return mgr.ToString();
+        }
     }
 }
 

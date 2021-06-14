@@ -255,9 +255,9 @@ namespace sqlcli
                 if (dname != null)
                 {
                     if (theSide == null)
-                        theSide = new Side(dname.Provider);
+                        theSide = new Side(dname);
                     else
-                        theSide.UpdateDatabase(dname.Provider);
+                        theSide.UpdateDatabase(dname);
                 }
                 else
                 {
@@ -265,7 +265,7 @@ namespace sqlcli
                     if (sname != null)
                     {
                         if (theSide == null)
-                            theSide = new Side(dname.Provider);
+                            theSide = new Side(dname);
                         else
                             theSide.UpdateDatabase(sname.Provider);
                     }

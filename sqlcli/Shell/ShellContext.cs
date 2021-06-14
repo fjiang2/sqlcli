@@ -61,7 +61,8 @@ namespace sqlcli
 
         public void SwitchTask(IShellTask context)
         {
-            ChangeSide((context as ShellContext).theSide);
+            Side side = (context as ShellContext).theSide;
+            ChangeSide(side);
         }
     }
 }
