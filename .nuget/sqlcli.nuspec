@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+  <metadata>
+    <id>sqlcon</id>
+    <version>3.0.0.0</version>
+    <title>sqlcli</title>
+    <authors>datconn</authors>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/fjiang2/sqlcon/</projectUrl>
+    <iconUrl>http://download-codeplex.sec.s-msft.com/Download?ProjectName=tie&amp;DownloadId=331680&amp;Build=20841</iconUrl>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <description>
+      Operate databases(servers) like file system on the disk
+      sqlcon command: dir,cd,md,rd,del,type,ren,copy,comp,xcopy,cls,ver,echo,rem,set,import,export,mount,umount,open,save,edit,clean,execute,attrib
+      Support SQL Server, LocalDB, SQL Azure, SQL Server Express
+      Support Xml database on disk or web/ftp site which is used to compare database on 2 differnet networks.
+      Support unlimited database server connections
+      Compare data/schema between 2+ databases or database servers, and generate SQL script
+      Copy data/schema between 2+ databases or database servers
+      Search data rows, column, table, view, proc and database name by wildcard(*,?)
+      Edit data on GUI or console
+      Clean redundant rows 
+      Delete rows with constraints
+      Generate data in format of json, CSV, and SQL script
+      Generate C# class: data contract, Linq to SQL, and entity framework
+      Execute SQL Script file
+      Support all SQL statements
+    </description>
+    <summary> SQL Console Tools for DevOps</summary>
+    <releaseNotes>
+	  6/17/2021 v3.0.0.0
+  	    1. Converted from sqlcon project (.NET Framework 4.x).
+    </releaseNotes>
+    <dependencies>
+      <group targetFramework="net5.0">
+        <dependency id="Tie" version="2.0.8.0" />
+      </group>
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="..\sqlcli\bin\Debug\net5.0\**\*.*" target="lib\net5.0" exclude="**\*.pdb;**\*.dev.json"/>
+  </files>
+</package>

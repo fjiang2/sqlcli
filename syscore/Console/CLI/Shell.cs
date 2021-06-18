@@ -155,15 +155,11 @@ namespace Sys.Stdio.Cli
 #else
             try
             {
-                return command.DoSingleLineCommand(text);
+                return Task.DoSingleLineCommand(line);
             }
-            catch (System.Data.SqlClient.SqlException ex1)
+            catch (Exception ex)
             {
-                cerr.WriteLine($"SQL:{ex1.AllMessages()}");
-            }
-            catch (Exception ex2)
-            {
-                cerr.WriteLine(ex2.Message);
+                cerr.WriteLine(ex.AllMessages());
             }
 
             return NextStep.ERROR;
