@@ -104,7 +104,7 @@ namespace Sys.Data
             set
             {
                 var builder = WriteValue(column, rowId, value);
-                new SqlCmd(builder).ExecuteNonQuery();
+                new SqlCmd(builder.Provider, builder.Query).ExecuteNonQuery();
                 table.AcceptChanges();
             }
         }
@@ -128,7 +128,7 @@ namespace Sys.Data
             string col = column.ColumnName;
             int rowId = RowId(row);
             var builder = UpdateClause(col, rowId, value);
-            new SqlCmd(builder).ExecuteNonQuery();
+            new SqlCmd(builder.Provider, builder.Query).ExecuteNonQuery();
             row.AcceptChanges();
         }
 
@@ -168,10 +168,10 @@ namespace Sys.Data
             }
 
             var builder = new SqlBuilder().INSERT_INTO(TableName, columns.ToArray()).VALUES(values.ToArray());
-            new SqlCmd(builder).ExecuteNonQuery();
+            new SqlCmd(TableName.Provider, builder.Query).ExecuteNonQuery();
 
             builder = new SqlBuilder().SELECT().COLUMNS(SqlExpr.PHYSLOC).FROM(TableName).WHERE(where.AND());
-            var loc = new SqlCmd(builder).FillObject<byte[]>();
+            var loc = new SqlCmd(TableName.Provider, builder.Query).FillObject<byte[]>();
             LOC.Add(loc);
 
             row[colRowID] = table.Rows.Count - 1; //this will trigger events ColumnChanged or RowChanged

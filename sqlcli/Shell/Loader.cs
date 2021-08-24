@@ -71,7 +71,7 @@ namespace sqlcli
                     var builder = new SqlBuilder().INSERT_INTO(tname, columns).VALUES(values);
                     try
                     {
-                        new SqlCmd(builder).ExecuteNonQuery();
+                        new SqlCmd(tname.Provider, builder.Query).ExecuteNonQuery();
                     }
                     catch (System.Data.SqlClient.SqlException ex)
                     {

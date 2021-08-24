@@ -25,7 +25,7 @@ namespace Sys.Data
     /// <summary>
     /// SQL clauses builder
     /// </summary>
-    public sealed class SqlBuilder : SqlBuilderInfo, ISqlBuilder
+    public sealed class SqlBuilder : SqlBuilderInfo
     {
         private ConnectionProvider provider;
 
@@ -372,7 +372,7 @@ namespace Sys.Data
             }
         }
 
-        public SqlCmd SqlCmd => new SqlCmd(this);
+        public SqlCmd SqlCmd => new SqlCmd(this.Provider, this.Query);
 
     }
 }

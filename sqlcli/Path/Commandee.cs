@@ -986,7 +986,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
 
             Locator locator = new Locator(setting.KeyName.ColumnName() == key);
             SqlBuilder builder = new SqlBuilder().SELECT().COLUMNS(setting.ValueName.ColumnName()).FROM(tname).WHERE(locator);
-            var L = new SqlCmd(builder).FillDataColumn<string>(0);
+            var L = new SqlCmd(tname.Provider, builder.Query).FillDataColumn<string>(0);
             if (L.Any())
             {
                 cerr.WriteLine($"undefined key: {key}");
@@ -1891,7 +1891,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
                 string colValue = cmd.GetValue("value") ?? "Value";
 
                 SqlBuilder builder = new SqlBuilder().SELECT().COLUMNS(new string[] { colKey, colValue }).FROM(tname);
-                var L = new SqlCmd(builder).ToList(row => new { Key = row.GetField<string>(colKey), Value = row.GetField<string>(colValue) });
+                var L = new SqlCmd(tname.Provider, builder.Query).ToList(row => new { Key = row.GetField<string>(colKey), Value = row.GetField<string>(colValue) });
 
                 Memory DS = new Memory();
                 foreach (var kvp in L)

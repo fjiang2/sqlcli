@@ -115,7 +115,7 @@ namespace Sys.Data
             get
             {
                 object value1 = propertyInfo1.GetValue(dpoInstance, null);
-                SqlCmd cmd = new SqlCmd(this.clause1);
+                SqlCmd cmd = new SqlCmd(this.clause1.Provider, this.clause1.Query);
                 cmd.AddParameter(association.Column1.SqlParameterName(), value1);
                 return cmd.FillDataTable().ToArray<object>(association.Relation1);
             }
@@ -127,7 +127,7 @@ namespace Sys.Data
                 return ;
 
             object value1 = propertyInfo1.GetValue(dpoInstance, null);
-            SqlCmd cmd = new SqlCmd(this.clause2);
+            SqlCmd cmd = new SqlCmd(this.clause2.Provider, clause2.Query);
             cmd.AddParameter(association.Column1.SqlParameterName(), value1);
             DataTable dataTable =  cmd.FillDataTable();
 

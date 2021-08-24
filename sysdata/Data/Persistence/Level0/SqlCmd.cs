@@ -53,11 +53,6 @@ namespace Sys.Data
             ParseParameters(parameters);
         }
 
-        public SqlCmd(ISqlBuilder builder)
-            : this(builder.Provider, builder.Query)
-        {
-        }
-
         /// <summary>
         /// parameters can be VAL, Dictionary, Json, DbParameter, and anonymous class
         /// </summary>
