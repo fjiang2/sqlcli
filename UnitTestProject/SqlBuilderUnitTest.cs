@@ -8,7 +8,7 @@ namespace UnitTestProject
     [TestClass]
     public class SqlBuilderUnitTest
     {
-        readonly SqlExpr ProductId = "ProductId".ColumnName();
+        readonly Expression ProductId = "ProductId".AsColumn();
         readonly string Products = "Products";
         readonly string Categories = "Categories";
 
@@ -30,7 +30,7 @@ namespace UnitTestProject
         public void IS_NULL_TestMethod()
         {
             string sql = "SELECT COUNT(*) FROM Products WHERE [ProductId] IS NULL";
-            string query = new SqlBuilder().SELECT().COLUMNS(SqlExpr.COUNT).FROM(Products).WHERE(ProductId.IS_NULL()).ToString();
+            string query = new SqlBuilder().SELECT().COLUMNS(Expression.COUNT_STAR).FROM(Products).WHERE(ProductId.IS_NULL()).ToString();
 
             Debug.Assert(sql == query.Substring(0, sql.Length));
         }
@@ -39,7 +39,7 @@ namespace UnitTestProject
         public void IS_NOT_NULL_TestMethod()
         {
             string sql = "SELECT COUNT(*) FROM Products WHERE [ProductId] IS NOT NULL";
-            string query = new SqlBuilder().SELECT().COLUMNS(SqlExpr.COUNT).FROM(Products).WHERE(ProductId != null).ToString();
+            string query = new SqlBuilder().SELECT().COLUMNS(Expression.COUNT_STAR).FROM(Products).WHERE(ProductId != null).ToString();
 
             Debug.Assert(sql == query.Substring(0, sql.Length));
         }
@@ -48,7 +48,7 @@ namespace UnitTestProject
         public void BETWEEN_TestMethod()
         {
             string sql = "SELECT COUNT(*), MAX([ProductId]) FROM Products WHERE [ProductId] BETWEEN 10 AND 30";
-            string query = new SqlBuilder().SELECT().COLUMNS(SqlExpr.COUNT, ProductId.MAX()).FROM(Products).WHERE(ProductId.BETWEEN(10, 30)).ToString();
+            string query = new SqlBuilder().SELECT().COLUMNS(Expression.COUNT_STAR, ProductId.MAX()).FROM(Products).WHERE(ProductId.BETWEEN(10, 30)).ToString();
 
             Debug.Assert(sql == query.Substring(0, sql.Length));
         }
@@ -63,17 +63,17 @@ WHERE Products.[Discontinued] <> 1 ";
             string query = new SqlBuilder()
                 .SELECT()
                 .COLUMNS(
-                    "CategoryName".ColumnName(Categories),
-                    "ProductName".ColumnName(Products),
-                    "QuantityPerUnit".ColumnName(Products),
-                    "UnitsInStock".ColumnName(Products),
-                    "Discontinued".ColumnName(Products)
+                    "CategoryName".AsColumn(Categories),
+                    "ProductName".AsColumn(Products),
+                    "QuantityPerUnit".AsColumn(Products),
+                    "UnitsInStock".AsColumn(Products),
+                    "Discontinued".AsColumn(Products)
                     )
                 .AppendLine()
                 .FROM(Categories)
-                .INNER().JOIN(Products).ON("CategoryID".ColumnName(Categories) == "CategoryID".ColumnName(Products))
+                .INNER().JOIN(Products).ON("CategoryID".AsColumn(Categories) == "CategoryID".AsColumn(Products))
                 .AppendLine()
-                .WHERE("Discontinued".ColumnName(Products) != 1)
+                .WHERE("Discontinued".AsColumn(Products) != 1)
                 .ToString();
 
             Debug.Assert(sql == query.Substring(0, sql.Length));
@@ -85,7 +85,7 @@ WHERE Products.[Discontinued] <> 1 ";
             string sql = "UPDATE Products SET [ProductName] = N'Apple', [UnitPrice] = 20 WHERE [ProductId] BETWEEN 10 AND 30";
             string query = new SqlBuilder()
                 .UPDATE(Products)
-                .SET("ProductName".ColumnName() == "Apple", "UnitPrice".ColumnName() == 20)
+                .SET("ProductName".AsColumn() == "Apple", "UnitPrice".AsColumn() == 20)
                 .WHERE(ProductId.BETWEEN(10, 30))
                 .ToString();
 

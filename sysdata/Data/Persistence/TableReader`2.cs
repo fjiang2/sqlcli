@@ -39,18 +39,18 @@ namespace Sys.Data
         {
 
             SqlBuilder relationships = new SqlBuilder()
-                .SELECT().COLUMNS().FROM<T1>().WHERE(column1.RelationName.ColumnName() == value);
+                .SELECT().COLUMNS().FROM<T1>().WHERE(column1.RelationName.AsColumn() == value);
 
             SqlBuilder many = new SqlBuilder()
                 .SELECT().COLUMNS()
                 .FROM<T2>()
-                .WHERE(column2.Name.ColumnName()
+                .WHERE(column2.Name.AsColumn()
                     .IN(
                          new SqlBuilder()
                             .SELECT()
                             .COLUMNS(column2.RelationName)
                             .FROM<T1>()
-                            .WHERE(column1.RelationName.ColumnName() == value)
+                            .WHERE(column1.RelationName.AsColumn() == value)
                         )
                     );
 

@@ -78,18 +78,18 @@ namespace Sys.Data
                 this.clause1 = new SqlBuilder()
                     .SELECT().COLUMNS(association.Relation2)
                     .FROM(association.TRelation)
-                    .WHERE(association.Relation1.ColumnName() == association.Column1.ParameterName());
+                    .WHERE(association.Relation1.AsColumn() == association.Column1.AsParameter());
 
                 this.clause2 = new SqlBuilder()
                     .SELECT()
                     .COLUMNS()
                     .FROM(dpoType2)
-                    .WHERE(association.Relation2.ColumnName().IN(this.clause1));
+                    .WHERE(association.Relation2.AsColumn().IN(this.clause1));
                     
             }
             else
             {
-                SqlExpr where = association.Column2.ColumnName() == association.Column1.ParameterName();
+                Expression where = association.Column2.AsColumn() == association.Column1.AsParameter();
                 if (association.Filter != null)
                     where = where.AND(association.Filter);
 

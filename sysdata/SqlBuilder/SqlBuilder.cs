@@ -107,7 +107,7 @@ namespace Sys.Data
             return AppendLine($"USE {databaseName.Name}");
         }
 
-        public SqlBuilder SET(string key, SqlExpr value)
+        public SqlBuilder SET(string key, Expression value)
         {
             return AppendLine($"SET {key} {value}");
         }
@@ -132,8 +132,8 @@ namespace Sys.Data
         {
             if (has)
             {
-                return Append($"{SqlExpr.PHYSLOC} AS [{SqlExpr.PHYSLOC}],")
-                       .Append($"0 AS [{SqlExpr.ROWID}],");
+                return Append($"{Expression.PHYSLOC} AS [{Expression.PHYSLOC}],")
+                       .Append($"0 AS [{Expression.ROWID}],");
             }
 
             return this;
@@ -151,12 +151,12 @@ namespace Sys.Data
                 return COLUMNS("*");
             else
             {
-                var L = columns.Select(column => column.ColumnName());
+                var L = columns.Select(column => column.AsColumn());
                 return COLUMNS(string.Join(",", L));
             }
         }
 
-        public SqlBuilder COLUMNS(params SqlExpr[] columns)
+        public SqlBuilder COLUMNS(params Expression[] columns)
         {
             if (columns.Count() == 0)
                 return COLUMNS("*");
@@ -187,7 +187,7 @@ namespace Sys.Data
             return AppendSpace($"UPDATE").TABLE_NAME(tableName, alias);
         }
 
-        public SqlBuilder SET(params SqlExpr[] assignments) => SET(string.Join<SqlExpr>(", ", assignments));
+        public SqlBuilder SET(params Expression[] assignments) => SET(string.Join<Expression>(", ", assignments));
 
         public SqlBuilder SET(string assignments) => AppendSpace("SET").AppendSpace(assignments);
 
@@ -230,7 +230,7 @@ namespace Sys.Data
 
         #region WHERE clause
 
-        public SqlBuilder WHERE(SqlExpr exp)
+        public SqlBuilder WHERE(Expression exp)
         {
             AppendSpace($"WHERE {exp}");
             this.Merge(exp);
@@ -252,7 +252,7 @@ namespace Sys.Data
 
         public SqlBuilder WHERE(byte[] loc)
         {
-            return WHERE($"{SqlExpr.PHYSLOC} = {new SqlValue(loc)}");
+            return WHERE($"{Expression.PHYSLOC} = {new SqlValue(loc)}");
         }
 
         #endregion
@@ -272,7 +272,7 @@ namespace Sys.Data
 
         public SqlBuilder JOIN(SqlTableName tableName, string alias = null) => AppendSpace("JOIN").TABLE_NAME(tableName, alias);
 
-        public SqlBuilder ON(SqlExpr exp)
+        public SqlBuilder ON(Expression exp)
         {
             AppendSpace($"ON {exp}");
             this.Merge(exp);
@@ -289,7 +289,7 @@ namespace Sys.Data
             return AppendSpace($"GROUP BY {JoinColumns(columns)}");
         }
 
-        public SqlBuilder HAVING(SqlExpr expr)
+        public SqlBuilder HAVING(Expression expr)
         {
             return AppendSpace($"HAVING {expr}");
         }

@@ -984,8 +984,8 @@ sp_rename '{1}', '{2}', 'COLUMN'";
                 return;
             }
 
-            Locator locator = new Locator(setting.KeyName.ColumnName() == key);
-            SqlBuilder builder = new SqlBuilder().SELECT().COLUMNS(setting.ValueName.ColumnName()).FROM(tname).WHERE(locator);
+            Locator locator = new Locator(setting.KeyName.AsColumn() == key);
+            SqlBuilder builder = new SqlBuilder().SELECT().COLUMNS(setting.ValueName.AsColumn()).FROM(tname).WHERE(locator);
             var L = new SqlCmd(tname.Provider, builder.Query).FillDataColumn<string>(0);
             if (L.Any())
             {
@@ -1001,7 +1001,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
 
             builder = new SqlBuilder()
                 .UPDATE(tname)
-                .SET(setting.ValueName.ColumnName() == value)
+                .SET(setting.ValueName.AsColumn() == value)
                 .WHERE(locator);
 
             try

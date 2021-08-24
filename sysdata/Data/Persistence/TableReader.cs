@@ -73,7 +73,7 @@ namespace Sys.Data
                 if (table.IsValueCreated)
                     return Table.Rows.Count;
 
-                var sql = new SqlBuilder().SELECT().COLUMNS(SqlExpr.COUNT).FROM(tableName).WHERE(locator);
+                var sql = new SqlBuilder().SELECT().COLUMNS(Expression.COUNT_STAR).FROM(tableName).WHERE(locator);
 
                 object obj = new SqlCmd(tableName.Provider, sql.Query).ExecuteScalar();
                 long count = Convert.ToInt64(obj);

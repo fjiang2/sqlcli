@@ -16,7 +16,7 @@ namespace Sys.Data.Linq
             this.builder = new StringBuilder();
         }
 
-        public string Translate(Expression expression)
+        public string Translate(System.Linq.Expressions.Expression expression)
         {
             if (expression == null)
                 return null;
@@ -26,7 +26,7 @@ namespace Sys.Data.Linq
             return this.builder.ToString();
         }
 
-        private static Expression StripQuotes(Expression expr)
+        private static System.Linq.Expressions.Expression StripQuotes(System.Linq.Expressions.Expression expr)
         {
             while (expr.NodeType == ExpressionType.Quote)
             {
@@ -35,7 +35,7 @@ namespace Sys.Data.Linq
             return expr;
         }
 
-        protected override Expression VisitMethodCall(MethodCallExpression expr)
+        protected override System.Linq.Expressions.Expression VisitMethodCall(MethodCallExpression expr)
         {
             if (expr.Method.DeclaringType != typeof(Queryable) && expr.Method.DeclaringType != typeof(Enumerable))
                 throw new NotSupportedException(string.Format("The method '{0}' is not supported", expr.Method.Name));
@@ -59,7 +59,7 @@ namespace Sys.Data.Linq
             throw new NotSupportedException(string.Format("The method '{0}' is not supported", expr.Method.Name));
         }
 
-        protected override Expression VisitUnary(UnaryExpression expr)
+        protected override System.Linq.Expressions.Expression VisitUnary(UnaryExpression expr)
         {
             switch (expr.NodeType)
             {
@@ -77,7 +77,7 @@ namespace Sys.Data.Linq
         }
 
 
-        protected override Expression VisitBinary(BinaryExpression expr)
+        protected override System.Linq.Expressions.Expression VisitBinary(BinaryExpression expr)
         {
             builder.Append("(");
             this.Visit(expr.Left);
@@ -148,7 +148,7 @@ namespace Sys.Data.Linq
             return expr;
         }
 
-        protected override Expression VisitConstant(ConstantExpression expr)
+        protected override System.Linq.Expressions.Expression VisitConstant(ConstantExpression expr)
         {
             IQueryable q = expr.Value as IQueryable;
 
@@ -165,7 +165,7 @@ namespace Sys.Data.Linq
             return expr;
         }
 
-        protected override Expression VisitMember(MemberExpression expr)
+        protected override System.Linq.Expressions.Expression VisitMember(MemberExpression expr)
         {
             if (expr.Expression != null)
             {
@@ -212,13 +212,13 @@ namespace Sys.Data.Linq
             }
         }
 
-        protected static bool IsNullConstant(Expression expression)
+        protected static bool IsNullConstant(System.Linq.Expressions.Expression expression)
         {
             return (expression.NodeType == ExpressionType.Constant && ((ConstantExpression)expression).Value == null);
         }
 
 
-        private static object GetValue(Expression expression)
+        private static object GetValue(System.Linq.Expressions.Expression expression)
         {
             object GetMemberValue(MemberInfo memberInfo, object container = null)
             {
@@ -250,7 +250,7 @@ namespace Sys.Data.Linq
                     return GetMemberValue(memberExpression.Member, GetValue(memberExpression.Expression));
 
                 case MethodCallExpression methodCallExpression:
-                    return Expression.Lambda(methodCallExpression).Compile().DynamicInvoke();
+                    return System.Linq.Expressions.Expression.Lambda(methodCallExpression).Compile().DynamicInvoke();
 
                 case null:
                     return null;

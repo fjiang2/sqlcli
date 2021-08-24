@@ -30,14 +30,14 @@ namespace Sys.Data
 
             foreach (DataColumn column in table.Columns)
             {
-                if (column.ColumnName == SqlExpr.PHYSLOC)
+                if (column.ColumnName == Expression.PHYSLOC)
                 {
                     this.hasPhysloc = true;
                     colLoc = column;
                     I1 = i;
                 }
 
-                if (column.ColumnName == SqlExpr.ROWID)
+                if (column.ColumnName == Expression.ROWID)
                 {
                     this.hasPhysloc = true;
                     colRowID = column;
@@ -136,7 +136,7 @@ namespace Sys.Data
         {
             List<string> columns = new List<string>();
             List<object> values = new List<object>();
-            List<SqlExpr> where = new List<SqlExpr>();
+            List<Expression> where = new List<Expression>();
 
             var _columns = TableName.GetTableSchema().Columns;
 
@@ -170,7 +170,7 @@ namespace Sys.Data
             var builder = new SqlBuilder().INSERT_INTO(TableName, columns.ToArray()).VALUES(values.ToArray());
             new SqlCmd(TableName.Provider, builder.Query).ExecuteNonQuery();
 
-            builder = new SqlBuilder().SELECT().COLUMNS(SqlExpr.PHYSLOC).FROM(TableName).WHERE(where.AND());
+            builder = new SqlBuilder().SELECT().COLUMNS(Expression.PHYSLOC).FROM(TableName).WHERE(where.AND());
             var loc = new SqlCmd(TableName.Provider, builder.Query).FillObject<byte[]>();
             LOC.Add(loc);
 
