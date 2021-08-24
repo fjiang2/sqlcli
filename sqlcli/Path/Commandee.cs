@@ -218,7 +218,7 @@ namespace sqlcli
 
             try
             {
-                int count = builder.SqlCmd.ExecuteNonQuery();
+                int count = builder.SqlCmd().ExecuteNonQuery();
                 cout.WriteLine("{0} of row(s) affected", count);
             }
             catch (Exception ex)
@@ -381,9 +381,9 @@ namespace sqlcli
             {
                 int count;
                 if (locator == null)
-                    count = new SqlBuilder().DELETE(tname).SqlCmd.ExecuteNonQuery();
+                    count = new SqlBuilder().DELETE(tname).SqlCmd().ExecuteNonQuery();
                 else
-                    count = new SqlBuilder().DELETE(tname).WHERE(locator).SqlCmd.ExecuteNonQuery();
+                    count = new SqlBuilder().DELETE(tname).WHERE(locator).SqlCmd().ExecuteNonQuery();
 
                 cout.WriteLine("{0} of row(s) affected", count);
             }
@@ -986,7 +986,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
 
             Locator locator = new Locator(setting.KeyName.AsColumn() == key);
             SqlBuilder builder = new SqlBuilder().SELECT().COLUMNS(setting.ValueName.AsColumn()).FROM(tname).WHERE(locator);
-            var L = new SqlCmd(tname.Provider, builder.Query).FillDataColumn<string>(0);
+            var L = new SqlCmd(tname.Provider, builder.Script).FillDataColumn<string>(0);
             if (L.Any())
             {
                 cerr.WriteLine($"undefined key: {key}");
@@ -1006,7 +1006,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
 
             try
             {
-                int count = builder.SqlCmd.ExecuteNonQuery();
+                int count = builder.SqlCmd().ExecuteNonQuery();
                 cout.WriteLine("{0} of row(s) affected", count);
             }
             catch (Exception ex)
@@ -1891,7 +1891,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
                 string colValue = cmd.GetValue("value") ?? "Value";
 
                 SqlBuilder builder = new SqlBuilder().SELECT().COLUMNS(new string[] { colKey, colValue }).FROM(tname);
-                var L = new SqlCmd(tname.Provider, builder.Query).ToList(row => new { Key = row.GetField<string>(colKey), Value = row.GetField<string>(colValue) });
+                var L = new SqlCmd(tname.Provider, builder.Script).ToList(row => new { Key = row.GetField<string>(colKey), Value = row.GetField<string>(colValue) });
 
                 Memory DS = new Memory();
                 foreach (var kvp in L)

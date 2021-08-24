@@ -69,6 +69,32 @@ namespace Sys.Data
             return new DPCollection<T>(list.Table);
         }
 
+
+        public static SqlCmd SqlCmd(this SqlBuilder sql) => new SqlCmd(sql.Provider, sql.Script);
+
+
+        public static bool Invalid(this SqlBuilder sql)
+        {
+            bool result = false;
+
+            sql.SqlCmd().Error += (sender, e) =>
+            {
+                result = true;
+            };
+
+            try
+            {
+                sql.SqlCmd().ExecuteScalar();
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return true;
+            }
+        }
+
+
     }
 
 }

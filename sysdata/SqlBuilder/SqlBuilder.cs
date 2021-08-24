@@ -34,20 +34,12 @@ namespace Sys.Data
             this.provider = ConnectionProviderManager.DefaultProvider;
         }
 
-        public SqlBuilder(ConnectionProvider privider)
-        {
-            this.provider = privider;
-        }
-
-        public static explicit operator string(SqlBuilder sql)
-        {
-            return sql.Query;
-        }
+     
 
         public ConnectionProvider Provider => provider;
 
         private readonly List<string> script = new List<string>();
-        public string Query
+        public string Script
         {
             get
             {
@@ -325,9 +317,9 @@ namespace Sys.Data
         {
             var builder = new SqlBuilder();
 
-            builder.Append(clause1.Query)
+            builder.Append(clause1.Script)
                 .AppendLine()
-                .Append(clause2.Query);
+                .Append(clause2.Script);
             return builder;
         }
 
@@ -341,38 +333,18 @@ namespace Sys.Data
         {
             var builder = new SqlBuilder();
 
-            builder.Append(clause1.Query)
+            builder.Append(clause1.Script)
                 .Append(" ")
-                .Append(clause2.Query);
+                .Append(clause2.Script);
             return builder;
         }
 
 
 
-        public override string ToString() => Query;
+        public override string ToString() => Script;
 
-        public bool Invalid()
-        {
-            bool result = false;
+    
 
-            SqlCmd.Error += (sender, e) =>
-            {
-                result = true;
-            };
-
-            try
-            {
-                SqlCmd.ExecuteScalar();
-
-                return result;
-            }
-            catch (Exception)
-            {
-                return true;
-            }
-        }
-
-        public SqlCmd SqlCmd => new SqlCmd(this.Provider, this.Query);
 
     }
 }

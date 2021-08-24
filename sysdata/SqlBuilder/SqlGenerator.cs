@@ -7,7 +7,7 @@ using Sys.Data.Linq;
 
 namespace Sys.Data
 {
-    public class SqlMaker : SqlColumnValuePairCollection
+    public class SqlGenerator : SqlColumnValuePairCollection
     {
         public string TableName { get; }
         public string[] PrimaryKeys { get; set; }
@@ -21,7 +21,7 @@ namespace Sys.Data
 
         private readonly SqlTemplate template;
 
-        public SqlMaker(string formalName)
+        public SqlGenerator(string formalName)
         {
             this.TableName = formalName;
             this.template = new SqlTemplate(formalName);

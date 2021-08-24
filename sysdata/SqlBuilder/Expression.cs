@@ -302,7 +302,7 @@ namespace Sys.Data
 
         public Expression IN(SqlBuilder select)
         {
-            this.WrapSpace($"IN ({select.Query})");
+            this.WrapSpace($"IN ({select.Script})");
             this.Merge(select);
             return this;
         }
