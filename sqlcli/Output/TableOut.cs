@@ -88,7 +88,7 @@ namespace sqlcli
 		{
 			try
 			{
-				DataTable table = builder.SqlCmd().FillDataTable();
+				DataTable table = builder.SqlCmd(tname.Provider).FillDataTable();
 				table.SetSchemaAndTableName(tname);
 				ShellHistory.SetLastResult(table);
 

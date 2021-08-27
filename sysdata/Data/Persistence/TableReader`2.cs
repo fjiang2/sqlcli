@@ -55,7 +55,7 @@ namespace Sys.Data
                     );
 
 
-            this.dataset = (relationships + many).SqlCmd().FillDataSet();
+            this.dataset = (relationships + many).SqlCmd(ConnectionProviderManager.DefaultProvider).FillDataSet();
             
         }
 

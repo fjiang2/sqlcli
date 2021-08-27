@@ -27,16 +27,10 @@ namespace Sys.Data
     /// </summary>
     public sealed class SqlBuilder : SqlBuilderInfo
     {
-        private ConnectionProvider provider;
 
         public SqlBuilder()
         {
-            this.provider = ConnectionProviderManager.DefaultProvider;
         }
-
-     
-
-        public ConnectionProvider Provider => provider;
 
         private readonly List<string> script = new List<string>();
         public string Script
@@ -79,9 +73,6 @@ namespace Sys.Data
             AppendSpace(tableName.ToString());
             if (!string.IsNullOrEmpty(alias))
                 AppendSpace(alias);
-
-            if (tableName.Provider != null)
-                this.provider = tableName.Provider;
 
             return this;
         }

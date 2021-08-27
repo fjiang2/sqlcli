@@ -70,21 +70,21 @@ namespace Sys.Data
         }
 
 
-        public static SqlCmd SqlCmd(this SqlBuilder sql) => new SqlCmd(sql.Provider, sql.Script);
+        public static SqlCmd SqlCmd(this SqlBuilder sql, ConnectionProvider provider) => new SqlCmd(provider, sql.Script);
 
 
-        public static bool Invalid(this SqlBuilder sql)
+        public static bool Invalid(this SqlBuilder sql, TableName tname)
         {
             bool result = false;
 
-            sql.SqlCmd().Error += (sender, e) =>
+            sql.SqlCmd(tname.Provider).Error += (sender, e) =>
             {
                 result = true;
             };
 
             try
             {
-                sql.SqlCmd().ExecuteScalar();
+                sql.SqlCmd(tname.Provider).ExecuteScalar();
 
                 return result;
             }

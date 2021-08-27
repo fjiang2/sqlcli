@@ -218,7 +218,7 @@ namespace sqlcli
 
             try
             {
-                int count = builder.SqlCmd().ExecuteNonQuery();
+                int count = builder.SqlCmd(tname.Provider).ExecuteNonQuery();
                 cout.WriteLine("{0} of row(s) affected", count);
             }
             catch (Exception ex)
@@ -381,9 +381,9 @@ namespace sqlcli
             {
                 int count;
                 if (locator == null)
-                    count = new SqlBuilder().DELETE(tname).SqlCmd().ExecuteNonQuery();
+                    count = new SqlBuilder().DELETE(tname).SqlCmd(tname.Provider).ExecuteNonQuery();
                 else
-                    count = new SqlBuilder().DELETE(tname).WHERE(locator).SqlCmd().ExecuteNonQuery();
+                    count = new SqlBuilder().DELETE(tname).WHERE(locator).SqlCmd(tname.Provider).ExecuteNonQuery();
 
                 cout.WriteLine("{0} of row(s) affected", count);
             }
@@ -1006,7 +1006,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
 
             try
             {
-                int count = builder.SqlCmd().ExecuteNonQuery();
+                int count = builder.SqlCmd(tname.Provider).ExecuteNonQuery();
                 cout.WriteLine("{0} of row(s) affected", count);
             }
             catch (Exception ex)

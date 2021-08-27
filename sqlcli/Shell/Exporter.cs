@@ -324,7 +324,7 @@ namespace sqlcli
 
 
                         cout.WriteLine("start to generate {0}", tname);
-                        var dt = new SqlBuilder().SELECT().TOP(cmd.Top).COLUMNS().FROM(tname).SqlCmd().FillDataTable();
+                        var dt = new SqlBuilder().SELECT().TOP(cmd.Top).COLUMNS().FROM(tname).SqlCmd(tname.Provider).FillDataTable();
                         var file = xmlDbFile.WriteData(tname, dt);
                         cout.WriteLine("completed {0} => {1}", tname.ShortName, file);
                     }
@@ -417,7 +417,7 @@ namespace sqlcli
                 if (file == null)
                     file = fullName(tname);
 
-                var dt = new SqlBuilder().SELECT().COLUMNS(cmd.Columns).FROM(tname).SqlCmd().FillDataTable();
+                var dt = new SqlBuilder().SELECT().COLUMNS(cmd.Columns).FROM(tname).SqlCmd(tname.Provider).FillDataTable();
                 using (var writer = file.CreateStreamWriter(cmd.Append))
                 {
                     CsvFile.Write(dt, writer, true);

@@ -107,7 +107,7 @@ namespace Sys.Data
             set
             {
                 var builder = WriteValue(column, rowId, value);
-                new SqlCmd(builder.Provider, builder.Script).ExecuteNonQuery();
+                new SqlCmd(TableName.Provider, builder.Script).ExecuteNonQuery();
                 table.AcceptChanges();
             }
         }
@@ -131,7 +131,7 @@ namespace Sys.Data
             string col = column.ColumnName;
             int rowId = RowId(row);
             var builder = UpdateClause(col, rowId, value);
-            new SqlCmd(builder.Provider, builder.Script).ExecuteNonQuery();
+            new SqlCmd(TableName.Provider, builder.Script).ExecuteNonQuery();
             row.AcceptChanges();
         }
 
