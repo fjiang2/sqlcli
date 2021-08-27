@@ -15,7 +15,7 @@ namespace Sys.Data.Linq
         {
         }
 
-        public List<string> Translate(Expression expression)
+        public List<string> Translate(System.Linq.Expressions.Expression expression)
         {
             if (expression == null)
                 return null;
@@ -24,7 +24,7 @@ namespace Sys.Data.Linq
             return this.properties;
         }
 
-        protected override Expression VisitMember(MemberExpression expr)
+        protected override System.Linq.Expressions.Expression VisitMember(MemberExpression expr)
         {
             if (expr.Expression != null)
             {

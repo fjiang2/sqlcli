@@ -8,14 +8,10 @@ namespace Sys.Data
     public class SchemaName
     {
         public static readonly SchemaName Dbo = new SchemaName(dbo);
+        public static readonly SchemaName Empty = new SchemaName(string.Empty);
         public const string dbo = "dbo";
 
         private readonly string name;
-
-        public SchemaName()
-        {
-            this.name = string.Empty;
-        }
 
         public SchemaName(string name)
         {

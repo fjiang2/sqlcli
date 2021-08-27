@@ -19,6 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
+using Sys.Data.Coding;
 
 namespace Sys.Data
 {
@@ -68,6 +69,32 @@ namespace Sys.Data
         {
             return new DPCollection<T>(list.Table);
         }
+
+
+        public static SqlCmd SqlCmd(this SqlBuilder sql, ConnectionProvider provider) => new SqlCmd(provider, sql.Script);
+
+
+        public static bool Invalid(this SqlBuilder sql, TableName tname)
+        {
+            bool result = false;
+
+            sql.SqlCmd(tname.Provider).Error += (sender, e) =>
+            {
+                result = true;
+            };
+
+            try
+            {
+                sql.SqlCmd(tname.Provider).ExecuteScalar();
+
+                return result;
+            }
+            catch (Exception)
+            {
+                return true;
+            }
+        }
+
 
     }
 

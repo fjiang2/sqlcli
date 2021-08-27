@@ -7,7 +7,7 @@ using Sys;
 using Sys.Data;
 using Sys.Stdio;
 using Sys.Stdio.Cli;
-
+using Sys.Data.Coding;
 
 namespace sqlcli
 {
@@ -217,7 +217,7 @@ namespace sqlcli
             }
 
             var builder = new SqlBuilder().SELECT().TOP(1).COLUMNS().FROM(tname).WHERE(locator);
-            if (builder.Invalid())
+            if (builder.Invalid(tname))
             {
                 cerr.WriteLine($"invalid path: {cmd.Arg1}");
                 return pt;

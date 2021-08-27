@@ -4,298 +4,302 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Data;
+using Sys.Data.Coding;
 
 namespace Sys.Data
 {
-    public class UniqueTable
-    {
-        public readonly TableName TableName;
-        public static string ROWID = "$RowId";
+	public class UniqueTable
+	{
+		public readonly TableName TableName;
+		public static string ROWID = "$RowId";
 
-        private readonly DataTable table;
-        private readonly List<byte[]> LOC = new List<byte[]>();
-        private readonly bool hasPhysloc = false;
+		private readonly DataTable table;
+		private readonly List<byte[]> LOC = new List<byte[]>();
+		private readonly bool hasPhysloc = false;
 
-        private readonly DataColumn colLoc = null;
-        private readonly DataColumn colRowID = null;
+		private readonly DataColumn colLoc = null;
+		private readonly DataColumn colRowID = null;
 
-        public UniqueTable(TableName tname, DataTable table)
-        {
-            this.TableName = tname;
-            this.table = table;
+		public const string _PHYSLOC = "%%physloc%%";
+		public const string _ROWID = "%%RowId%%";
 
-            int i = 0;
-            int I1 = -1;
-            int I2 = -1;
+		public UniqueTable(TableName tname, DataTable table)
+		{
+			this.TableName = tname;
+			this.table = table;
 
-            foreach (DataColumn column in table.Columns)
-            {
-                if (column.ColumnName == SqlExpr.PHYSLOC)
-                {
-                    this.hasPhysloc = true;
-                    colLoc = column;
-                    I1 = i;
-                }
+			int i = 0;
+			int I1 = -1;
+			int I2 = -1;
 
-                if (column.ColumnName == SqlExpr.ROWID)
-                {
-                    this.hasPhysloc = true;
-                    colRowID = column;
-                    I2 = i;
-                }
+			foreach (DataColumn column in table.Columns)
+			{
+				if (column.ColumnName == _PHYSLOC)
+				{
+					this.hasPhysloc = true;
+					colLoc = column;
+					I1 = i;
+				}
 
-                i++;
-            }
+				if (column.ColumnName == _ROWID)
+				{
+					this.hasPhysloc = true;
+					colRowID = column;
+					I2 = i;
+				}
 
-            if (!hasPhysloc)
-                return;
+				i++;
+			}
 
-            i = 0;
-            foreach (DataRow row in table.Rows)
-            {
-                LOC.Add((byte[])row[I1]);
-                row[I2] = i++;
-            }
+			if (!hasPhysloc)
+				return;
 
-            colRowID.ColumnName = ROWID;
+			i = 0;
+			foreach (DataRow row in table.Rows)
+			{
+				LOC.Add((byte[])row[I1]);
+				row[I2] = i++;
+			}
 
-            table.Columns.Remove(colLoc);
-            table.AcceptChanges();
-        }
+			colRowID.ColumnName = ROWID;
 
-        public bool HasPhysloc
-        {
-            get { return hasPhysloc; }
-        }
+			table.Columns.Remove(colLoc);
+			table.AcceptChanges();
+		}
 
-        public DataTable Table { get { return this.table; } }
+		public bool HasPhysloc
+		{
+			get { return hasPhysloc; }
+		}
 
-        public byte[] PhysLoc(int rowId)
-        {
-            if (rowId < 0 || rowId > LOC.Count - 1)
-                throw new IndexOutOfRangeException("RowId is out of range");
+		public DataTable Table { get { return this.table; } }
 
-            return LOC[rowId];
-        }
+		public byte[] PhysLoc(int rowId)
+		{
+			if (rowId < 0 || rowId > LOC.Count - 1)
+				throw new IndexOutOfRangeException("RowId is out of range");
 
-        private int RowId(DataRow row)
-        {
-            return (int)row[colRowID];
-        }
+			return LOC[rowId];
+		}
 
-        public object this[DataColumn column, DataRow row]
-        {
-            get
-            {
-                return this[column.ColumnName, RowId(row)];
-            }
-            set
-            {
-                this[column.ColumnName, RowId(row)] = value;
-            }
-        }
+		private int RowId(DataRow row)
+		{
+			return (int)row[colRowID];
+		}
 
-        public object this[string column, int rowId]
-        {
-            get
-            {
-                return table.Rows[rowId][column];
-            }
-            set
-            {
-                var builder = WriteValue(column, rowId, value);
-                new SqlCmd(builder).ExecuteNonQuery();
-                table.AcceptChanges();
-            }
-        }
+		public object this[DataColumn column, DataRow row]
+		{
+			get
+			{
+				return this[column.ColumnName, RowId(row)];
+			}
+			set
+			{
+				this[column.ColumnName, RowId(row)] = value;
+			}
+		}
 
-        public SqlBuilder WriteValue(string column, int rowId, object value)
-        {
-            table.Rows[rowId][column] = value;
-            return UpdateClause(column, rowId, value);
-        }
+		public object this[string column, int rowId]
+		{
+			get
+			{
+				return table.Rows[rowId][column];
+			}
+			set
+			{
+				var builder = WriteValue(column, rowId, value);
+				new SqlCmd(TableName.Provider, builder.Script).ExecuteNonQuery();
+				table.AcceptChanges();
+			}
+		}
 
-        private SqlBuilder UpdateClause(string column, int rowId, object value)
-        {
-            return new SqlBuilder().UPDATE(TableName).SET(column.Assign(value)).WHERE(PhysLoc(rowId));
-        }
+		public SqlBuilder WriteValue(string column, int rowId, object value)
+		{
+			table.Rows[rowId][column] = value;
+			return UpdateClause(column, rowId, value);
+		}
 
-        public void UpdateCell(DataRow row, DataColumn column, object value)
-        {
-            if (column == colRowID)
-                return;
+		private SqlBuilder UpdateClause(string column, int rowId, object value)
+		{
+			return new SqlBuilder().UPDATE(TableName).SET(column.AssignColumn(value)).WHERE(_PHYSLOC.AsColumn() == PhysLoc(rowId));
+		}
 
-            string col = column.ColumnName;
-            int rowId = RowId(row);
-            var builder = UpdateClause(col, rowId, value);
-            new SqlCmd(builder).ExecuteNonQuery();
-            row.AcceptChanges();
-        }
+		public void UpdateCell(DataRow row, DataColumn column, object value)
+		{
+			if (column == colRowID)
+				return;
 
-        public void InsertRow(DataRow row)
-        {
-            List<string> columns = new List<string>();
-            List<object> values = new List<object>();
-            List<SqlExpr> where = new List<SqlExpr>();
+			string col = column.ColumnName;
+			int rowId = RowId(row);
+			var builder = UpdateClause(col, rowId, value);
+			new SqlCmd(TableName.Provider, builder.Script).ExecuteNonQuery();
+			row.AcceptChanges();
+		}
 
-            var _columns = TableName.GetTableSchema().Columns;
+		public void InsertRow(DataRow row)
+		{
+			List<string> columns = new List<string>();
+			List<object> values = new List<object>();
+			List<Expression> where = new List<Expression>();
 
-            foreach (DataColumn column in table.Columns)
-            {
-                object value = row[column];
-                string name = column.ColumnName;
-                IColumn _column = _columns[column.ColumnName];
+			var _columns = TableName.GetTableSchema().Columns;
 
-                if (column == colRowID)
-                    continue;
+			foreach (DataColumn column in table.Columns)
+			{
+				object value = row[column];
+				string name = column.ColumnName;
+				IColumn _column = _columns[column.ColumnName];
 
-                if (value != DBNull.Value)
-                {
-                    columns.Add(name);
-                    values.Add(value);
+				if (column == colRowID)
+					continue;
 
-                    where.Add(name.Equal(value));
-                }
-                else if (!_column.Nullable)  //add default value to COLUMN NOT NULL
-                {
-                    Type type = _column.CType.ToType();
-                    value = GetDefault(type);
-                    columns.Add(name);
-                    values.Add(value);
+				if (value != DBNull.Value)
+				{
+					columns.Add(name);
+					values.Add(value);
 
-                    where.Add(name.Equal(value));
-                }
-            }
+					where.Add(name.AsColumn() == value.AsValue());
+				}
+				else if (!_column.Nullable)  //add default value to COLUMN NOT NULL
+				{
+					Type type = _column.CType.ToType();
+					value = GetDefault(type);
+					columns.Add(name);
+					values.Add(value);
 
-            var builder = new SqlBuilder().INSERT_INTO(TableName, columns.ToArray()).VALUES(values.ToArray());
-            new SqlCmd(builder).ExecuteNonQuery();
+					where.Add(name.AsColumn() == value.AsValue());
+				}
+			}
 
-            builder = new SqlBuilder().SELECT().COLUMNS(SqlExpr.PHYSLOC).FROM(TableName).WHERE(where.AND());
-            var loc = new SqlCmd(builder).FillObject<byte[]>();
-            LOC.Add(loc);
+			var builder = new SqlBuilder().INSERT_INTO(TableName, columns).VALUES(values);
+			new SqlCmd(TableName.Provider, builder.Script).ExecuteNonQuery();
 
-            row[colRowID] = table.Rows.Count - 1; //this will trigger events ColumnChanged or RowChanged
+			builder = new SqlBuilder().SELECT().COLUMNS(_PHYSLOC).FROM(TableName).WHERE(where.AND());
+			var loc = new SqlCmd(TableName.Provider, builder.Script).FillObject<byte[]>();
+			LOC.Add(loc);
 
-            row.AcceptChanges();
-        }
+			row[colRowID] = table.Rows.Count - 1; //this will trigger events ColumnChanged or RowChanged
 
-        private static object GetDefault(Type type)
-        {
-            if (type == typeof(string))
-                return string.Empty;
-            else if (type == typeof(DateTime))
-                return new DateTime();
-            else if (type == typeof(bool))
-                return false;
-            else if (type == typeof(int))
-                return 0;
-            else if (type == typeof(double))
-                return 0.0;
+			row.AcceptChanges();
+		}
 
-            if (type.IsValueType)
-            {
-                return Activator.CreateInstance(type);
-            }
+		private static object GetDefault(Type type)
+		{
+			if (type == typeof(string))
+				return string.Empty;
+			else if (type == typeof(DateTime))
+				return new DateTime();
+			else if (type == typeof(bool))
+				return false;
+			else if (type == typeof(int))
+				return 0;
+			else if (type == typeof(double))
+				return 0.0;
 
-            return null;
-        }
+			if (type.IsValueType)
+			{
+				return Activator.CreateInstance(type);
+			}
 
-
-        private DataColumnCollection columns = null;
-        public DataColumnCollection Columns
-        {
-            get
-            {
-                if (columns == null)
-                    columns = new DataColumnCollection(this.table);
-
-                return columns;
-            }
-        }
-    }
-
-    public class DataColumnCollection
-    {
-        private readonly DataTable table;
-        private readonly List<Column> columns = new List<Column>();
-
-        internal DataColumnCollection(DataTable table)
-        {
-            this.table = table;
-
-            foreach (DataColumn column in table.Columns)
-            {
-                columns.Add(new Column(this.table, column));
-            }
-        }
-
-        public Column this[DataColumn column]
-        {
-            get
-            {
-                return columns.Find(c => c.DataColumn == column);
-            }
-        }
+			return null;
+		}
 
 
-        public Column this[string column]
-        {
-            get
-            {
-                return columns.Find(c => c.DataColumn.ColumnName == column);
-            }
-        }
-    }
+		private DataColumnCollection columns = null;
+		public DataColumnCollection Columns
+		{
+			get
+			{
+				if (columns == null)
+					columns = new DataColumnCollection(this.table);
 
-    public class Column
-    {
-        private readonly DataColumn column;
-        private readonly DataTable table;
+				return columns;
+			}
+		}
+	}
 
-        internal Column(DataTable table, DataColumn name)
-        {
-            this.table = table;
-            this.column = name;
-        }
+	public class DataColumnCollection
+	{
+		private readonly DataTable table;
+		private readonly List<Column> columns = new List<Column>();
 
-        public DataColumn DataColumn
-        {
-            get { return this.column; }
-        }
+		internal DataColumnCollection(DataTable table)
+		{
+			this.table = table;
 
-        public object this[int rowId]
-        {
-            get
-            {
-                return table.Rows[rowId][column];
-            }
-            set
-            {
-                table.Rows[rowId][column] = value;
-            }
-        }
+			foreach (DataColumn column in table.Columns)
+			{
+				columns.Add(new Column(this.table, column));
+			}
+		}
 
-        public object[] ItemArray
-        {
-            get
-            {
-                object[] objs = new object[table.Rows.Count];
-                for (int i = 0; i < objs.Length; i++)
-                    objs[i] = table.Rows[i][column];
+		public Column this[DataColumn column]
+		{
+			get
+			{
+				return columns.Find(c => c.DataColumn == column);
+			}
+		}
 
-                return objs;
-            }
-            set
-            {
-                object[] objs = value;
-                for (int i = 0; i < objs.Length; i++)
-                    table.Rows[i][column] = objs[i];
-            }
-        }
 
-        public override string ToString()
-        {
-            return string.Format("Table Column Array: {0} size={1}", column.ColumnName, table.Rows.Count);
-        }
-    }
+		public Column this[string column]
+		{
+			get
+			{
+				return columns.Find(c => c.DataColumn.ColumnName == column);
+			}
+		}
+	}
+
+	public class Column
+	{
+		private readonly DataColumn column;
+		private readonly DataTable table;
+
+		internal Column(DataTable table, DataColumn name)
+		{
+			this.table = table;
+			this.column = name;
+		}
+
+		public DataColumn DataColumn
+		{
+			get { return this.column; }
+		}
+
+		public object this[int rowId]
+		{
+			get
+			{
+				return table.Rows[rowId][column];
+			}
+			set
+			{
+				table.Rows[rowId][column] = value;
+			}
+		}
+
+		public object[] ItemArray
+		{
+			get
+			{
+				object[] objs = new object[table.Rows.Count];
+				for (int i = 0; i < objs.Length; i++)
+					objs[i] = table.Rows[i][column];
+
+				return objs;
+			}
+			set
+			{
+				object[] objs = value;
+				for (int i = 0; i < objs.Length; i++)
+					table.Rows[i][column] = objs[i];
+			}
+		}
+
+		public override string ToString()
+		{
+			return string.Format("Table Column Array: {0} size={1}", column.ColumnName, table.Rows.Count);
+		}
+	}
 }

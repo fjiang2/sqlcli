@@ -20,6 +20,7 @@ using System.Text;
 using System.Reflection;
 using System.Data;
 using Tie;
+using Sys.Data.Coding;
 
 namespace Sys.Data
 {
@@ -79,16 +80,16 @@ namespace Sys.Data
             if (this.Identity.Length > 1)
                 throw new MessageException("multiple identity columns defined {0}", this.Identity);
 
-            UpdateObject(this.Identity.ColumnNames[0].ColumnName() == identityId);
+            UpdateObject(this.Identity.ColumnNames[0].AsColumn() == identityId);
         }
 
         /// <summary>
         /// Instantiate an instant from select a record from database
         /// </summary>
         /// <param name="where"></param>
-        public void UpdateObject(SqlExpr where)
+        public void UpdateObject(Expression where)
         {
-            DataRow row = new SqlCmd(this.TableName.Provider, new SqlBuilder().SELECT().COLUMNS().FROM(TableName).WHERE(where).Query).FillDataRow();
+            DataRow row = new SqlCmd(this.TableName.Provider, new SqlBuilder().SELECT().COLUMNS().FROM(TableName).WHERE(where).Script).FillDataRow();
             this.exists = row != null;
             
             if(exists)
@@ -523,7 +524,7 @@ namespace Sys.Data
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public virtual DataRow Update(SqlExpr where)
+        public virtual DataRow Update(Expression where)
         {
             Locator temp = this.locator;
             
@@ -675,7 +676,7 @@ namespace Sys.Data
         /// </summary>
         /// <param name="where"></param>
         /// <returns></returns>
-        public virtual bool Delete(SqlExpr where)
+        public virtual bool Delete(Expression where)
         {
             Locator temp = this.locator;
 

@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using Sys.Data;
 using Sys.Stdio;
+using Sys.Data.Coding;
 
 namespace sqlcli
 {
@@ -43,13 +44,13 @@ namespace sqlcli
 
             var builder = new SqlBuilder()
                 .SELECT()
-                .AppendSpace($"COUNT(*) AS [{COUNT_COLUMN_NAME}],")
+                .COLUMNS($"COUNT(*) AS [{COUNT_COLUMN_NAME}],")
                 .COLUMNS(_columns)
                 .FROM(tname)
-                .GROUP_BY(_columns).AppendSpace("HAVING COUNT(*)>1")
+                .GROUP_BY(_columns).HAVING(Expression.COUNT_STAR > 1 )
                 .ORDER_BY(_columns);
 
-            group = builder.SqlCmd.FillDataTable();
+            group = new SqlCmd(tname.Provider, builder.Script).FillDataTable();
         
         }
 
@@ -57,14 +58,14 @@ namespace sqlcli
         {
             foreach (var row in group.AsEnumerable())
             {
-                var where = _columns.Select(column => column.Equal(row[column])).AND();
+                var where = _columns.Select(column => column.AssignColumn(row[column])).AND();
                 if (AllColumnsSelected)
                     cout.WriteLine("idential rows");
                 else
                     cout.WriteLine("{0}", where);
 
                 var builder = new SqlBuilder().SELECT().COLUMNS().FROM(tname).WHERE(where);
-                display(builder.SqlCmd.FillDataTable());
+                display(new SqlCmd(tname.Provider, builder.Script).FillDataTable());
                 cout.WriteLine();
             }
         }
@@ -89,15 +90,15 @@ namespace sqlcli
             {
                 int count = row.Field<int>(COUNT_COLUMN_NAME);
 
-                var where = _columns.Select(column => column.Equal(row[column])).AND();
+                var where = _columns.Select(column => column.AssignColumn(row[column])).AND();
                 var builder = new SqlBuilder()
                     .SET("ROWCOUNT", count-1)
-                    .DELETE(tname)
+                    .DELETE_FROM(tname)
                     .WHERE(where)
                     .SET("ROWCOUNT", 0);
 
                 sum += count - 1;
-                builder.SqlCmd.ExecuteNonQuery();
+                new SqlCmd(tname.Provider, builder.Script).ExecuteNonQuery();
             }
 
             return sum;

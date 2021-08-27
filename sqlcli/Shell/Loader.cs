@@ -9,6 +9,7 @@ using Sys;
 using Sys.Data;
 using Sys.Stdio;
 using Tie;
+using Sys.Data.Coding;
 
 namespace sqlcli
 {
@@ -71,7 +72,7 @@ namespace sqlcli
                     var builder = new SqlBuilder().INSERT_INTO(tname, columns).VALUES(values);
                     try
                     {
-                        new SqlCmd(builder).ExecuteNonQuery();
+                        new SqlCmd(tname.Provider, builder.Script).ExecuteNonQuery();
                     }
                     catch (System.Data.SqlClient.SqlException ex)
                     {

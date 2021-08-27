@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Text;
+using Sys.Data.Coding;
 
 namespace Sys.Data
 {
@@ -46,7 +47,7 @@ namespace Sys.Data
               .Where(column => !ik.Contains(column.ColumnName))
               .Where(column => !ck.Contains(column.ColumnName));
 
-            var x1 = L1.Select(p => p.ColumnName.ColumnName());
+            var x1 = L1.Select(p => p.ColumnName.AsColumn());
             var x2 = L1.Select(p => p.Value.ToScript());
 
             if (InsertWithoutColumns)
@@ -67,7 +68,7 @@ namespace Sys.Data
                 .Where(column => !ik.Contains(column.ColumnName))
                 .Where(column => !pk.Contains(column.ColumnName))
                 .Where(column => !ck.Contains(column.ColumnName))
-                .Select(p => $"{p.ColumnName.ColumnName()} = {p.Value.ToScript()}");
+                .Select(p => $"{p.ColumnName.AsColumn()} = {p.Value.ToScript()}");
 
             string update = string.Join(",", L1);
             return template.Update(update, WHERE(pairs));

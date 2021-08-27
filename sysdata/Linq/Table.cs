@@ -14,7 +14,7 @@ namespace Sys.Data.Linq
         private readonly string formalName;
         private readonly ITableSchema schema;
 
-        public SqlMaker Generator { get; }
+        public SqlGenerator Generator { get; }
         public DataContext Context { get; }
 
         internal Table(DataContext context)
@@ -24,7 +24,7 @@ namespace Sys.Data.Linq
             this.schema = broker.Schema;
             this.formalName = schema.FormalTableName();
 
-            this.Generator = new SqlMaker(formalName)
+            this.Generator = new SqlGenerator(formalName)
             {
                 PrimaryKeys = schema.PrimaryKeys,
                 IdentityKeys = schema.IdentityKeys,
@@ -80,7 +80,7 @@ namespace Sys.Data.Linq
 
         private void OperateOnSubmit(RowOperation operation, TEntity entity)
         {
-            SqlMaker gen = this.Generator;
+            SqlGenerator gen = this.Generator;
 
             var dict = broker.ToDictionary(entity);
             gen.AddRange(dict);

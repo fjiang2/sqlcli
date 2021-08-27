@@ -20,6 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using System.Reflection;
+using Sys.Data.Coding;
 
 namespace Sys.Data
 {
@@ -42,6 +43,7 @@ namespace Sys.Data
         private readonly SqlBuilder clause1;     //A := SELECT UserRoles.Role_ID FROM UserRoles WHERE UserRoles.User_ID=@[User.ID]
         private readonly SqlBuilder clause2;     //B := SELECT * FROM Roles WHERE Roles.Role_ID IN (A)
 
+        ParameterContext context = new ParameterContext();
         public Mapping(PersistentObject dpo, PropertyInfo propertyInfo2)
         {
             this.association = Reflex.GetAssociationAttribute(propertyInfo2);
@@ -77,26 +79,26 @@ namespace Sys.Data
             {
                 this.clause1 = new SqlBuilder()
                     .SELECT().COLUMNS(association.Relation2)
-                    .FROM(association.TRelation)
-                    .WHERE(association.Relation1.ColumnName() == association.Column1.ParameterName());
+                    .FROM(association.TRelation.Name)
+                    .WHERE(association.Relation1.AsColumn() == context.AsParameter(association.Column1));
 
                 this.clause2 = new SqlBuilder()
                     .SELECT()
                     .COLUMNS()
-                    .FROM(dpoType2)
-                    .WHERE(association.Relation2.ColumnName().IN(this.clause1));
+                    .FROM(dpoType2.Name)
+                    .WHERE(association.Relation2.AsColumn().IN(this.clause1));
                     
             }
             else
             {
-                SqlExpr where = association.Column2.ColumnName() == association.Column1.ParameterName();
+                Expression where = association.Column2.AsColumn() == context.AsParameter(association.Column1);
                 if (association.Filter != null)
                     where = where.AND(association.Filter);
 
                 this.clause2 = new SqlBuilder()
                     .SELECT()
                     .COLUMNS()
-                    .FROM(dpoType2)
+                    .FROM(dpoType2.Name)
                     .WHERE(where);
 
                 if(association.OrderBy != null)
@@ -115,7 +117,7 @@ namespace Sys.Data
             get
             {
                 object value1 = propertyInfo1.GetValue(dpoInstance, null);
-                SqlCmd cmd = new SqlCmd(this.clause1);
+                SqlCmd cmd = new SqlCmd(ConnectionProviderManager.DefaultProvider, this.clause1.Script);
                 cmd.AddParameter(association.Column1.SqlParameterName(), value1);
                 return cmd.FillDataTable().ToArray<object>(association.Relation1);
             }
@@ -127,7 +129,7 @@ namespace Sys.Data
                 return ;
 
             object value1 = propertyInfo1.GetValue(dpoInstance, null);
-            SqlCmd cmd = new SqlCmd(this.clause2);
+            SqlCmd cmd = new SqlCmd(ConnectionProviderManager.DefaultProvider, clause2.Script);
             cmd.AddParameter(association.Column1.SqlParameterName(), value1);
             DataTable dataTable =  cmd.FillDataTable();
 

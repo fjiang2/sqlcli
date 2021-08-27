@@ -7,7 +7,7 @@ namespace Sys.Data
         public string ColumnName { get; set; }
         public string ColumnCaption { get; set; }
 
-        public Expression Expression { get; set; }
+        public System.Linq.Expressions.Expression Expression { get; set; }
     }
 
 }

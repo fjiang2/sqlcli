@@ -18,13 +18,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Sys.Data.Coding;
 
 namespace Sys.Data
 {
     /// <summary>
     /// Modeling SQL WHERE clause
     /// </summary>
-    public class Locator : IDataPath
+    public class Locator : IDataPath, ILocator
     {
         private string where;
         bool unique = true;
@@ -63,7 +64,7 @@ namespace Sys.Data
         {
         }
 
-        public Locator(SqlExpr expression)
+        public Locator(Expression expression)
         {
             this.where = expression.ToString();
         }

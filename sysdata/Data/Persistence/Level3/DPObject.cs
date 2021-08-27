@@ -236,10 +236,6 @@ namespace Sys.Data
 
         #endregion
 
-        public static SqlExpr AllColumnNames(string alias = null)
-        {
-            return SqlExpr.AllColumnNames(alias);
-        }
     
     }
 }

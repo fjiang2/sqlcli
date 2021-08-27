@@ -99,17 +99,17 @@ namespace Sys.Data.Code
                 TypeInfo ty = new TypeInfo(dict[column].Type);
                 var name = COLUMN(column);
 
-                List<Expression> expressions = new List<Expression>();
+                List<CodeBuilder.Expression> expressions = new List<CodeBuilder.Expression>();
                 if (hasColumnProperty)
                 {
                     if (column.Unique)
-                        expressions.Add(new Expression(nameof(column.Unique), true));
+                        expressions.Add(new CodeBuilder.Expression(nameof(column.Unique), true));
                     if (!column.AllowDBNull)
-                        expressions.Add(new Expression(nameof(column.AllowDBNull), false));
+                        expressions.Add(new CodeBuilder.Expression(nameof(column.AllowDBNull), false));
                     if (column.MaxLength > 0)
-                        expressions.Add(new Expression(nameof(column.MaxLength), column.MaxLength));
+                        expressions.Add(new CodeBuilder.Expression(nameof(column.MaxLength), column.MaxLength));
                     if (column.AutoIncrement)
-                        expressions.Add(new Expression(nameof(column.AutoIncrement), true));
+                        expressions.Add(new CodeBuilder.Expression(nameof(column.AutoIncrement), true));
                 }
 
                 var _args = new Arguments(new Argument(name), new Argument(ty));
@@ -199,7 +199,7 @@ namespace Sys.Data.Code
             var schema = TableSchemaCache.GetSchema(tname);
             var pkeys = schema.ByForeignKeys.Keys.OrderBy(k => k.FK_Table);
 
-            List<Expression> L = new List<Expression>();
+            List<CodeBuilder.Expression> L = new List<CodeBuilder.Expression>();
             foreach (IForeignKey pkey in pkeys)
             {
                 string entity = ident.Identifier(pkey.FK_Table);

@@ -278,7 +278,7 @@ namespace Sys.Data.Code
             var provider = ConnectionProviderManager.DefaultProvider;
             TableName tname = new TableName(provider, dt.TableName);
 
-            SqlMaker gen = new SqlMaker(tname.FormalName)
+            SqlGenerator gen = new SqlGenerator(tname.FormalName)
             {
                 PrimaryKeys = dt.PrimaryKey.Select(x => x.ColumnName).ToArray()
             };

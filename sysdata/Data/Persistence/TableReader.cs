@@ -22,6 +22,7 @@ using System.Text;
 using System.Data;
 using System.Data.Common;
 using System.Threading;
+using Sys.Data.Coding;
 
 namespace Sys.Data
 {
@@ -58,8 +59,8 @@ namespace Sys.Data
         {
             get
             {
-                var sql = new SqlBuilder(tableName.Provider).SELECT().TOP(Top).COLUMNS().FROM(tableName).WHERE(locator);
-                return new SqlCmd(sql);
+                var sql = new SqlBuilder().SELECT().TOP(Top).COLUMNS().FROM(tableName).WHERE(locator);
+                return new SqlCmd(tableName.Provider, sql.Script);
             }
         }
 
@@ -73,9 +74,9 @@ namespace Sys.Data
                 if (table.IsValueCreated)
                     return Table.Rows.Count;
 
-                var sql = new SqlBuilder(tableName.Provider).SELECT().COLUMNS(SqlExpr.COUNT).FROM(tableName).WHERE(locator);
+                var sql = new SqlBuilder().SELECT().COLUMNS(Expression.COUNT_STAR).FROM(tableName).WHERE(locator);
 
-                object obj = new SqlCmd(sql).ExecuteScalar();
+                object obj = new SqlCmd(tableName.Provider, sql.Script).ExecuteScalar();
                 long count = Convert.ToInt64(obj);
                 if (Top > 0 && Top < count)
                     return Top;
