@@ -25,25 +25,7 @@ namespace Sys.Data.Linq
         /// </summary>
         public static EntityClassType EntityClassType { get; set; } = EntityClassType.ExtensionClass;
 
-        public DataContext()
-        {
-            this.sqlCommand = query => new SqlCmd(query);
-            this.Description = "Default SQL command handler";
-        }
-
-        public DataContext(string connectionString)
-        {
-            var connectionProvider = ConnectionProvider.CreateProvider("ServerName", connectionString);
-            this.sqlCommand = query => new SqlCmd(connectionProvider, query);
-            this.Description = connectionString;
-        }
-
-        public DataContext(ConnectionProvider provider)
-        {
-            this.sqlCommand = query => new SqlCmd(provider, query);
-            this.Description = provider.ConnectionString;
-        }
-
+       
         public DataContext(Func<string, IDbCmd> cmd)
         {
             this.sqlCommand = cmd;

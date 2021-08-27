@@ -10,7 +10,7 @@ namespace Sys.Data.Linq
 {
     public static class Query
     {
-        public static Func<string, IDbCmd> DefaultSqlCommand { get; set; } = query => new SqlCmd(query);
+        public static Func<string, IDbCmd> DefaultSqlCommand { get; set; } 
 
         private static T Invoke<T>(this Func<DataContext, T> func)
         {

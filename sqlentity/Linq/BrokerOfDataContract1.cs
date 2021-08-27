@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using System.Data;
-using Tie;
 
 namespace Sys.Data.Linq
 {
@@ -21,7 +20,7 @@ namespace Sys.Data.Linq
         public BrokerOfDataContract1()
         {
             this.type = typeof(TEntity);
-            this.extension = HostType.GetType(type.FullName + EXTENSION);
+            this.extension = HostType.GetType(type, type.FullName + EXTENSION);
 
             this.Schema = extension.GetTableSchemaFromType();
             this.functionToDictionary = extension.GetMethod(nameof(ToDictionary), BindingFlags.Public | BindingFlags.Static);
@@ -29,7 +28,7 @@ namespace Sys.Data.Linq
 
         public ITableSchema GetSchmea(Type type)
         {
-            var extension = HostType.GetType(type.FullName + EXTENSION);
+            var extension = HostType.GetType(type, type.FullName + EXTENSION);
             return extension.GetTableSchemaFromType();
         }
 

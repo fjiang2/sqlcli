@@ -41,7 +41,7 @@ namespace Sys.Data
 
             this.tableName = tname;
             this.locator = locator;
-            this.template = new SqlTemplate(tname);
+            this.template = new SqlTemplate(tname.FormalName);
         }
 
         public TableName TableName => this.tableName;

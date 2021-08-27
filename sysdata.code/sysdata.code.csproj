@@ -9,7 +9,9 @@
     <PackageReference Include="Tie" Version="2.0.8" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\code-gen\sqlcode\sqlcode.csproj" />
     <ProjectReference Include="..\..\code-gen\syscode\syscode.csproj" />
+    <ProjectReference Include="..\sqlentity\sqlentity.csproj" />
     <ProjectReference Include="..\syscore\syscore.csproj" />
     <ProjectReference Include="..\sysdata\sysdata.csproj" />
   </ItemGroup>

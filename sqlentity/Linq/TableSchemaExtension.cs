@@ -5,9 +5,10 @@ namespace Sys.Data.Linq
 {
     static class TableSchemaExtension
     {
+        private const string dbo = "dbo";
         public static ITableSchema GetTableSchemaFromType(this Type extension)
         {
-            string schemaName = extension.GetStaticField(nameof(ITableSchema.SchemaName), SchemaName.dbo);
+            string schemaName = extension.GetStaticField(nameof(ITableSchema.SchemaName), dbo);
             string tableName = extension.GetStaticField(nameof(ITableSchema.TableName), string.Empty);
             string[] keys = extension.GetStaticField("Keys", new string[] { });
             string[] identity = extension.GetStaticField("Identity", new string[] { });
@@ -34,7 +35,7 @@ namespace Sys.Data.Linq
 
         public static string FormalTableName(this ITableSchema schema)
         {
-            if (schema.SchemaName == SchemaName.dbo)
+            if (schema.SchemaName == dbo)
                 return string.Format("[{0}]", schema.TableName);
             else
                 return $"[{schema.SchemaName}].[{schema.TableName}]";

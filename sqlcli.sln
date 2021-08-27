@@ -23,6 +23,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sqlshop", "sqlshop\sqlshop.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sqlcode", "..\code-gen\sqlcode\sqlcode.csproj", "{E4FABBF5-2C9E-4B59-A024-0BE48C52439A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "sqlentity", "sqlentity\sqlentity.csproj", "{9C68CDFD-7E4C-4935-A622-B512A757A4EE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -65,6 +67,10 @@ Global
 		{E4FABBF5-2C9E-4B59-A024-0BE48C52439A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4FABBF5-2C9E-4B59-A024-0BE48C52439A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4FABBF5-2C9E-4B59-A024-0BE48C52439A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C68CDFD-7E4C-4935-A622-B512A757A4EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C68CDFD-7E4C-4935-A622-B512A757A4EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C68CDFD-7E4C-4935-A622-B512A757A4EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C68CDFD-7E4C-4935-A622-B512A757A4EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

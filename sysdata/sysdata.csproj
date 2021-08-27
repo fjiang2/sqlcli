@@ -12,9 +12,10 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\code-gen\sqlcode\sqlcode.csproj" />
+    <ProjectReference Include="..\sqlentity\sqlentity.csproj" />
     <ProjectReference Include="..\syscore\syscore.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="SqlBuilder\" />
+    <Folder Include="Linq\" />
   </ItemGroup>
 </Project>
