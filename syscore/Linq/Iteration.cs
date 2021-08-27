@@ -4,7 +4,7 @@ using System.Text;
 using System.Data;
 using System.Linq;
 
-namespace Sys
+namespace Sys.Data
 {
 	public static class Iteration
 	{

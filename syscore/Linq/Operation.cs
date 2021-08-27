@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Data;
 
-namespace Sys
+namespace Sys.Data
 {
 	public static class Operation
 	{

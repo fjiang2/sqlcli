@@ -243,8 +243,6 @@ namespace Sys
                 return "\"" + val + "\"";
             else if (val is DateTime)
                 return "\"" + val + "\"";
-            else if (val is Tie.VAL)
-                return (val as Tie.VAL).ToSimpleString();
             else if (val is IDictionary)
                 return ToSimpleString((IDictionary)val);
             else if (val is IEnumerable)

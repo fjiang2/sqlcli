@@ -221,7 +221,7 @@ namespace Sys.Data.Resource
                 val.AddMember(entry.name, new Tie.VAL(entry.value));
             }
 
-            string json = Json.WriteObject(val);
+            string json = JsonTie.WriteObject(val);
             File.WriteAllText(path, json);
 
             return entries.Count;

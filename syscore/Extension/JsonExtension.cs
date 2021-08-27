@@ -5,7 +5,6 @@ using System.Text;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Json;
 using System.IO;
-using Tie;
 
 namespace Sys
 {
@@ -55,20 +54,6 @@ namespace Sys
             }
         }
 
-        public static T ReadObject<T>(this string json)
-        {
-            if (json == null)
-                return default(T);
-
-            var val = Script.Evaluate(json);
-            return Valizer.Devalize<T>(val);
-        }
-
-        public static string WriteObject<T>(this T graph)
-        {
-            var val = Valizer.Valize(graph);
-            return val.ToJson();
-        }
-
+   
     }
 }
