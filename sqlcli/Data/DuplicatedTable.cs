@@ -58,7 +58,7 @@ namespace sqlcli
         {
             foreach (var row in group.AsEnumerable())
             {
-                var where = _columns.Select(column => column.LetColumnBe(row[column])).AND();
+                var where = _columns.Select(column => column.AssignColumn(row[column])).AND();
                 if (AllColumnsSelected)
                     cout.WriteLine("idential rows");
                 else
@@ -90,7 +90,7 @@ namespace sqlcli
             {
                 int count = row.Field<int>(COUNT_COLUMN_NAME);
 
-                var where = _columns.Select(column => column.LetColumnBe(row[column])).AND();
+                var where = _columns.Select(column => column.AssignColumn(row[column])).AND();
                 var builder = new SqlBuilder()
                     .SET("ROWCOUNT", count-1)
                     .DELETE_FROM(tname)

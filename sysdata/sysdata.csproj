@@ -14,4 +14,7 @@
     <ProjectReference Include="..\..\code-gen\sqlcode\sqlcode.csproj" />
     <ProjectReference Include="..\syscore\syscore.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="SqlBuilder\" />
+  </ItemGroup>
 </Project>

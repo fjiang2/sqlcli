@@ -39,20 +39,7 @@ namespace Sys.Data
 
         public object Value => value;
 
-        private static bool gb2312text(string text)
-        {
-            Encoding encoding = Encoding.GetEncoding("gb2312");
-
-            for (int i = 0; i < text.Length; i++)
-            {
-                byte[] s2 = encoding.GetBytes(text.Substring(i, 1));
-                if (s2.Length == 2)
-                    return true;
-            }
-
-            return false;
-        }
-
+  
         public bool IsNull => value == null || value == DBNull.Value;
         public string ToScript()
         {

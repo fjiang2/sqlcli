@@ -121,7 +121,7 @@ namespace Sys.Data
 
 		private SqlBuilder UpdateClause(string column, int rowId, object value)
 		{
-			return new SqlBuilder().UPDATE(TableName).SET(column.LetColumnBe(value)).WHERE(_PHYSLOC.AsColumn() == PhysLoc(rowId));
+			return new SqlBuilder().UPDATE(TableName).SET(column.AssignColumn(value)).WHERE(_PHYSLOC.AsColumn() == PhysLoc(rowId));
 		}
 
 		public void UpdateCell(DataRow row, DataColumn column, object value)
@@ -158,7 +158,7 @@ namespace Sys.Data
 					columns.Add(name);
 					values.Add(value);
 
-					where.Add(name.AsColumn() == new Coding.SqlValue(value));
+					where.Add(name.AsColumn() == value.AsValue());
 				}
 				else if (!_column.Nullable)  //add default value to COLUMN NOT NULL
 				{
@@ -167,11 +167,11 @@ namespace Sys.Data
 					columns.Add(name);
 					values.Add(value);
 
-					where.Add(name.AsColumn() == new Coding.SqlValue(value));
+					where.Add(name.AsColumn() == value.AsValue());
 				}
 			}
 
-			var builder = new SqlBuilder().INSERT_INTO(TableName, columns.ToArray()).VALUES(values.ToArray());
+			var builder = new SqlBuilder().INSERT_INTO(TableName, columns).VALUES(values);
 			new SqlCmd(TableName.Provider, builder.Script).ExecuteNonQuery();
 
 			builder = new SqlBuilder().SELECT().COLUMNS(_PHYSLOC).FROM(TableName).WHERE(where.AND());
