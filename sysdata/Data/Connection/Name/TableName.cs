@@ -20,7 +20,7 @@ using System.Text;
 
 namespace Sys.Data
 {
-    public class TableName : IComparable<TableName>, IComparable, IDataPath
+    public class TableName : IComparable<TableName>, IComparable, IDataPath, ITableName
     {
         protected const string dbo = Sys.Data.SchemaName.dbo;
 

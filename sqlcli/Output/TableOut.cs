@@ -7,6 +7,7 @@ using System.Data;
 using Sys;
 using Sys.Data;
 using Sys.Stdio;
+using Sys.Data.Coding;
 
 namespace sqlcli
 {
@@ -118,12 +119,16 @@ namespace sqlcli
 		}
 
 
-		public string ROWID(bool has)
+		public string[] ROWID(bool has)
 		{
 			if (has)
-				return $"{UniqueTable._PHYSLOC} AS [{UniqueTable._PHYSLOC}], 0 AS [{UniqueTable._ROWID}],";
+				return new string[]
+				{
+					$"{UniqueTable._PHYSLOC} AS [{UniqueTable._PHYSLOC}]",
+					$"0 AS [{UniqueTable._ROWID}]"
+				};
 			else
-				return string.Empty;
+				return new string[] { };
 		}
 
 
@@ -136,12 +141,12 @@ namespace sqlcli
 			if (cmd.Wildcard != null)
 			{
 				Locator where = LikeExpr(cmd.Wildcard, cmd.Columns);
-				builder = new SqlBuilder().SELECT().COLUMNS(ROWID(cmd.HasRowId)).COLUMNS().FROM(tname).WHERE(where);
+				builder = new SqlBuilder().SELECT().COLUMNS(ROWID(cmd.HasRowId).Concat(new string[] { "*" })).FROM(tname).WHERE(where);
 			}
 			else if (cmd.Where != null)
 			{
 				var locator = new Locator(cmd.Where);
-				builder = new SqlBuilder().SELECT().TOP(top).COLUMNS(ROWID(cmd.HasRowId)).COLUMNS(columns).FROM(tname).WHERE(locator);
+				builder = new SqlBuilder().SELECT().TOP(top).COLUMNS(ROWID(cmd.HasRowId).Concat(columns)).FROM(tname).WHERE(locator);
 			}
 			else if (cmd.Has("dup"))
 			{
@@ -164,7 +169,7 @@ namespace sqlcli
 				return true;
 			}
 			else
-				builder = new SqlBuilder().SELECT().TOP(top).COLUMNS(ROWID(cmd.HasRowId)).COLUMNS(columns).FROM(tname);
+				builder = new SqlBuilder().SELECT().TOP(top).COLUMNS(ROWID(cmd.HasRowId).Concat(columns)).FROM(tname);
 
 			return Display(builder, top);
 		}

@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using Sys.Data;
 using Sys.Stdio;
+using Sys.Data.Coding;
 
 namespace sqlcli
 {
@@ -43,10 +44,10 @@ namespace sqlcli
 
             var builder = new SqlBuilder()
                 .SELECT()
-                .AppendSpace($"COUNT(*) AS [{COUNT_COLUMN_NAME}],")
+                .COLUMNS($"COUNT(*) AS [{COUNT_COLUMN_NAME}],")
                 .COLUMNS(_columns)
                 .FROM(tname)
-                .GROUP_BY(_columns).AppendSpace("HAVING COUNT(*)>1")
+                .GROUP_BY(_columns).HAVING(Expression.COUNT_STAR > 1 )
                 .ORDER_BY(_columns);
 
             group = new SqlCmd(tname.Provider, builder.Script).FillDataTable();
@@ -57,7 +58,7 @@ namespace sqlcli
         {
             foreach (var row in group.AsEnumerable())
             {
-                var where = _columns.Select(column => column.Equal(row[column])).AND();
+                var where = _columns.Select(column => column.LetColumnBe(row[column])).AND();
                 if (AllColumnsSelected)
                     cout.WriteLine("idential rows");
                 else
@@ -89,10 +90,10 @@ namespace sqlcli
             {
                 int count = row.Field<int>(COUNT_COLUMN_NAME);
 
-                var where = _columns.Select(column => column.Equal(row[column])).AND();
+                var where = _columns.Select(column => column.LetColumnBe(row[column])).AND();
                 var builder = new SqlBuilder()
                     .SET("ROWCOUNT", count-1)
-                    .DELETE(tname)
+                    .DELETE_FROM(tname)
                     .WHERE(where)
                     .SET("ROWCOUNT", 0);
 

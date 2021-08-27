@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.IO;
 using System.Data;
 using System.Data.Common;
+using Sys.Data.Coding;
 
 namespace Sys.Data
 {

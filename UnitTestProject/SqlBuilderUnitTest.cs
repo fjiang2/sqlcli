@@ -2,6 +2,7 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Diagnostics;
 using Sys.Data;
+using Sys.Data.Coding;
 
 namespace UnitTestProject
 {

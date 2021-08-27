@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Text;
+using Sys.Data.Coding;
 
 namespace Sys.Data
 {

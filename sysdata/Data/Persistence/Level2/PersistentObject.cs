@@ -20,6 +20,7 @@ using System.Text;
 using System.Reflection;
 using System.Data;
 using Tie;
+using Sys.Data.Coding;
 
 namespace Sys.Data
 {

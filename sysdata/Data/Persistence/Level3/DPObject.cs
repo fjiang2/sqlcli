@@ -236,10 +236,6 @@ namespace Sys.Data
 
         #endregion
 
-        public static Expression AllColumnNames(string alias = null)
-        {
-            return Expression.AllColumnNames(alias);
-        }
     
     }
 }
