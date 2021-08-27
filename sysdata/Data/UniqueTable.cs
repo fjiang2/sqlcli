@@ -19,6 +19,9 @@ namespace Sys.Data
         private readonly DataColumn colLoc = null;
         private readonly DataColumn colRowID = null;
 
+        public const string _PHYSLOC = "%%physloc%%";
+        public const string _ROWID = "%%RowId%%";
+
         public UniqueTable(TableName tname, DataTable table)
         {
             this.TableName = tname;
@@ -30,14 +33,14 @@ namespace Sys.Data
 
             foreach (DataColumn column in table.Columns)
             {
-                if (column.ColumnName == Expression.PHYSLOC)
+                if (column.ColumnName == _PHYSLOC)
                 {
                     this.hasPhysloc = true;
                     colLoc = column;
                     I1 = i;
                 }
 
-                if (column.ColumnName == Expression.ROWID)
+                if (column.ColumnName == _ROWID)
                 {
                     this.hasPhysloc = true;
                     colRowID = column;
@@ -117,7 +120,7 @@ namespace Sys.Data
 
         private SqlBuilder UpdateClause(string column, int rowId, object value)
         {
-            return new SqlBuilder().UPDATE(TableName).SET(column.Assign(value)).WHERE(PhysLoc(rowId));
+            return new SqlBuilder().UPDATE(TableName).SET(column.Assign(value)).WHERE(_PHYSLOC.AsColumn() == PhysLoc(rowId));
         }
 
         public void UpdateCell(DataRow row, DataColumn column, object value)
@@ -170,7 +173,7 @@ namespace Sys.Data
             var builder = new SqlBuilder().INSERT_INTO(TableName, columns.ToArray()).VALUES(values.ToArray());
             new SqlCmd(TableName.Provider, builder.Script).ExecuteNonQuery();
 
-            builder = new SqlBuilder().SELECT().COLUMNS(Expression.PHYSLOC).FROM(TableName).WHERE(where.AND());
+            builder = new SqlBuilder().SELECT().COLUMNS(_PHYSLOC).FROM(TableName).WHERE(where.AND());
             var loc = new SqlCmd(TableName.Provider, builder.Script).FillObject<byte[]>();
             LOC.Add(loc);
 

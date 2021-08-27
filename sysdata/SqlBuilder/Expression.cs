@@ -26,8 +26,7 @@ namespace Sys.Data
     {
         public static readonly Expression COUNT_STAR = new Expression().Append("COUNT(*)");
 
-        internal const string PHYSLOC = "%%physloc%%";
-        internal const string ROWID = "%%RowId%%";
+   
 
         private readonly StringBuilder script = new StringBuilder();
 
@@ -218,6 +217,11 @@ namespace Sys.Data
         }
 
         public static implicit operator Expression(byte value)
+        {
+            return new Expression().AppendValue(value);
+        }
+
+        public static implicit operator Expression(byte[] value)
         {
             return new Expression().AppendValue(value);
         }

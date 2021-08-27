@@ -44,14 +44,6 @@ namespace UnitTestProject
             Debug.Assert(sql == query.Substring(0, sql.Length));
         }
 
-        [TestMethod]
-        public void BETWEEN_TestMethod()
-        {
-            string sql = "SELECT COUNT(*), MAX([ProductId]) FROM Products WHERE [ProductId] BETWEEN 10 AND 30";
-            string query = new SqlBuilder().SELECT().COLUMNS(Expression.COUNT_STAR, ProductId.MAX()).FROM(Products).WHERE(ProductId.BETWEEN(10, 30)).ToString();
-
-            Debug.Assert(sql == query.Substring(0, sql.Length));
-        }
 
         [TestMethod]
         public void JOIN_TestMethod()

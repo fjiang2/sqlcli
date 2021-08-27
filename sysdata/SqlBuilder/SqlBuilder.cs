@@ -120,18 +120,7 @@ namespace Sys.Data
             return this;
         }
 
-        public SqlBuilder ROWID(bool has)
-        {
-            if (has)
-            {
-                return Append($"{Expression.PHYSLOC} AS [{Expression.PHYSLOC}],")
-                       .Append($"0 AS [{Expression.ROWID}],");
-            }
-
-            return this;
-        }
-
-
+    
         public SqlBuilder COLUMNS(string columns)
         {
             return AppendSpace(columns);
@@ -240,11 +229,6 @@ namespace Sys.Data
         public SqlBuilder WHERE(string exp)
         {
             return AppendSpace($"WHERE {exp}");
-        }
-
-        public SqlBuilder WHERE(byte[] loc)
-        {
-            return WHERE($"{Expression.PHYSLOC} = {new SqlValue(loc)}");
         }
 
         #endregion
