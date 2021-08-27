@@ -31,11 +31,31 @@ namespace Sys.Data
         public string INSERT(IEnumerable<IColumn> columns, bool hasQuotationMark = true)
         {
             IEnumerable<string> x1 = columns.Select(column => "[" + column.ColumnName + "]");
-            IEnumerable<string> x2 = columns.Select(column => ColumnValue.ToScript(column));
+            IEnumerable<string> x2 = columns.Select(column => ToScript(column));
             if (!hasQuotationMark)
                 x2 = columns.Select(column => column.ColumnName).Select(c => c.SqlParameterName());
 
             return template.Insert(string.Join(",", x1), string.Join(",", x2));
+        }
+
+        private static string ToScript(IColumn column)
+        {
+            const string DELIMETER = "'";
+            string name = "@" + column.ColumnName;
+
+            switch (column.CType)
+            {
+                case CType.VarChar:
+                case CType.Char:
+                case CType.NVarChar:
+                case CType.NChar:
+                case CType.DateTime:
+                case CType.DateTime2:
+                case CType.DateTimeOffset:
+                    return DELIMETER + name + DELIMETER;
+            }
+
+            return name;
         }
 
 
@@ -160,7 +180,7 @@ namespace Sys.Data
                     else
                         obj = Activator.CreateInstance(type);
 
-                    val = new ColumnValue(obj).ToScript();
+                    val = new SqlValue(obj).ToScript();
                 }
                 catch (Exception ex)
                 {
