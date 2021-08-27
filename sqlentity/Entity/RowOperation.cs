@@ -1,4 +1,4 @@
-﻿namespace Sys.Data.Linq
+﻿namespace Sys.Data.Entity
 {
     public enum RowOperation
     {

@@ -5,7 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Linq.Expressions;
 
-namespace Sys.Data.Linq
+namespace Sys.Data.Entity
 {
 
     public sealed partial class Table<TEntity> : ITable

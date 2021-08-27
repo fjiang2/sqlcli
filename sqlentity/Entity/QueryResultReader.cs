@@ -2,7 +2,7 @@
 using System.Data;
 using System.Collections.Generic;
 
-namespace Sys.Data.Linq
+namespace Sys.Data.Entity
 {
     class QueryResultReader : IQueryResultReader
     {

@@ -4,7 +4,7 @@ using System.Data;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Sys.Data.Linq
+namespace Sys.Data.Entity
 {
 
     public partial class DataContext : IDisposable

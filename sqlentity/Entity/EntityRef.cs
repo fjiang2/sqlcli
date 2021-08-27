@@ -5,7 +5,7 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sys.Data.Linq
+namespace Sys.Data.Entity
 {
     public struct EntityRef<TEntity>
         where TEntity : class

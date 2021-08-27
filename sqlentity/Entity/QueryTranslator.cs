@@ -5,7 +5,7 @@ using System.Text;
 using System.Linq.Expressions;
 using System.Reflection;
 
-namespace Sys.Data.Linq
+namespace Sys.Data.Entity
 {
     class QueryTranslator : ExpressionVisitor
     {

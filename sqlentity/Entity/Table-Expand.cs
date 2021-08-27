@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace Sys.Data.Linq
+namespace Sys.Data.Entity
 {
     public sealed partial class Table<TEntity>
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Linq.Expressions;
 using System.Data;
 
-namespace Sys.Data.Linq
+namespace Sys.Data.Entity
 {
     public static class Query
     {

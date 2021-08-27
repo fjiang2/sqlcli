@@ -7,7 +7,7 @@ using System.Linq;
 
 using UnitTestProject.Northwind.dc2;
 using Sys;
-using Sys.Data.Linq;
+using Sys.Data.Entity;
 using Sys.Data;
 
 namespace UnitTestProject
@@ -63,7 +63,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestMethodSelectIQueryable()
         {
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 int id = 1000;
                 string name = "Grandma's Boysenberry Spread";
@@ -78,7 +78,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestMethodSelect()
         {
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 var table = db.GetTable<Products>();
                 var rows = table.Select("ProductID < 1000");
@@ -90,7 +90,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestMethodInsert()
         {
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 var table = db.GetTable<Products>();
                 Products product = new Products
@@ -108,7 +108,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestMethodUpdate()
         {
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 var table = db.GetTable<Products>();
                 var product = new
@@ -122,7 +122,7 @@ namespace UnitTestProject
                 Debug.Assert(SQL.StartsWith("UPDATE [Products] SET [ProductName] = N'iPhone' WHERE [ProductID] = 100"));
             }
 
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 var table = db.GetTable<Products>();
                 Products prod = new Products
@@ -139,7 +139,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestMethodInsertOrUpdate()
         {
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 var table = db.GetTable<Products>();
                 var product = new Products
@@ -157,7 +157,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestMethodDelete()
         {
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 var table = db.GetTable<Products>();
                 var product = new Products
@@ -175,7 +175,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestMethodSelectOnSubmit()
         {
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 var product = db.GetTable<Products>();
                 product.SelectOnSubmit(row => row.ProductID == 6);
@@ -199,7 +199,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestMethodSelectOnSubmitChanges()
         {
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 db.SelectOnSubmit<Products>(row => row.ProductID == 6);
                 db.SelectOnSubmit<Customers>(row => row.CustomerID == "MAISD");
@@ -220,7 +220,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestMethodAssociation()
         {
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 var order_table = db.GetTable<Orders>();
                 var order = order_table.Select(row => row.OrderID == 10256).FirstOrDefault();
@@ -239,7 +239,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestMasterDetail()
         {
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 var customer_table = db.GetTable<Customers>();
                 var customer = customer_table.Select(row => row.CustomerID == "THECR").FirstOrDefault();
@@ -264,7 +264,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestMasterDetail2()
         {
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 var customers = db.Select<Customers>(row => row.CustomerID == "THECR");
                 var customer = customers.FirstOrDefault();
@@ -286,7 +286,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestMasterDetail3()
         {
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 var customers = db.Select<Customers>(row => row.CustomerID == "THECR");
                 var customer = customers.FirstOrDefault();
@@ -316,7 +316,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestEntityExpandAll()
         {
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 var customer_table = db.GetTable<Customers>();
                 var customer = customer_table.Select(row => row.CustomerID == "THECR").FirstOrDefault();
@@ -336,7 +336,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestExpandAllCustomers()
         {
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 var customer_table = db.GetTable<Customers>();
                 var customers = customer_table.Select(row => row.CustomerID == "THECR" || row.CustomerID == "SUPRD");
@@ -357,7 +357,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestExpandAllOnSubmitOrders()
         {
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 var order_table = db.GetTable<Orders>();
                 var orders = order_table.Select(row => row.OrderID == 10254 || row.OrderID == 10260);
@@ -379,7 +379,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestExpandAllOrders()
         {
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 var orders = db.Select<Orders>(row => row.OrderID == 10254 || row.OrderID == 10260);
 
@@ -398,7 +398,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestExpandAllOrders2()
         {
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 var orders = db.Select<Orders>(row => row.OrderID == 10254 || row.OrderID == 10260);
 
@@ -484,7 +484,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestRowChangedEvent()
         {
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 db.RowChanged += (sender, args) =>
                  {
@@ -503,7 +503,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestContains1()
         {
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 var L = new int[] { 10, 30, 40 }.AsQueryable();
                 var table = db.GetTable<Products>();
@@ -517,7 +517,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestContains2()
         {
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 var L = new int[] { 10 };
                 var table = db.GetTable<Products>();
@@ -531,7 +531,7 @@ namespace UnitTestProject
         [TestMethod]
         public void TestContains3()
         {
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 var L = new int[] { };
                 var table = db.GetTable<Products>();
@@ -546,7 +546,7 @@ namespace UnitTestProject
         [TestMethod]
         public void Test2TableContains()
         {
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 //"SELECT * FROM [Products] WHERE CategoryID IN (SELECT CategoryID FROM Categories WHERE CategoryName == 'Beverages')"
                 var products = Query.Select<Categories, int, Products>(row => row.CategoryName == "Beverages", row => row.CategoryID, row => row.CategoryID);
@@ -559,7 +559,7 @@ namespace UnitTestProject
         [TestMethod]
         public void Test2DeleteManyRows()
         {
-            using (var db = new MyDataContext(connectionString))
+            using (var db = new DbContext(connectionString))
             {
                 var products = db.GetTable<Products>();
                 products.DeleteOnSubmit(row => row.CategoryID == 1 && row.ProductName == "Apple");

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 using System.Data;
 
-namespace Sys.Data.Linq
+namespace Sys.Data.Entity
 {
 
     class BrokerOfDataContract2<TEntity> : IDataContractBroker<TEntity>

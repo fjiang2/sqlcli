@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Reflection;
 
-namespace Sys.Data.Linq
+namespace Sys.Data.Entity
 {
     static class TableSchemaExtension
     {

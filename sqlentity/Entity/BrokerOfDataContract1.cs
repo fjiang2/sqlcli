@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Reflection;
 using System.Data;
 
-namespace Sys.Data.Linq
+namespace Sys.Data.Entity
 {
     class BrokerOfDataContract1<TEntity> : IDataContractBroker<TEntity>
     {
@@ -20,7 +20,7 @@ namespace Sys.Data.Linq
         public BrokerOfDataContract1()
         {
             this.type = typeof(TEntity);
-            this.extension = HostType.GetType(type, type.FullName + EXTENSION);
+            this.extension = GetType(type, type.FullName + EXTENSION);
 
             this.Schema = extension.GetTableSchemaFromType();
             this.functionToDictionary = extension.GetMethod(nameof(ToDictionary), BindingFlags.Public | BindingFlags.Static);
@@ -28,7 +28,7 @@ namespace Sys.Data.Linq
 
         public ITableSchema GetSchmea(Type type)
         {
-            var extension = HostType.GetType(type, type.FullName + EXTENSION);
+            var extension = GetType(type, type.FullName + EXTENSION);
             return extension.GetTableSchemaFromType();
         }
 
@@ -58,6 +58,11 @@ namespace Sys.Data.Linq
         {
             object obj = Invoke($"To{type.Name}Collection", new object[] { dt });
             return (List<TEntity>)obj;
+        }
+
+        public static Type GetType(Type type, string name)
+        {
+            return Assembly.GetAssembly(type).GetType(name);
         }
 
     }

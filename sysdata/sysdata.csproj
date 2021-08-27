@@ -6,6 +6,11 @@
     <Company>Datconn</Company>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Remove="Linq\**" />
+    <EmbeddedResource Remove="Linq\**" />
+    <None Remove="Linq\**" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="System.CodeDom" Version="5.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
     <PackageReference Include="Tie" Version="2.0.8" />
@@ -14,8 +19,5 @@
     <ProjectReference Include="..\..\code-gen\sqlcode\sqlcode.csproj" />
     <ProjectReference Include="..\sqlentity\sqlentity.csproj" />
     <ProjectReference Include="..\syscore\syscore.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Linq\" />
   </ItemGroup>
 </Project>

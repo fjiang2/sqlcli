@@ -4,24 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-using Sys.Data;
-using Sys.Data.Linq;
+using Sys.Data.Entity;
 
-namespace UnitTestProject
+namespace Sys.Data
 {
-	class MyDataContext : DataContext
+	public class DbContext : DataContext
 	{
-		public MyDataContext()
+		public DbContext()
 			: this(ConnectionProviderManager.DefaultProvider)
 		{
 		}
 
-		public MyDataContext(string connectionString)
+		public DbContext(string connectionString)
 			: this(ConnectionProvider.CreateProvider("ServerName", connectionString))
 		{
 		}
 
-		public MyDataContext(ConnectionProvider provider)
+		public DbContext(ConnectionProvider provider)
 			: base(query => new SqlCmd(provider, query))
 		{
 			Description = provider.ToString();

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Sys.Data.Linq
+namespace Sys.Data.Entity
 {
     public class RowEventArgs: EventArgs
     {

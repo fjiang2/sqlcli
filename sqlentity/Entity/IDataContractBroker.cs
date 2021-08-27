@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Data;
 
-namespace Sys.Data.Linq
+namespace Sys.Data.Entity
 {
     interface IDataContractBroker<TEntity>
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Linq.Expressions;
 
-namespace Sys.Data.Linq
+namespace Sys.Data.Entity
 {
     partial class DataContext
     {

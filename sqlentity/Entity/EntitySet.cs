@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sys.Data.Linq
+namespace Sys.Data.Entity
 {
     public class EntitySet<TEntity> : List<TEntity>
         where TEntity : class

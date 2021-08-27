@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Sys.Data;
-using Sys.Data.Linq;
+using Sys.Data.Entity;
 
 namespace UnitTestProject.Northwind.dc2
 {
