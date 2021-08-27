@@ -11,18 +11,18 @@ namespace Sys.Networking
     {
         public static void Init()
         {
-            Script.FunctionChain.Add(RemoteExtension.functions);
+            Script.FunctionChain.Add(functions);
 
             Constant.MAX_STRING_SIZE = 20 * 1024 * 1024;
 
             Valizer.Register<DataSet>(
-                 ds => RemoteExtension.ToVal(ds),
-                (host, type, xml) => RemoteExtension.ToDataSet(host, type, xml)
+                 ds => ToVal(ds),
+                (host, type, xml) => ToDataSet(host, type, xml)
                 );
 
             Valizer.Register<DataTable>(
-                dt => RemoteExtension.ToVal(dt),
-                (host, type, xml) => RemoteExtension.ToDataTable(host, type, xml)
+                dt => ToVal(dt),
+                (host, type, xml) => ToDataTable(host, type, xml)
                 );
 
         }

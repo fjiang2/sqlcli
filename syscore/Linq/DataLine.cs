@@ -16,7 +16,7 @@
 //--------------------------------------------------------------------------------------------------//
 using System.Data;
 
-namespace Sys.Data
+namespace Sys
 {
     public class DataLine
     {

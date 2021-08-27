@@ -30,9 +30,6 @@ namespace Sys.Data.Manager
 {
     public static class ManagerExtension
     {
-
-        #region Logger
-
         /// <summary>
         /// register user defined transaction logee
         /// </summary>
@@ -52,11 +49,6 @@ namespace Sys.Data.Manager
         {
             LogManager.Instance.Register(tableName, logee);
         }
-
-
-        #endregion
-
-
 
     }
 }

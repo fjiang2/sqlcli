@@ -31,11 +31,11 @@ namespace Sys
             }
         }
 
-        public static string Concatenate<TSource>(this IEnumerable<TSource> items, Func<TSource, string> doit, string delimiter)
+        public static string Join<TSource>(this IEnumerable<TSource> items, Func<TSource, string> selector, string delimiter)
         {
             StringBuilder builder = new StringBuilder();
             items.ForEach(
-                item => builder.Append(doit(item)),
+                item => builder.Append(selector(item)),
                 _ => builder.Append(delimiter)
              );
 
