@@ -1,4 +1,4 @@
-﻿//--------------------------------------------------------------------------------------------------//
+﻿ //--------------------------------------------------------------------------------------------------//
 //                                                                                                  //
 //        DPO(Data Persistent Object)                                                               //
 //                                                                                                  //
@@ -18,74 +18,38 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.ComponentModel;
+using System.Data;
+using Sys.Data.Coding;
 
-namespace Sys
+namespace Sys.Data
 {
-
-	public class BackgroundTask : BackgroundWorker
+    public static class DpListExtension
     {
-        private readonly UserState state = new UserState();
-        private bool cancelled = false;
 
-        public BackgroundTask()
+        public static DataTable ToTable<T>(this IEnumerable<T> records) where T : class, IDPObject, new()
         {
-            this.WorkerReportsProgress = true;
+            DPList<T> list = new DPList<T>(records);
+            return list.Table;
         }
 
-        public void Cancel()
+        public static DPList<T> ToDPList<T>(this IEnumerable<T> collection) where T : class, IDPObject, new()
         {
-            this.cancelled = true;
+            return new DPList<T>(collection);
         }
 
-        public bool SetProgress(int progress1, int progress2)
+    
+        public static DPList<T> ToDPList<T>(this TableReader<T> reader) where T : class, IDPObject, new()
         {
-            this.state.Progress1 = progress1;
-            this.state.Progress2 = progress2;
-            this.state.Message = "";
-            this.ReportProgress(0, state);
-
-            return this.cancelled;
+            return new DPList<T>(reader);
         }
 
-
-        public bool SetProgress(int progress2, string message)
+        public static DPCollection<T> ToDPCollection<T>(this DPList<T> list) where T : class, IDPObject, new()
         {
-            this.state.Progress2 = progress2;
-            this.state.Message = message;
-            this.ReportProgress(0, state );
-
-            return this.cancelled;
-        }
-
-        public bool SetProgress(int progress2)
-        {
-            this.state.Progress2 = progress2;
-            this.state.Message = "";
-            this.ReportProgress(0, state);
-
-            return this.cancelled;
+            return new DPCollection<T>(list.Table);
         }
 
 
-        public bool SetProgress(string message)
-        {
-            this.state.Progress2 = 0;
-            this.state.Message = message;
-            this.ReportProgress(0, state);
 
-            return this.cancelled;
-        }
-
-        public bool SetProgress(int progress1, int progress2, string message)
-        {
-            this.state.Progress1 = progress1;
-            this.state.Progress2 = progress2;
-            this.state.Message = message;
-            this.ReportProgress(0, state);
-
-            return this.cancelled;
-        }
 
     }
 

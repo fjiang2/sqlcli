@@ -203,12 +203,5 @@ namespace Sys.Data
 
             return Class2VAL(instance,val);
         }
-
-
-     
-
-
-    
-
     }
 }

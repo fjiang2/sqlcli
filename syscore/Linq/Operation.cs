@@ -2,11 +2,42 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Data;
+using System.IO;
 
 namespace Sys.Data
 {
 	public static class Operation
 	{
+        public static T IsNull<T>(this object value, T defaultValue)
+        {
+            if (value is T)
+                return (T)value;
+
+            if (value == null || value == DBNull.Value)
+                return defaultValue;
+
+            throw new Exception($"{value} is not type of {typeof(T)}");
+        }
+
+        public static T GetField<T>(this DataRow row, string columnName, T defaultValue = default(T))
+        {
+            if (!row.Table.Columns.Contains(columnName))
+                return defaultValue;
+
+            return IsNull<T>(row[columnName], defaultValue);
+        }
+
+        public static void SetField(this DataRow row, string columnName, object value)
+        {
+            if (row.Table.Columns.Contains(columnName))
+            {
+                if (value == null)
+                    row[columnName] = DBNull.Value;
+                else
+                    row[columnName] = value;
+            }
+        }
+
         public static void Insert(this DataTable dt, Action<DataRow> insert)
         {
             DataRow row = dt.NewRow();
@@ -109,6 +140,86 @@ namespace Sys.Data
 
             dt.AcceptChanges();
             return dt;
+        }
+
+        public static DataSet ToDataSet(this string xml)
+        {
+            DataSet ds = new DataSet();
+            return ToDataSet(xml, ds);
+        }
+
+        public static DataSet ToDataSet(this string xml, DataSet ds)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            using (StreamWriter writer = new StreamWriter(stream))
+            {
+                writer.Write(xml);
+                writer.Flush();
+                stream.Position = 0;
+
+                try
+                {
+                    ds.ReadXml(stream, XmlReadMode.ReadSchema);
+                }
+                catch (Exception)
+                {
+                    throw new Exception(xml);
+                }
+            }
+            return ds;
+        }
+
+
+        public static string ToXml(this DataSet ds)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                ds.WriteXml(stream, XmlWriteMode.WriteSchema);
+                stream.Flush();
+                stream.Position = 0;
+
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
+        }
+
+        public static DataTable ToDataTable(this string xml, DataTable dt)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            using (StreamWriter writer = new StreamWriter(stream))
+            {
+                writer.Write(xml);
+                writer.Flush();
+                stream.Position = 0;
+
+                try
+                {
+                    dt.ReadXml(stream);
+                }
+                catch (Exception)
+                {
+                    throw new Exception(xml);
+                }
+            }
+            return dt;
+        }
+
+
+        public static string ToXml(this DataTable dt)
+        {
+            using (MemoryStream stream = new MemoryStream())
+            {
+                dt.WriteXml(stream, XmlWriteMode.WriteSchema);
+                stream.Flush();
+                stream.Position = 0;
+
+                using (StreamReader reader = new StreamReader(stream))
+                {
+                    return reader.ReadToEnd();
+                }
+            }
         }
     }
 }
