@@ -15,7 +15,7 @@ using Sys.Stdio;
 using Sys.Stdio.Cli;
 using Sys.Data.Resource;
 using Sys.Data.Code;
-using Sys.Data.Coding;
+using Sys.Data.Text;
 using Tie;
 
 

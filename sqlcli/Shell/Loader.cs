@@ -9,7 +9,7 @@ using Sys;
 using Sys.Data;
 using Sys.Stdio;
 using Tie;
-using Sys.Data.Coding;
+using Sys.Data.Text;
 
 namespace sqlcli
 {

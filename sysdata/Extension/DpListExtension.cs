@@ -19,7 +19,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using Sys.Data.Coding;
+using Sys.Data.Text;
 
 namespace Sys.Data
 {

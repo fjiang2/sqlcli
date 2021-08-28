@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data;
 
-namespace Sys.Data
+namespace Sys.Data.Entity
 {
 	public static class EntityExtension
 	{

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 
-namespace Sys.Data
+namespace Sys.Data.Entity
 {
     public interface IEntityRow
     {

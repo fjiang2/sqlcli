@@ -18,7 +18,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Sys.Data.Coding;
+using Sys.Data.Text;
 
 namespace Sys.Data
 {
