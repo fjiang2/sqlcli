@@ -356,10 +356,11 @@ namespace Sys.Data.Code
             {
                 Modifier = Modifier.Public,
                 Type = new TypeInfo { UserType = associationClassName },
+                Params = new Parameters().Add("IQuery", "query"),
             };
             Statement sent = method.Body;
 
-            sent.Return($"GetAssociation(new {ClassName}[] {{ this }}).FirstOrDefault()");
+            sent.Return($"GetAssociation(query, new {ClassName}[] {{ this }}).FirstOrDefault()");
             clss.Insert(index++, method);
 
 
@@ -367,12 +368,12 @@ namespace Sys.Data.Code
             {
                 Modifier = Modifier.Public | Modifier.Static,
                 Type = new TypeInfo { UserType = $"IEnumerable<{associationClassName}>" },
-                Params = new Parameters().Add($"IEnumerable<{ClassName}>", "entities"),
+                Params = new Parameters().Add("IQuery", "query").Add($"IEnumerable<{ClassName}>", "entities"),
             };
             clss.Insert(index++, method);
 
             sent = method.Body;
-            sent.AppendLine("var reader = entities.Expand();");
+            sent.AppendLine("var reader = query.Expand(entities);");
             sent.AppendLine();
             sent.AppendLine($"var associations = new List<{associationClassName}>();");
             sent.AppendLine();
