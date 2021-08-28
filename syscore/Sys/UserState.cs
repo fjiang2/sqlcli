@@ -14,41 +14,18 @@
 //                                                                                                  //
 //                                                                                                  //
 //--------------------------------------------------------------------------------------------------//
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Data;
-using Sys.Data;
-using System.Threading;
-using System.ComponentModel;
-using System.IO;
-using System.Reflection;
-using Sys.Data.Log;
 
-namespace Sys.Data.Manager
+namespace Sys
 {
-    public static class ManagerExtension
+	public class UserState
     {
-        /// <summary>
-        /// register user defined transaction logee
-        /// </summary>
-        /// <param name="transactionType"></param>
-        /// <param name="logee"></param>
-        public static void Register(this TransactionLogeeType transactionType, ITransactionLogee logee)
-        {
-            LogManager.Instance.Register(transactionType, logee);
-        }
+        public int Progress1;
+        public int Progress2;
+        public string Message;
 
-        /// <summary>
-        /// register user defined record/row logee
-        /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="logee"></param>
-        public static void Register(this TableName tableName, IRowLogee logee)
+        public UserState()
         {
-            LogManager.Instance.Register(tableName, logee);
         }
-
     }
+
 }

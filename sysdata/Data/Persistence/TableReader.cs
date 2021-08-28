@@ -22,7 +22,7 @@ using System.Text;
 using System.Data;
 using System.Data.Common;
 using System.Threading;
-using Sys.Data.Coding;
+using Sys.Data.Text;
 
 namespace Sys.Data
 {

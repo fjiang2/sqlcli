@@ -22,18 +22,8 @@ using System.ComponentModel;
 
 namespace Sys
 {
-    public class UserState
-    {
-        public int Progress1;
-        public int Progress2;
-        public string Message;
 
-        public UserState()
-        {
-        }
-    }
-
-    public class BackgroundTask : BackgroundWorker
+	public class BackgroundTask : BackgroundWorker
     {
         private readonly UserState state = new UserState();
         private bool cancelled = false;

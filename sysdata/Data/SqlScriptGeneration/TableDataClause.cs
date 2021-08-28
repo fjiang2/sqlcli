@@ -4,7 +4,7 @@ using System.Data;
 using System.Data.Common;
 using System.Linq;
 using System.Text;
-using Sys.Data.Coding;
+using Sys.Data.Text;
 
 namespace Sys.Data
 {
@@ -22,7 +22,7 @@ namespace Sys.Data
         {
             this.schema = schema;
             this.tableName = schema.TableName;
-            this.template = new SqlTemplate(tableName);
+            this.template = new SqlTemplate(tableName.FormalName);
 
             this.pk = schema.PrimaryKeys.Keys;
             this.ik = schema.Identity.ColumnNames;

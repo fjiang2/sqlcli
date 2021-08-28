@@ -20,7 +20,7 @@ using System.Linq;
 using System.Text;
 using System.Data;
 using System.Reflection;
-using Sys.Data.Coding;
+using Sys.Data.Text;
 
 namespace Sys.Data
 {

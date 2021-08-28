@@ -1,4 +1,4 @@
-﻿//--------------------------------------------------------------------------------------------------//
+﻿ //--------------------------------------------------------------------------------------------------//
 //                                                                                                  //
 //        DPO(Data Persistent Object)                                                               //
 //                                                                                                  //
@@ -19,36 +19,38 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Data;
-using Sys.Data;
-using System.Threading;
-using System.ComponentModel;
-using System.IO;
-using System.Reflection;
-using Sys.Data.Log;
+using Sys.Data.Text;
 
-namespace Sys.Data.Manager
+namespace Sys.Data
 {
-    public static class ManagerExtension
+    public static class DpListExtension
     {
-        /// <summary>
-        /// register user defined transaction logee
-        /// </summary>
-        /// <param name="transactionType"></param>
-        /// <param name="logee"></param>
-        public static void Register(this TransactionLogeeType transactionType, ITransactionLogee logee)
+
+        public static DataTable ToTable<T>(this IEnumerable<T> records) where T : class, IDPObject, new()
         {
-            LogManager.Instance.Register(transactionType, logee);
+            DPList<T> list = new DPList<T>(records);
+            return list.Table;
         }
 
-        /// <summary>
-        /// register user defined record/row logee
-        /// </summary>
-        /// <param name="tableName"></param>
-        /// <param name="logee"></param>
-        public static void Register(this TableName tableName, IRowLogee logee)
+        public static DPList<T> ToDPList<T>(this IEnumerable<T> collection) where T : class, IDPObject, new()
         {
-            LogManager.Instance.Register(tableName, logee);
+            return new DPList<T>(collection);
         }
+
+    
+        public static DPList<T> ToDPList<T>(this TableReader<T> reader) where T : class, IDPObject, new()
+        {
+            return new DPList<T>(reader);
+        }
+
+        public static DPCollection<T> ToDPCollection<T>(this DPList<T> list) where T : class, IDPObject, new()
+        {
+            return new DPCollection<T>(list.Table);
+        }
+
+
+
 
     }
+
 }

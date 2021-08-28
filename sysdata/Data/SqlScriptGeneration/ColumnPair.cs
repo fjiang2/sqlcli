@@ -9,10 +9,7 @@ namespace Sys.Data
     class ColumnPair
     {
         public string ColumnName { get; set; }
-        public ColumnValue Value;
-
-
-        private const string DELIMETER = "'";
+        public SqlValue Value;
 
         public ColumnPair()
         { 
@@ -21,7 +18,7 @@ namespace Sys.Data
         public ColumnPair(string columnName, object value)
         {
             this.ColumnName = columnName;
-            this.Value = new ColumnValue(value);
+            this.Value = new SqlValue(value);
         }
 
         public override string ToString()
