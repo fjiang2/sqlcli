@@ -8,6 +8,9 @@ EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "syscore", "syscore\syscore.csproj", "{58332852-369D-4045-93C2-5CFE9CFB2313}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{770A34FA-CDFE-47C9-8DE8-D0128BFF9117}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\sqlcli.nuspec = .nuget\sqlcli.nuspec
+	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sysdata", "sysdata\sysdata.csproj", "{2066797E-01B0-4F66-ADE1-2731A0851794}"
 EndProject
@@ -19,7 +22,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "syscode", "..\code-gen\sysc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sqlshop", "sqlshop\sqlshop.csproj", "{6422E5EF-28EF-493A-AED7-02E8A3B4DAA1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "systie", "systie\systie.csproj", "{4F7CC514-D01B-4C4D-87A0-3A722A504E96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "syscore.tie", "systie\syscore.tie.csproj", "{4F7CC514-D01B-4C4D-87A0-3A722A504E96}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sqlcode", "..\sqlcode\sqlcode\sqlcode.csproj", "{585336BB-4925-4591-9101-EC12D7A62080}"
 EndProject
