@@ -17,7 +17,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\sqlcode\sqlcode\sqlcode.csproj" />
-    <ProjectReference Include="..\..\sqlcode\sqlentity\sqlentity.csproj" />
     <ProjectReference Include="..\syscore\syscore.csproj" />
     <ProjectReference Include="..\systie\syscore.tie.csproj" />
   </ItemGroup>

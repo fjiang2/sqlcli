@@ -10,7 +10,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\code-gen\syscode\syscode.csproj" />
-    <ProjectReference Include="..\..\sqlcode\sqlentity\sqlentity.csproj" />
     <ProjectReference Include="..\syscore\syscore.csproj" />
     <ProjectReference Include="..\sysdata\sysdata.csproj" />
   </ItemGroup>
