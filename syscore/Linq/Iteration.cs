@@ -8,6 +8,9 @@ namespace Sys.Data
 {
 	public static class Iteration
 	{
+        public static IEnumerable<T> Enumerable<T>(params T[] items)
+            => items;
+
         public static List<T> ToList<T>(this DataRow row, Func<int, object, T> func)
         {
             List<T> list = new List<T>();

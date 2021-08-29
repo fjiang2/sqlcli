@@ -328,11 +328,11 @@ namespace Sys.Data.Code
             {
                 Modifier = Modifier.Public | Modifier.Static,
                 Type = new TypeInfo { UserType = associationClassName },
-                Params = new Parameters().Add(ClassName, "entity"),
+                Params = new Parameters().Add(ClassName, "entity").Add("IQuery", "query"),
                 IsExtensionMethod = true
             };
             Statement sent = method.Body;
-            sent.Return("entity.AsEnumerable().GetAssociation().FirstOrDefault()");
+            sent.Return($"GetAssociation(new {ClassName}[] {{ entity }}, query).FirstOrDefault()");
             clss.Insert(index++, method);
 
 
@@ -340,13 +340,13 @@ namespace Sys.Data.Code
             {
                 Modifier = Modifier.Public | Modifier.Static,
                 Type = new TypeInfo { UserType = $"IEnumerable<{associationClassName}>" },
-                Params = new Parameters().Add($"IEnumerable<{ClassName}>", "entities"),
+                Params = new Parameters().Add($"IEnumerable<{ClassName}>", "entities").Add("IQuery", "query"),
                 IsExtensionMethod = true
             };
             clss.Insert(index++, method);
 
             sent = method.Body;
-            sent.AppendLine("var reader = entities.Expand();");
+            sent.AppendLine("var reader = query.Expand(entities);");
             sent.AppendLine();
             sent.AppendLine($"var associations = new List<{associationClassName}>();");
             sent.AppendLine();
