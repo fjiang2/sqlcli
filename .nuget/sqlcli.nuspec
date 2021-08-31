@@ -28,7 +28,7 @@
     </description>
     <summary> SQL Console Tools for DevOps</summary>
     <releaseNotes>
-	  6/17/2021 v3.0.0.0
+	  8/30/2021 v3.0.0.0
   	    1. Converted from sqlcon project (.NET Framework 4.x).
     </releaseNotes>
     <dependencies>
