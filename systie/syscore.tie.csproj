@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <RootNamespace>Sys</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Tie" Version="2.0.8" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\syscore\syscore.csproj" />
+  </ItemGroup>
+
+</Project>
