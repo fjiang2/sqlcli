@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data;
 using System.Text;
+
 using Sys.Collections;
+using Sys.Data.Linq;
 
 namespace Sys.Data.Resource
 {
