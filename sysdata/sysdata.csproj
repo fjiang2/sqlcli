@@ -11,12 +11,12 @@
     <None Remove="Linq\**" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="sqlcode" Version="1.0.4" />
     <PackageReference Include="System.CodeDom" Version="5.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.2" />
     <PackageReference Include="Tie" Version="2.0.8" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\sqlcode\sqlcode\sqlcode.csproj" />
     <ProjectReference Include="..\syscore\syscore.csproj" />
     <ProjectReference Include="..\systie\syscore.tie.csproj" />
   </ItemGroup>
