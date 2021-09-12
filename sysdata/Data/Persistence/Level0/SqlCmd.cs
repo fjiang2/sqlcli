@@ -61,7 +61,7 @@ namespace Sys.Data
 		}
 
 		public SqlCmd(ConnectionProvider provider, SqlBuilder sql)
-			: base(provider, sql.ToScript(DbAgentStyle.SqlServer))
+			: base(provider, sql.ToScript(provider.AgentStyle()))
 		{
 		}
 

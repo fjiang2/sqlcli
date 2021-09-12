@@ -195,11 +195,11 @@ namespace sqlcli
 
 			string SQL;
 			SqlBuilder builder = new SqlBuilder().UPDATE(tname).SET(cmd.Args);
-			SQL = builder.ToScript(DbAgentStyle.SqlServer);
+			SQL = builder.ToScript(tname.Provider.AgentStyle());
 			if (locator != null)
 			{
 				builder.WHERE(locator);
-				SQL = builder.ToScript(DbAgentStyle.SqlServer);
+				SQL = builder.ToScript(tname.Provider.AgentStyle());
 			}
 			else if (mgr.Tout != null && mgr.Tout.TableName == tname && mgr.Tout.HasPhysloc)
 			{
@@ -261,7 +261,8 @@ namespace sqlcli
 
 					SqlBuilder builder = table.WriteValue(column, i, s.HostValue);
 
-					sum.AppendLine(builder.ToScript(DbAgentStyle.SqlServer));
+					var style = table.TableName.Provider.AgentStyle();
+					sum.AppendLine(builder.ToScript(style));
 				}
 			}
 

@@ -225,6 +225,14 @@ namespace Sys.Data
 
         internal abstract DbProvider CreateDbProvider(string script);
 
+        public DbAgentStyle AgentStyle()
+        {
+            if (DpType == DbProviderType.SQLite)
+                return DbAgentStyle.SQLite;
+            else
+                return DbAgentStyle.SqlServer;
+        }
+
         public const string PROVIDER_FILE_DB_XML = "file/db/xml";
 
         public const string PROVIDER_FILE_DATASET_JSON = "file/dataset/json";

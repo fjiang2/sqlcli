@@ -21,7 +21,7 @@ namespace Sys.Data
 		}
 
 		public DbContext(ConnectionProvider provider)
-			: base(DbAgent.Create(DbAgentStyle.SqlServer, (query, args) => new SqlCmd(provider, query, args)))
+			: base(DbAgent.Create(provider.AgentStyle(), (query, args) => new SqlCmd(provider, query, args)))
 		{
 			Description = provider.ToString();
 		}

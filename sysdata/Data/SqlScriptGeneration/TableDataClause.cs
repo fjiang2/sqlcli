@@ -17,6 +17,7 @@ namespace Sys.Data
 		private readonly string[] ik;
 		private readonly string[] ck;
 
+		private DbAgentStyle style;
 
 		public TableDataClause(ITableSchema schema)
 		{
@@ -27,6 +28,7 @@ namespace Sys.Data
 			this.pk = schema.PrimaryKeys.Keys;
 			this.ik = schema.Identity.ColumnNames;
 			this.ck = schema.Columns.Where(column => column.IsComputed).Select(column => column.ColumnName).ToArray();
+			this.style = schema.TableName.Provider.AgentStyle();
 		}
 
 
@@ -48,7 +50,7 @@ namespace Sys.Data
 			  .Where(column => !ck.Contains(column.ColumnName));
 
 			var x1 = L1.Select(p => p.ColumnName.AsColumn());
-			var x2 = L1.Select(p => p.Value.ToScript(DbAgentStyle.SqlServer));
+			var x2 = L1.Select(p => p.Value.ToScript(style));
 
 			if (InsertWithoutColumns)
 				return template.Insert(string.Join(",", x2));
@@ -68,7 +70,7 @@ namespace Sys.Data
 				.Where(column => !ik.Contains(column.ColumnName))
 				.Where(column => !pk.Contains(column.ColumnName))
 				.Where(column => !ck.Contains(column.ColumnName))
-				.Select(p => $"{p.ColumnName.AsColumn()} = {p.Value.ToScript(DbAgentStyle.SqlServer)}");
+				.Select(p => $"{p.ColumnName.AsColumn()} = {p.Value.ToScript(style)}");
 
 			string update = string.Join(",", L1);
 			return template.Update(update, WHERE(pairs));

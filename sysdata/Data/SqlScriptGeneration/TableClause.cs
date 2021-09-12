@@ -12,12 +12,14 @@ namespace Sys.Data
 		private readonly ITableSchema schema;
 		private readonly TableName tableName;
 		private readonly SqlTemplate template;
+		private DbAgentStyle style;
 
 		public TableClause(ITableSchema schema)
 		{
 			this.schema = schema;
 			this.tableName = schema.TableName;
 			this.template = new SqlTemplate(tableName.FormalName);
+			this.style = schema.TableName.Provider.AgentStyle();
 		}
 
 		#region SELECT/UPDATE/DELETE/INSERT template
@@ -180,7 +182,7 @@ namespace Sys.Data
 					else
 						obj = Activator.CreateInstance(type);
 
-					val = new SqlValue(obj).ToScript(DbAgentStyle.SqlServer);
+					val = new SqlValue(obj).ToScript(style);
 				}
 				catch (Exception ex)
 				{
