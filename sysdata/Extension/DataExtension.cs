@@ -40,7 +40,7 @@ namespace Sys.Data
 				return null;
 		}
 
-		public static SqlCmd SqlCmd(this SqlBuilder sql, ConnectionProvider provider) => new SqlCmd(provider, sql.ToScript(DbAgentStyle.SqlServer));
+		public static SqlCmd SqlCmd(this SqlBuilder sql, ConnectionProvider provider) => new SqlCmd(provider, sql);
 
 
 		public static bool Invalid(this SqlBuilder sql, TableName tname)

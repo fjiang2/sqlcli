@@ -986,7 +986,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
 
 			Locator locator = new Locator(setting.KeyName.AsColumn() == key);
 			SqlBuilder builder = new SqlBuilder().SELECT().COLUMNS(setting.ValueName.AsColumn()).FROM(tname).WHERE(locator);
-			var L = new SqlCmd(tname.Provider, builder.ToScript(DbAgentStyle.SqlServer)).FillDataColumn<string>(0);
+			var L = new SqlCmd(tname.Provider, builder).FillDataColumn<string>(0);
 			if (L.Any())
 			{
 				cerr.WriteLine($"undefined key: {key}");
@@ -1895,7 +1895,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
 					.COLUMNS(new string[] { colKey, colValue })
 					.FROM(tname);
 
-				var L = new SqlCmd(tname.Provider, builder.ToScript(DbAgentStyle.SqlServer))
+				var L = new SqlCmd(tname.Provider, builder)
 					.FillDataTable()
 					.AsEnumerable()
 					.Select(row => new

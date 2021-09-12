@@ -60,7 +60,7 @@ namespace Sys.Data
             get
             {
                 var sql = new SqlBuilder().SELECT().TOP(Top).COLUMNS().FROM(tableName).WHERE(locator);
-                return new SqlCmd(tableName.Provider, sql.ToScript(DbAgentStyle.SqlServer));
+                return new SqlCmd(tableName.Provider, sql);
             }
         }
 
@@ -76,7 +76,7 @@ namespace Sys.Data
 
                 var sql = new SqlBuilder().SELECT().COLUMNS(Expression.COUNT_STAR).FROM(tableName).WHERE(locator);
 
-                object obj = new SqlCmd(tableName.Provider, sql.ToScript(DbAgentStyle.SqlServer)).ExecuteScalar();
+                object obj = new SqlCmd(tableName.Provider, sql).ExecuteScalar();
                 long count = Convert.ToInt64(obj);
                 if (Top > 0 && Top < count)
                     return Top;

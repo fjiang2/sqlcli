@@ -20,6 +20,7 @@ using System.Linq;
 using System.Data.Common;
 using System.Data.SqlClient;
 using System.Data;
+using Sys.Data.Text;
 using Tie;
 
 namespace Sys.Data
@@ -57,6 +58,11 @@ namespace Sys.Data
 		 : this(ConnectionProviderManager.DefaultProvider, script)
 		{
 			ParseParameters(parameters);
+		}
+
+		public SqlCmd(ConnectionProvider provider, SqlBuilder sql)
+			: base(provider, sql.ToScript(DbAgentStyle.SqlServer))
+		{
 		}
 
 		/// <summary>

@@ -119,7 +119,7 @@ namespace Sys.Data
 			get
 			{
 				object value1 = propertyInfo1.GetValue(dpoInstance, null);
-				SqlCmd cmd = new SqlCmd(ConnectionProviderManager.DefaultProvider, this.clause1.ToScript(DbAgentStyle.SqlServer));
+				SqlCmd cmd = new SqlCmd(ConnectionProviderManager.DefaultProvider, this.clause1);
 				cmd.AddParameter(association.Column1.SqlParameterName(), value1);
 				return cmd.FillDataTable().ToArray<object>(association.Relation1);
 			}
@@ -131,7 +131,7 @@ namespace Sys.Data
 				return;
 
 			object value1 = propertyInfo1.GetValue(dpoInstance, null);
-			SqlCmd cmd = new SqlCmd(ConnectionProviderManager.DefaultProvider, clause2.ToScript(DbAgentStyle.SqlServer));
+			SqlCmd cmd = new SqlCmd(ConnectionProviderManager.DefaultProvider, clause2);
 			cmd.AddParameter(association.Column1.SqlParameterName(), value1);
 			DataTable dataTable = cmd.FillDataTable();
 
