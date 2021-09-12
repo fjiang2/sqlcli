@@ -50,7 +50,7 @@ namespace sqlcli
                 .GROUP_BY(_columns).HAVING(Expression.COUNT_STAR > 1 )
                 .ORDER_BY(_columns);
 
-            group = new SqlCmd(tname.Provider, builder.Script).FillDataTable();
+            group = new SqlCmd(tname.Provider, builder.ToScript(DbAgentStyle.SqlServer)).FillDataTable();
         
         }
 
@@ -65,7 +65,7 @@ namespace sqlcli
                     cout.WriteLine("{0}", where);
 
                 var builder = new SqlBuilder().SELECT().COLUMNS().FROM(tname).WHERE(where);
-                display(new SqlCmd(tname.Provider, builder.Script).FillDataTable());
+                display(new SqlCmd(tname.Provider, builder.ToScript(DbAgentStyle.SqlServer)).FillDataTable());
                 cout.WriteLine();
             }
         }
@@ -98,7 +98,7 @@ namespace sqlcli
                     .SET("ROWCOUNT", 0);
 
                 sum += count - 1;
-                new SqlCmd(tname.Provider, builder.Script).ExecuteNonQuery();
+                new SqlCmd(tname.Provider, builder.ToScript(DbAgentStyle.SqlServer)).ExecuteNonQuery();
             }
 
             return sum;

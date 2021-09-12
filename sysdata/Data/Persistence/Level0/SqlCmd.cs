@@ -155,13 +155,12 @@ namespace Sys.Data
 		}
 
 
-		public override DataSet FillDataSet(DataSet dataSet)
+		public override int FillDataSet(DataSet dataSet)
 		{
 			try
 			{
 				connection.Open();
-				dbProvider.FillDataSet(dataSet);
-				return dataSet;
+				return dbProvider.FillDataSet(dataSet);
 			}
 			catch (Exception ex)
 			{
@@ -172,9 +171,27 @@ namespace Sys.Data
 				connection.Close();
 			}
 
-			return null;
+			return -1;
 		}
 
+		public override int FillDataTable(DataTable dataTable, int startRecord, int maxRecords)
+		{
+			try
+			{
+				connection.Open();
+				return dbProvider.FillDataTable(dataTable, startRecord, maxRecords);
+			}
+			catch (Exception ex)
+			{
+				OnError(new SqlExceptionEventArgs(command, ex));
+			}
+			finally
+			{
+				connection.Close();
+			}
+
+			return -1;
+		}
 
 		public override DataTable FillDataTable(DataSet dataSet, string tableName)
 		{

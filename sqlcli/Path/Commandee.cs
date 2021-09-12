@@ -16,7 +16,7 @@ using Sys.Stdio.Cli;
 using Sys.Data.Resource;
 using Sys.Data.Code;
 using Sys.Data.Text;
-using Sys.Data.Linq;
+using Sys.Data.Entity;
 using Tie;
 
 
@@ -195,11 +195,11 @@ namespace sqlcli
 
 			string SQL;
 			SqlBuilder builder = new SqlBuilder().UPDATE(tname).SET(cmd.Args);
-			SQL = builder.Script;
+			SQL = builder.ToScript(DbAgentStyle.SqlServer);
 			if (locator != null)
 			{
 				builder.WHERE(locator);
-				SQL = builder.Script;
+				SQL = builder.ToScript(DbAgentStyle.SqlServer);
 			}
 			else if (mgr.Tout != null && mgr.Tout.TableName == tname && mgr.Tout.HasPhysloc)
 			{
@@ -261,7 +261,7 @@ namespace sqlcli
 
 					SqlBuilder builder = table.WriteValue(column, i, s.HostValue);
 
-					sum.AppendLine(builder.Script);
+					sum.AppendLine(builder.ToScript(DbAgentStyle.SqlServer));
 				}
 			}
 
@@ -986,7 +986,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
 
 			Locator locator = new Locator(setting.KeyName.AsColumn() == key);
 			SqlBuilder builder = new SqlBuilder().SELECT().COLUMNS(setting.ValueName.AsColumn()).FROM(tname).WHERE(locator);
-			var L = new SqlCmd(tname.Provider, builder.Script).FillDataColumn<string>(0);
+			var L = new SqlCmd(tname.Provider, builder.ToScript(DbAgentStyle.SqlServer)).FillDataColumn<string>(0);
 			if (L.Any())
 			{
 				cerr.WriteLine($"undefined key: {key}");
@@ -1895,13 +1895,15 @@ sp_rename '{1}', '{2}', 'COLUMN'";
 					.COLUMNS(new string[] { colKey, colValue })
 					.FROM(tname);
 
-				var L = new SqlCmd(tname.Provider, builder.Script)
+				var L = new SqlCmd(tname.Provider, builder.ToScript(DbAgentStyle.SqlServer))
 					.FillDataTable()
-					.ToList(row => new
+					.AsEnumerable()
+					.Select(row => new
 					{
 						Key = row.GetField<string>(colKey),
 						Value = row.GetField<string>(colValue)
-					});
+					})
+					.ToList();
 
 				Memory DS = new Memory();
 				foreach (var kvp in L)

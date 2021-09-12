@@ -53,10 +53,16 @@ namespace Sys.Data
         protected abstract DbDataAdapter NewDbDataAdapter();
         protected abstract DbCommand NewDbCommand();
 
-        public void FillDataSet(DataSet dataSet)
+        public int FillDataSet(DataSet dataSet)
         {
             DbDataAdapter adapter = NewDbDataAdapter();
-            adapter.Fill(dataSet);
+            return adapter.Fill(dataSet);
+        }
+
+        public int FillDataTable(DataTable dataTable, int startRecord, int maxRecords)
+		{
+            DbDataAdapter adapter = NewDbDataAdapter();
+            return adapter.Fill(startRecord, startRecord, dataTable);
         }
 
         public void FillDataTable(DataSet dataSet, string tableName)
