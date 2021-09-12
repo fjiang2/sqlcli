@@ -10,8 +10,8 @@ namespace Sys.Data.Comparison
     class RowCompare
     {
         private readonly TableCompare table;
-        private List<ColumnPair> L1;
-        private List<ColumnPair> L2;
+        private List<SqlColumnValuePair> L1;
+        private List<SqlColumnValuePair> L2;
 
         public RowCompare(TableCompare table, DataRow row1, DataRow row2)
         {
@@ -22,8 +22,8 @@ namespace Sys.Data.Comparison
         private void Difference(DataRow row1, DataRow row2)
         {
 
-            L1 = new List<ColumnPair>();
-            L2 = new List<ColumnPair>();
+            L1 = new List<SqlColumnValuePair>();
+            L2 = new List<SqlColumnValuePair>();
 
             foreach (var column in table.CompareColumns)
             {
@@ -37,19 +37,19 @@ namespace Sys.Data.Comparison
                     r2 = (r2 as string).Trim();
 
                 if (!r1.Equals(r2))
-                    L2.Add(new ColumnPair(column, r1));
+                    L2.Add(new SqlColumnValuePair(column, r1));
             }
 
             foreach (var column in table.PkColumns.Keys)
             {
-                L1.Add(new ColumnPair(column, row1[column]));
+                L1.Add(new SqlColumnValuePair(column, row1[column]));
             }
         }
 
         public string UPDATE(TableName tableName)
         {
-            string Set = string.Join<ColumnPair>(", ", L2);
-            string where = string.Join<ColumnPair>(" AND ", L1);
+            string Set = string.Join<SqlColumnValuePair>(", ", L2);
+            string where = string.Join<SqlColumnValuePair>(" AND ", L1);
             return new SqlTemplate(tableName.FormalName).Update(Set, where);
         }
 

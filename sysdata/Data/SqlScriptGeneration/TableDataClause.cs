@@ -17,6 +17,7 @@ namespace Sys.Data
 		private readonly string[] ik;
 		private readonly string[] ck;
 
+		private DbAgentStyle style;
 
 		public TableDataClause(ITableSchema schema)
 		{
@@ -27,28 +28,29 @@ namespace Sys.Data
 			this.pk = schema.PrimaryKeys.Keys;
 			this.ik = schema.Identity.ColumnNames;
 			this.ck = schema.Columns.Where(column => column.IsComputed).Select(column => column.ColumnName).ToArray();
+			this.style = schema.TableName.Provider.AgentStyle();
 		}
 
 
-		private string WHERE(ColumnPairCollection pairs)
+		private string WHERE(SqlColumnValuePairCollection pairs)
 		{
 			var L1 = pairs.Where(p => pk.Contains(p.ColumnName)).ToArray();
-			return string.Join<ColumnPair>(" AND ", L1);
+			return string.Join<SqlColumnValuePair>(" AND ", L1);
 		}
 
-		public string IF_NOT_EXISTS_INSERT(ColumnPairCollection pairs)
+		public string IF_NOT_EXISTS_INSERT(SqlColumnValuePairCollection pairs)
 		{
 			return template.IfNotExistsInsert(WHERE(pairs), INSERT(pairs));
 		}
 
-		public string INSERT(ColumnPairCollection pairs, bool InsertWithoutColumns = false)
+		public string INSERT(SqlColumnValuePairCollection pairs, bool InsertWithoutColumns = false)
 		{
 			var L1 = pairs
 			  .Where(column => !ik.Contains(column.ColumnName))
 			  .Where(column => !ck.Contains(column.ColumnName));
 
 			var x1 = L1.Select(p => p.ColumnName.AsColumn());
-			var x2 = L1.Select(p => p.Value.ToScript(DbAgentStyle.SqlServer));
+			var x2 = L1.Select(p => p.Value.ToScript(style));
 
 			if (InsertWithoutColumns)
 				return template.Insert(string.Join(",", x2));
@@ -57,18 +59,18 @@ namespace Sys.Data
 		}
 
 
-		public string IF_NOT_EXISTS_INSERT_ELSE_UPDATE(ColumnPairCollection pairs)
+		public string IF_NOT_EXISTS_INSERT_ELSE_UPDATE(SqlColumnValuePairCollection pairs)
 		{
 			return template.IfNotExistsInsertElseUpdate(WHERE(pairs), INSERT(pairs), UPDATE(pairs));
 		}
 
-		public string UPDATE(ColumnPairCollection pairs)
+		public string UPDATE(SqlColumnValuePairCollection pairs)
 		{
 			var L1 = pairs
 				.Where(column => !ik.Contains(column.ColumnName))
 				.Where(column => !pk.Contains(column.ColumnName))
 				.Where(column => !ck.Contains(column.ColumnName))
-				.Select(p => $"{p.ColumnName.AsColumn()} = {p.Value.ToScript(DbAgentStyle.SqlServer)}");
+				.Select(p => $"{p.ColumnName.AsColumn()} = {p.Value.ToScript(style)}");
 
 			string update = string.Join(",", L1);
 			return template.Update(update, WHERE(pairs));
@@ -76,13 +78,13 @@ namespace Sys.Data
 
 		public string DELETE(DataRow row, IPrimaryKeys primaryKey)
 		{
-			var L1 = new List<ColumnPair>();
+			var L1 = new List<SqlColumnValuePair>();
 			foreach (var column in primaryKey.Keys)
 			{
-				L1.Add(new ColumnPair(column, row[column]));
+				L1.Add(new SqlColumnValuePair(column, row[column]));
 			}
 
-			return template.Delete(string.Join<ColumnPair>(" AND ", L1));
+			return template.Delete(string.Join<SqlColumnValuePair>(" AND ", L1));
 		}
 
 	}

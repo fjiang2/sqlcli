@@ -145,7 +145,8 @@ namespace Sys.Data.Comparison
             StringBuilder builder = new StringBuilder();
             foreach (DataRow row in table.Rows)
             {
-                var pair = new ColumnPairCollection(row);
+                var pair = new SqlColumnValuePairCollection();
+                pair.AddRange(row);
                 builder.Append(script.INSERT(pair)).AppendLine();
             }
 

@@ -80,7 +80,7 @@ namespace Sys.Data.Comparison
                 }
                 else
                 {
-                    builder.Append(script.INSERT(new ColumnPairCollection(row1)));
+                    builder.Append(script.INSERT(new SqlColumnValuePairCollection().AddRange(row1)));
                     builder.AppendLine();
                 }
             }
