@@ -30,7 +30,7 @@ namespace Sys.Data
 
             RemoteInvoke agent = new RemoteInvoke(new Uri(provider.DataSource));
             string sql = command.CommandText;
-            string code = $"var cmd=new tw.Common.SqlCmdDirect('{sql}');ds=cmd.FillDataSet();";
+            string code = $"var cmd=new Sys.Data.SqlCmd('{sql}');ds=cmd.FillDataSet();";
             agent.Execute(code);
 
             var ds = agent.GetValue<DataSet>("ds");

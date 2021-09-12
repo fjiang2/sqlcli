@@ -5,7 +5,7 @@ using System.Data;
 using System.Text;
 
 using Sys.Collections;
-using Sys.Data.Linq;
+using Sys.Data.Entity;
 
 namespace Sys.Data.Resource
 {

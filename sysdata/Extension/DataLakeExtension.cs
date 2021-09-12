@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using Sys.Data;
 using Tie;
-using Sys.Data.Linq;
+using Sys.Data.Entity;
 
 namespace Sys.Data
 {
