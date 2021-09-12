@@ -68,7 +68,7 @@ namespace Sys.Data
             foreach (DataRow row in dt.Rows)
             {
                 values = row.ItemArray;
-                var pairs = new ColumnPairCollection(columns, values);
+                var pairs = new SqlColumnValuePairCollection().AddRange(columns, values);
                 GenerateRow(writer, pairs);
 
                 count++;
@@ -100,7 +100,7 @@ namespace Sys.Data
                         progress?.Report(step);
 
                     reader.GetValues(values);
-                    var pairs = new ColumnPairCollection(columns, values);
+                    var pairs = new SqlColumnValuePairCollection().AddRange(columns, values);
                     GenerateRow(writer, pairs);
 
                     count++;
@@ -118,7 +118,7 @@ namespace Sys.Data
             return count;
         }
 
-        private void GenerateRow(TextWriter writer, ColumnPairCollection pairs)
+        private void GenerateRow(TextWriter writer, SqlColumnValuePairCollection pairs)
         {
             switch (type)
             {

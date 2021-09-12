@@ -223,13 +223,13 @@ namespace Sys.Data
 			return table;
 		}
 
-		public string ToSql()
+		public string ToScrpit(DbAgentStyle style)
 		{
 			string text = this.command.CommandText;
 
 			foreach (DbParameter parameter in command.Parameters)
 			{
-				text = text.Replace(parameter.ParameterName, new SqlValue(parameter.Value).ToScript(DbAgentStyle.SqlServer));
+				text = text.Replace(parameter.ParameterName, new SqlValue(parameter.Value).ToScript(style));
 			}
 
 			return text;
@@ -239,8 +239,5 @@ namespace Sys.Data
 		{
 			return this.script;
 		}
-
-
-
 	}
 }

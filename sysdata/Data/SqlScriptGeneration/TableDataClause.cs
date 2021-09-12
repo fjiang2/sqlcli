@@ -30,18 +30,18 @@ namespace Sys.Data
 		}
 
 
-		private string WHERE(ColumnPairCollection pairs)
+		private string WHERE(SqlColumnValuePairCollection pairs)
 		{
 			var L1 = pairs.Where(p => pk.Contains(p.ColumnName)).ToArray();
-			return string.Join<ColumnPair>(" AND ", L1);
+			return string.Join<SqlColumnValuePair>(" AND ", L1);
 		}
 
-		public string IF_NOT_EXISTS_INSERT(ColumnPairCollection pairs)
+		public string IF_NOT_EXISTS_INSERT(SqlColumnValuePairCollection pairs)
 		{
 			return template.IfNotExistsInsert(WHERE(pairs), INSERT(pairs));
 		}
 
-		public string INSERT(ColumnPairCollection pairs, bool InsertWithoutColumns = false)
+		public string INSERT(SqlColumnValuePairCollection pairs, bool InsertWithoutColumns = false)
 		{
 			var L1 = pairs
 			  .Where(column => !ik.Contains(column.ColumnName))
@@ -57,12 +57,12 @@ namespace Sys.Data
 		}
 
 
-		public string IF_NOT_EXISTS_INSERT_ELSE_UPDATE(ColumnPairCollection pairs)
+		public string IF_NOT_EXISTS_INSERT_ELSE_UPDATE(SqlColumnValuePairCollection pairs)
 		{
 			return template.IfNotExistsInsertElseUpdate(WHERE(pairs), INSERT(pairs), UPDATE(pairs));
 		}
 
-		public string UPDATE(ColumnPairCollection pairs)
+		public string UPDATE(SqlColumnValuePairCollection pairs)
 		{
 			var L1 = pairs
 				.Where(column => !ik.Contains(column.ColumnName))
@@ -76,13 +76,13 @@ namespace Sys.Data
 
 		public string DELETE(DataRow row, IPrimaryKeys primaryKey)
 		{
-			var L1 = new List<ColumnPair>();
+			var L1 = new List<SqlColumnValuePair>();
 			foreach (var column in primaryKey.Keys)
 			{
-				L1.Add(new ColumnPair(column, row[column]));
+				L1.Add(new SqlColumnValuePair(column, row[column]));
 			}
 
-			return template.Delete(string.Join<ColumnPair>(" AND ", L1));
+			return template.Delete(string.Join<SqlColumnValuePair>(" AND ", L1));
 		}
 
 	}
