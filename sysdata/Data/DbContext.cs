@@ -8,6 +8,7 @@ using Sys.Data.Entity;
 
 namespace Sys.Data
 {
+
 	public class DbContext : DataContext
 	{
 		public DbContext()
@@ -21,7 +22,7 @@ namespace Sys.Data
 		}
 
 		public DbContext(ConnectionProvider provider)
-			: base(DbAgent.Create(provider.AgentStyle(), (query, args) => new SqlCmd(provider, query, args)))
+			: base(new SqlDbAgent(provider))
 		{
 			Description = provider.ToString();
 		}
