@@ -33,10 +33,10 @@ namespace Sys.Data
 		{
 		}
 
-		public SqlCmd(ConnectionProvider provider, string script, object parameters)
-		  : base(provider, script)
+		public SqlCmd(ConnectionProvider provider, SqlUnit unit)
+		  : base(provider, unit.Statement)
 		{
-			ParseParameters(parameters);
+			ParseParameters(unit.Arguments);
 		}
 
 		/// <summary>

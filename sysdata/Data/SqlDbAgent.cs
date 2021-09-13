@@ -9,10 +9,9 @@
 			this.provider = provider;
 		}
 
-		public IDbCmd Command(string sql, object args)
-			=> new SqlCmd(provider, sql, args);
+		public IDbCmd Proxy(SqlUnit unit)
+			=> new SqlCmd(provider, unit);
 
 		public DbAgentOption Option => new DbAgentOption { Style = provider.AgentStyle() };
-		public DbCmdFunction Function => Command;
 	}
 }
