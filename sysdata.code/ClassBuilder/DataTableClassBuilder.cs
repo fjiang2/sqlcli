@@ -93,7 +93,7 @@ namespace Sys.Data.Code
 
             bool hasColumnProperty = cmd.Has("data-column-property");
             Statement sent = method.Body;
-            sent.AppendLine("DataTable dt = new DataTable();");
+            sent.AppendLine("DataTable dt = new DataTable { TableName = TableName };");
             foreach (DataColumn column in dt.Columns)
             {
                 TypeInfo ty = new TypeInfo(dict[column].Type);
@@ -118,6 +118,8 @@ namespace Sys.Data.Code
                 sent.AppendLine($"dt.Columns.Add({_column});");
             }
 
+            sent.AppendLine();
+            sent.AppendLine("dt.PrimaryKey = dt.Columns.OfType<DataColumn>().Where(column => Keys.Contains(column.ColumnName)).ToArray();");
             sent.AppendLine();
             sent.AppendLine("return dt;");
         }
