@@ -26,7 +26,7 @@ using DataProviderHandle = System.Int32;
 
 namespace Sys.Data
 {
-	public abstract class DbCmd : BaseDbCmd
+	public abstract class DbCmd : DbAccess
 	{
 		protected string script;
 		protected DbProvider dbProvider;
@@ -136,7 +136,32 @@ namespace Sys.Data
 			return n;
 		}
 
+		public override void ExecuteTransaction()
+		{
+			try
+			{
+				connection.Open();
+				using (var transaction = connection.BeginTransaction())
+				{
+					try
+					{
+						command.Transaction = transaction;
+						command.ExecuteNonQuery();
+						transaction.Commit();
+					}
+					catch (Exception)
+					{
+						transaction.Rollback();
+						throw;
+					}
+				}
+			}
+			finally
+			{
+				connection.Close();
+			}
 
+		}
 		/// <summary>
 		/// Get stored procedure's return value
 		/// </summary>
