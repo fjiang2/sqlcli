@@ -11,7 +11,7 @@
     <None Remove="Linq\**" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="sqlcode" Version="1.0.7" />
+    <PackageReference Include="sqlcode" Version="1.0.8" />
     <PackageReference Include="System.CodeDom" Version="5.0.0" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.3" />
     <PackageReference Include="Tie" Version="2.0.8" />

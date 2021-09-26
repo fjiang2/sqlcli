@@ -8,11 +8,12 @@ namespace Sys.Data
 		public ConnectionProvider provider { get; }
 
 		public SqlDbAgent(ConnectionProvider provider)
+			:base(new SqlConnectionStringBuilder(provider.ConnectionString))
 		{
 			this.provider = provider;
 		}
 
-		public override IDbAccess Proxy(SqlUnit unit)
+		public override DbAccess Access(SqlUnit unit)
 			=> new SqlCmd(provider, unit);
 
 		public override DbAgentOption Option => new DbAgentOption { Style = provider.AgentStyle() };
