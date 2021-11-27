@@ -22,7 +22,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "syscode", "..\code-gen\sysc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sqlshop", "sqlshop\sqlshop.csproj", "{6422E5EF-28EF-493A-AED7-02E8A3B4DAA1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "syscore.tie", "systie\syscore.tie.csproj", "{4F7CC514-D01B-4C4D-87A0-3A722A504E96}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "systie", "systie\systie.csproj", "{4F7CC514-D01B-4C4D-87A0-3A722A504E96}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "anycli", "anycli\anycli.csproj", "{DF8EB59C-066C-448F-B342-957FD6056564}"
 EndProject

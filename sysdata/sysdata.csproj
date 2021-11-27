@@ -18,6 +18,6 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\syscore\syscore.csproj" />
-    <ProjectReference Include="..\systie\syscore.tie.csproj" />
+    <ProjectReference Include="..\systie\systie.csproj" />
   </ItemGroup>
 </Project>
