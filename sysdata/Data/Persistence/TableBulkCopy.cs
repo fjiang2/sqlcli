@@ -30,7 +30,7 @@ namespace Sys.Data
             Action<DbDataReader> copy = reader =>
             {
                 var dbReader = new DbReader(reader);
-                table = DbReader.CreateTable(reader);
+                table = DbReader.CreateBlankTable(reader);
 
                 DataRow row;
 

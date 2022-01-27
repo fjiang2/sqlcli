@@ -12,6 +12,9 @@ namespace Sys.Data
     class DbReader
     {
         private readonly DbDataReader reader;
+        public int StartRecord { get; set; } = 0;
+        public int MaxRecords { get; set; } = -1;
+
 
         public DbReader(DbDataReader reader)
         {
@@ -32,7 +35,7 @@ namespace Sys.Data
 
         public void ReadTable(CancellationToken cancellationToken, IProgress<DataRow> progress)
         {
-            var table = CreateTable(reader);
+            var table = CreateBlankTable(reader);
 
             while (reader.Read())
             {
@@ -48,7 +51,7 @@ namespace Sys.Data
 
         public DataTable ReadTable(CancellationToken cancellationToken, IProgress<int> progress)
         {
-            var table = CreateTable(reader);
+            var table = CreateBlankTable(reader);
 
             int step = 0;
 
@@ -69,12 +72,30 @@ namespace Sys.Data
             return table;
         }
 
-        public static DataTable CreateTable(DbDataReader reader)
+        public static DataTable CreateBlankTable(DbDataReader reader)
         {
             DataTable table = new DataTable
             {
                 CaseSensitive = true,
             };
+
+            CreateBlankTable(table, reader);
+            return table;
+        }
+
+        private static void CreateBlankTable(DataTable table, DbDataReader reader)
+        {
+            if (table != null)
+            {
+                table.CaseSensitive = true;
+                table.Columns.Clear();
+                table.Clear();
+                table.AcceptChanges();
+            }
+            else
+            {
+                table = new DataTable { CaseSensitive = true };
+            }
 
             for (int i = 0; i < reader.FieldCount; i++)
             {
@@ -83,33 +104,62 @@ namespace Sys.Data
             }
 
             table.AcceptChanges();
-
-            return table;
         }
 
-        public void ReadDataSet(IProgress<int> tableChanged, IProgress<DataRow> progress, CancellationToken cancellationToken)
+
+        public int ReadTable(DataTable table)
         {
-            int step = 0;
-            while (reader.HasRows)
-            {
-                ReadTable(cancellationToken, progress);
-                tableChanged.Report(step++);
-                reader.NextResult();
-            }
+            CreateBlankTable(table, reader);
+            return ReadRows(table);
         }
 
-        public DataSet ReadDataSet(IProgress<DataTable> tableChanged, IProgress<int> progress, CancellationToken cancellationToken)
+        private int ReadRows(DataTable table)
         {
-            DataSet ds = new DataSet();
-            while (reader.HasRows)
+            if (MaxRecords == 0)
+                return 0;
+
+            int index = -1;
+            int count = 0;
+            while (reader.Read())
             {
-                var dt = ReadTable(cancellationToken, progress);
-                tableChanged.Report(dt);
-                ds.Tables.Add(dt);
-                reader.NextResult();
+                index++;
+                if (index < StartRecord)
+                    continue;
+
+                var row = ReadRow(table);
+                table.Rows.Add(row);
+                count++;
+
+                if (MaxRecords > 0 && count >= MaxRecords)
+                    break;
             }
 
-            return ds;
+            table.AcceptChanges();
+            return count;
+        }
+
+        public int ReadDataSet(DataSet ds)
+        {
+            int count = 0;
+
+            //read empty table
+            var dt = new DataTable();
+            CreateBlankTable(dt, reader);
+            ds.Tables.Add(dt);
+
+            while (reader.HasRows)
+            {
+                count += ReadRows(dt);
+                if (reader.NextResult())
+                {
+                    //read next empty table
+                    dt = new DataTable();
+                    CreateBlankTable(dt, reader);
+                    ds.Tables.Add(dt);
+                }
+            }
+
+            return count;
         }
     }
 }
