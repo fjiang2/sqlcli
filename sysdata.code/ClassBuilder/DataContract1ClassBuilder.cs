@@ -124,17 +124,17 @@ namespace Sys.Data.Code
                 Method_FromDictionary(clssExt);
             }
 
-            UtilsStaticMethod option = UtilsStaticMethod.Undefined;
+            ICommonMethod common = clssExt.CommonMethod();
+
             if (ContainsMethod("CopyTo"))
-                option |= UtilsStaticMethod.CopyTo;
+                common.StaticCopy();
 
             if (ContainsMethod("CompareTo"))
-                option |= UtilsStaticMethod.CompareTo;
+                common.StaticCompare();
 
             if (ContainsMethod("ToSimpleString"))
-                option |= UtilsStaticMethod.ToSimpleString;
+                common.StaticToSimpleString();
 
-            clssExt.AddUtilsMethod(ClassName, dict.Keys.Select(column => new PropertyInfo { PropertyName = PropertyName(column) }), option);
             index2 = clssExt.Index;
             clssExt.AppendLine();
 

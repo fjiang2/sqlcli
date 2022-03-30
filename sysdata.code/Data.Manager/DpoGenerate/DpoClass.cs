@@ -331,8 +331,11 @@ namespace Sys.Data.Manager
 
             ConstStringColumnNames();
 
-            clss.AddUtilsMethod(UtilsThisMethod.Copy | UtilsThisMethod.Clone | UtilsThisMethod.Compare);
-            
+            ICommonMethod common = clss.CommonMethod();
+            common.Copy();
+            common.Clone();
+            common.Compare();
+
             return code.ToString();
         }
 

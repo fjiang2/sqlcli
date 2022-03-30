@@ -89,8 +89,7 @@ namespace Sys.Data.Code
                 }
             }
 
-
-            UtilsThisMethod option = UtilsThisMethod.Undefined;
+            ICommonMethod common = clss.CommonMethod();
 
             if (ContainsMethod("Map"))
             {
@@ -127,41 +126,29 @@ namespace Sys.Data.Code
                     .Select(column => new PropertyInfo { PropertyName = column.ColumnName })
                     .ToArray();
 
-                clss.AddUtilsMethod(ClassName, columns, UtilsThisMethod.Map);
+                common.Map();
             }
 
             if (ContainsMethod("Copy"))
-                option |= UtilsThisMethod.Copy;
+                common.Copy();
 
             if (ContainsMethod("Clone"))
-                option |= UtilsThisMethod.Clone;
+                common.Clone();
 
             if (ContainsMethod("Equals"))
-                option |= UtilsThisMethod.Equals;
+                common.Equals();
 
             if (ContainsMethod("GetHashCode"))
-                option |= UtilsThisMethod.GetHashCode;
+                common.GetHashCode();
 
             if (ContainsMethod("Compare"))
-                option |= UtilsThisMethod.Compare;
+                common.Compare();
 
             if (ContainsMethod("ToDictionary"))
-                option |= UtilsThisMethod.ToDictionary;
+                common.ToDictionary();
 
             if (ContainsMethod("ToString"))
-                option |= UtilsThisMethod.ToString;
-
-            {
-                PropertyInfo[] columns = schema.Columns
-                    .Select(column => new PropertyInfo
-                    {
-                        PropertyType = column.GetTypeInfo(),
-                        PropertyName = column.ColumnName
-                    })
-                    .ToArray();
-
-                clss.AddUtilsMethod(ClassName, columns, option);
-            }
+                common.ToString(useFormat: true);
         }
     }
 }
