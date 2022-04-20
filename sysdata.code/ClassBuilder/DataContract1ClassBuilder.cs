@@ -124,13 +124,13 @@ namespace Sys.Data.Code
                 Method_FromDictionary(clssExt);
             }
 
-            ICommonMethod common = clssExt.CommonMethod();
-
-            if (ContainsMethod("CopyTo"))
-                common.StaticCopy();
+            ICommonMethod common = clssExt.CommonMethod(ClassName, dict.Keys.Select(column => new PropertyInfo { PropertyName = PropertyName(column) }), isExtensionMethod: true);
 
             if (ContainsMethod("CompareTo"))
                 common.StaticCompare();
+
+            if (ContainsMethod("CopyTo"))
+                common.StaticCopy();
 
             if (ContainsMethod("ToSimpleString"))
                 common.StaticToSimpleString();
