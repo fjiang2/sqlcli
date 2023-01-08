@@ -14,7 +14,6 @@
     <DefineConstants>TRACE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\code-gen\syscode\syscode.csproj" />
     <ProjectReference Include="..\syscore\syscore.csproj" />
     <ProjectReference Include="..\sysdata.code\sysdata.code.csproj" />
     <ProjectReference Include="..\sysdata\sysdata.csproj" />

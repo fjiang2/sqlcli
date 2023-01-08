@@ -18,8 +18,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sysdata.code", "sysdata.cod
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sqlui", "sqlui\sqlui.csproj", "{301F923C-64BF-459C-92C5-368242A1A535}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "syscode", "..\code-gen\syscode\syscode.csproj", "{7C0A619E-4ADF-450D-9DA9-943AE2A35FCF}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "sqlshop", "sqlshop\sqlshop.csproj", "{6422E5EF-28EF-493A-AED7-02E8A3B4DAA1}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "systie", "systie\systie.csproj", "{4F7CC514-D01B-4C4D-87A0-3A722A504E96}"
@@ -52,10 +50,6 @@ Global
 		{301F923C-64BF-459C-92C5-368242A1A535}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{301F923C-64BF-459C-92C5-368242A1A535}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{301F923C-64BF-459C-92C5-368242A1A535}.Release|Any CPU.Build.0 = Release|Any CPU
-		{7C0A619E-4ADF-450D-9DA9-943AE2A35FCF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{7C0A619E-4ADF-450D-9DA9-943AE2A35FCF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{7C0A619E-4ADF-450D-9DA9-943AE2A35FCF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{7C0A619E-4ADF-450D-9DA9-943AE2A35FCF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6422E5EF-28EF-493A-AED7-02E8A3B4DAA1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6422E5EF-28EF-493A-AED7-02E8A3B4DAA1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6422E5EF-28EF-493A-AED7-02E8A3B4DAA1}.Release|Any CPU.ActiveCfg = Release|Any CPU
