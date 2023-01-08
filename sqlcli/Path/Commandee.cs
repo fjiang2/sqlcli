@@ -18,6 +18,7 @@ using Sys.Data.Code;
 using Sys.Data.Text;
 using Sys.Data.Entity;
 using Tie;
+using syscon.grid;
 
 
 namespace sqlcli

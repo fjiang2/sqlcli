@@ -15,7 +15,7 @@ namespace sqlcli.Windows
     public class TableEditor : Window
     {
         private readonly Grid grid = new Grid();
-        private readonly DataGrid dataGrid;
+        private readonly System.Windows.Controls.DataGrid dataGrid;
         private readonly UniqueTable udt;
 
         public TableEditor(UniqueTable udt)
@@ -33,7 +33,7 @@ namespace sqlcli.Windows
 
             this.Content = grid;
 
-            dataGrid = new DataGrid
+            dataGrid = new System.Windows.Controls.DataGrid
             {
                 AlternationCount = 2,
                 AlternatingRowBackground = Themes.TableEditor.AlternatingRowBackground,

@@ -6,6 +6,7 @@ using Sys.Data.Comparison;
 using Tie;
 using Sys.Stdio;
 using Sys.Stdio.Cli;
+using syscon.grid;
 
 namespace sqlcli
 {
