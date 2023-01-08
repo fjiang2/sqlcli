@@ -14,14 +14,7 @@ namespace sqlcli
 {
     static class ConsoleGrid
     {
-        public static void ToConsole<T>(this IEnumerable<T> source, bool vertical = false)
-        {
-            DataTable dt = source.ToDataTable();
-            new OutputDataTable(dt, cout.TrimWriteLine, vertical).Output();
-        }
-
       
-
 
         public static void ToConsole(this DataTable dt, bool vertical = false, bool more = false, bool outputDbNull = true, int maxColumnWidth = 0)
         {

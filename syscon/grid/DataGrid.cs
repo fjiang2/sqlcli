@@ -9,7 +9,29 @@ namespace syscon.grid
 {
     public static class DataGrid
     {
-        public static void ToConsole(this DbDataReader reader, int maxRow = 0)
+        public static void ToGrid<T>(this IEnumerable<T> source, bool vertical = false)
+        {
+            DataTable dt = source.ToDataTable();
+            new OutputDataTable(dt, cout.TrimWriteLine, vertical).Output();
+        }
+
+        public static void ToGrid(this DataTable dt, bool vertical = false, bool more = false, bool outputDbNull = true, int maxColumnWidth = 0)
+        {
+            OutputDataTable odt = new OutputDataTable(dt, cout.TrimWriteLine, vertical)
+            {
+                OutputDbNull = outputDbNull,
+                MaxColumnWidth = maxColumnWidth,
+            };
+            odt.Output();
+
+            var top = more ? "top " : "";
+            var rows = dt.Rows.Count > 1 ? "rows" : "row";
+
+            cout.WriteLine($"<{top}{dt.Rows.Count} {rows}>");
+        }
+
+
+        public static void ToGrid(this DbDataReader reader, int maxRow = 0)
         {
             while (reader.HasRows)
             {
@@ -59,15 +81,56 @@ namespace syscon.grid
                 }
 
                 D.DisplayLine();
-                cout.WriteLine("<{0} row{1}> {2}",
-                    count,
-                    count > 1 ? "s" : "",
-                    limited ? "limit reached" : ""
-                    );
+
+                var rows = count > 1 ? "rows" : "row";
+                var limit = limited ? "limit reached" : "";
+                cout.WriteLine($"<{count} {rows}> {limit}");
 
                 reader.NextResult();
             }
 
         }
+
+
+        public static DataTable ToDataTable<T>(this IEnumerable<T> source)
+        {
+            var properties = typeof(T).GetProperties();
+
+            DataTable dt = new DataTable();
+            foreach (var propertyInfo in properties)
+            {
+                dt.Columns.Add(new DataColumn(propertyInfo.Name, propertyInfo.PropertyType));
+            }
+
+            Func<T, object[]> selector = row =>
+            {
+                var values = new object[properties.Length];
+                int i = 0;
+
+                foreach (var propertyInfo in properties)
+                {
+                    values[i++] = propertyInfo.GetValue(row);
+                }
+
+                return values;
+            };
+
+            foreach (T row in source)
+            {
+                object[] values = selector(row);
+                var newRow = dt.NewRow();
+                int k = 0;
+                foreach (var item in values)
+                {
+                    newRow[k++] = item;
+                }
+
+                dt.Rows.Add(newRow);
+            }
+
+            dt.AcceptChanges();
+            return dt;
+        }
+
     }
 }
