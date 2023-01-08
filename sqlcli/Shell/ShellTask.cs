@@ -316,7 +316,7 @@ namespace sqlcli
                     }
                     else
                     {
-                        new SqlCmd(theSide.Provider, text).Read(reader => reader.ToGrid(cfg.MaxRows));
+                        new SqlCmd(theSide.Provider, text).Read(reader => reader.WriteGrid(cfg.MaxRows));
                     }
                     break;
 
@@ -408,7 +408,7 @@ namespace sqlcli
                 case "view":
                     vnames = new MatchedDatabase(dname, arg2).ViewNames();
                     vnames.Select(tname => new { Schema = tname.SchemaName, View = tname.Name })
-                        .ToGrid();
+                        .WriteGrid();
                     break;
 
                 case "proc":
@@ -425,7 +425,7 @@ namespace sqlcli
                         if (L.Any())
                         {
                             L.Select(pvd => new { Alias = pvd.ServerName.Path, Connection = pvd.ToSimpleString() })
-                            .ToGrid();
+                            .WriteGrid();
                         }
                         else
                             cerr.WriteLine("connection string not found");
@@ -441,7 +441,7 @@ namespace sqlcli
                         ((VAL)Context.DS)
                             .Where(row => row[1].VALTYPE != VALTYPE.nullcon && row[1].VALTYPE != VALTYPE.voidcon && !row[0].Str.StartsWith("$"))
                             .Select(row => new { Variable = (string)row[0], Value = row[1] })
-                            .ToGrid();
+                            .WriteGrid();
                     }
                     break;
                 default:

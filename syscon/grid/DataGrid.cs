@@ -9,13 +9,13 @@ namespace syscon.grid
 {
     public static class DataGrid
     {
-        public static void ToGrid<T>(this IEnumerable<T> source, bool vertical = false)
+        public static void WriteGrid<T>(this IEnumerable<T> source, bool vertical = false)
         {
             DataTable dt = source.ToDataTable();
             new OutputDataTable(dt, cout.TrimWriteLine, vertical).Output();
         }
 
-        public static void ToGrid(this DataTable dt, bool vertical = false, bool more = false, bool outputDbNull = true, int maxColumnWidth = 0)
+        public static void WriteGrid(this DataTable dt, bool vertical = false, bool more = false, bool outputDbNull = true, int maxColumnWidth = 0)
         {
             OutputDataTable odt = new OutputDataTable(dt, cout.TrimWriteLine, vertical)
             {
@@ -31,7 +31,7 @@ namespace syscon.grid
         }
 
 
-        public static void ToGrid(this DbDataReader reader, int maxRow = 0)
+        public static void WriteGrid(this DbDataReader reader, int maxRow = 0)
         {
             while (reader.HasRows)
             {
