@@ -162,7 +162,7 @@ namespace Sys.Data.Code
                 IsExtensionMethod = true
             };
             clss.Add(method);
-            sent = method.Body;
+            sent = method.Statement;
             sent.AppendLine("return dt.AsEnumerable()");
             sent.AppendLine(".Select(row =>");
             sent.Begin();
@@ -183,7 +183,7 @@ namespace Sys.Data.Code
                 IsExtensionMethod = false
             };
             clss.Add(method);
-            var sent = method.Body;
+            var sent = method.Statement;
             sent.AppendLine($"var obj = new {ClassName}();");
             sent.AppendLine("FillObject(obj, row);");
             sent.AppendLine("return obj;");
@@ -198,7 +198,7 @@ namespace Sys.Data.Code
                 IsExtensionMethod = true
             };
             clss.Add(method);
-            var sent1 = method.Body;
+            var sent1 = method.Statement;
             foreach (DataColumn column in dt.Columns)
             {
                 var type = dict[column];
@@ -218,7 +218,7 @@ namespace Sys.Data.Code
                 IsExtensionMethod = true
             };
             clss.Add(method);
-            var sent = method.Body;
+            var sent = method.Statement;
 
             foreach (DataColumn column in dt.Columns)
             {
@@ -239,7 +239,7 @@ namespace Sys.Data.Code
                 IsExtensionMethod = true
             };
             clss.Add(method);
-            Statement sent = method.Body;
+            Statement sent = method.Statement;
             sent.AppendLine("foreach (var item in items)");
             sent.Begin();
             sent.AppendLine("var row = dt.NewRow();");
@@ -259,7 +259,7 @@ namespace Sys.Data.Code
                 IsExtensionMethod = true
             };
             clss.Add(method);
-            Statement sent = method.Body;
+            Statement sent = method.Statement;
             sent.AppendLine("var dt = CreateTable();");
             sent.AppendLine("ToDataTable(items, dt);");
             sent.AppendLine("return dt;");
@@ -275,7 +275,7 @@ namespace Sys.Data.Code
                 IsExtensionMethod = true
             };
             clss.Add(method);
-            Statement sent = method.Body;
+            Statement sent = method.Statement;
             sent.AppendLine("return new Dictionary<string,object>() ");
             sent.Begin();
             int count = dt.Columns.Count;
@@ -303,7 +303,7 @@ namespace Sys.Data.Code
                 IsExtensionMethod = true
             };
             clss.Add(method);
-            Statement sent = method.Body;
+            Statement sent = method.Statement;
             sent.AppendLine($"return new {ClassName}");
             sent.Begin();
             int count = dt.Columns.Count;
@@ -331,7 +331,7 @@ namespace Sys.Data.Code
                 Params = new Parameters().Add(ClassName, "entity").Add("IQuery", "query"),
                 IsExtensionMethod = true
             };
-            Statement sent = method.Body;
+            Statement sent = method.Statement;
             sent.Return($"GetAssociation(new {ClassName}[] {{ entity }}, query).FirstOrDefault()");
             clss.Insert(index++, method);
 
@@ -345,7 +345,7 @@ namespace Sys.Data.Code
             };
             clss.Insert(index++, method);
 
-            sent = method.Body;
+            sent = method.Statement;
             sent.AppendLine("var reader = query.Expand(entities);");
             sent.AppendLine();
             sent.AppendLine($"var associations = new List<{associationClassName}>();");

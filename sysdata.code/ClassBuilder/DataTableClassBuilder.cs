@@ -92,7 +92,7 @@ namespace Sys.Data.Code
             clss.Add(method);
 
             bool hasColumnProperty = cmd.Has("data-column-property");
-            Statement sent = method.Body;
+            Statement sent = method.Statement;
             sent.AppendLine("DataTable dt = new DataTable { TableName = TableName };");
             foreach (DataColumn column in dt.Columns)
             {

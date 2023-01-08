@@ -118,7 +118,7 @@ namespace Sys.Data.Code
             };
 
             clss.Add(constructor);
-            var sent = constructor.Body;
+            var sent = constructor.Statement;
             sent.AppendLine("FillObject(row);");
         }
 
@@ -130,7 +130,7 @@ namespace Sys.Data.Code
                 Params = new Parameters().Add(typeof(DataRow), "row")
             };
             clss.Add(mtdFillObject);
-            var sent = mtdFillObject.Body;
+            var sent = mtdFillObject.Statement;
 
             foreach (DataColumn column in dt.Columns)
             {
@@ -151,7 +151,7 @@ namespace Sys.Data.Code
                 Params = new Parameters().Add(typeof(DataRow), "row")
             };
             clss.Add(mtdUpdateRow);
-            var sent = mtdUpdateRow.Body;
+            var sent = mtdUpdateRow.Statement;
             foreach (DataColumn column in dt.Columns)
             {
                 var NAME = COLUMN(column);
@@ -170,7 +170,7 @@ namespace Sys.Data.Code
                 Params = new Parameters().Add(ClassName, "obj")
             };
             clss.Add(mtdCopyTo);
-            var sent = mtdCopyTo.Body;
+            var sent = mtdCopyTo.Statement;
 
             foreach (DataColumn column in dt.Columns)
             {
@@ -190,7 +190,7 @@ namespace Sys.Data.Code
                 Params = new Parameters().Add(ClassName, "obj")
             };
             clss.Add(mtdEquals);
-            Statement sent = mtdEquals.Body;
+            Statement sent = mtdEquals.Statement;
             sent.AppendLine("return ");
             IEnumerable<string> variables = dict.Keys.Select(column => PropertyName(column));
             variables.ForEach(
@@ -209,7 +209,7 @@ namespace Sys.Data.Code
                 Type = new TypeInfo { Type = typeof(IDictionary<string, object>) },
             };
             clss.Add(method);
-            Statement sent = method.Body;
+            Statement sent = method.Statement;
             sent.AppendLine("return new Dictionary<string,object>() ");
             sent.Begin();
             int count = dt.Columns.Count;
@@ -235,7 +235,7 @@ namespace Sys.Data.Code
                 Params = new Parameters().Add(typeof(IDictionary<string, object>), "dict"),
             };
             clss.Add(method);
-            Statement sent = method.Body;
+            Statement sent = method.Statement;
             foreach (DataColumn column in dt.Columns)
             {
                 var type = dict[column];
@@ -252,7 +252,7 @@ namespace Sys.Data.Code
                 Modifier = Modifier.Public | Modifier.Override
             };
             clss.Add(method);
-            Statement sent = method.Body;
+            Statement sent = method.Statement;
 
             IEnumerable<string> variables = dict.Keys.Select(column => PropertyName(column));
             StringBuilder sb = new StringBuilder("\"{{");
@@ -295,7 +295,7 @@ namespace Sys.Data.Code
                 Modifier = Modifier.Public,
                 Type = new TypeInfo(typeof(string)),
             };
-            method.Body.AppendLine("return $\"" + gen.Insert() + "\";");
+            method.Statement.AppendLine("return $\"" + gen.Insert() + "\";");
             clss.Add(method);
 
             method = new Method("Update")
@@ -303,7 +303,7 @@ namespace Sys.Data.Code
                 Modifier = Modifier.Public,
                 Type = new TypeInfo(typeof(string)),
             };
-            method.Body.AppendLine("return $\"" + gen.Update() + "\";");
+            method.Statement.AppendLine("return $\"" + gen.Update() + "\";");
             clss.Add(method);
 
             method = new Method("InsertOrUpdate")
@@ -311,7 +311,7 @@ namespace Sys.Data.Code
                 Modifier = Modifier.Public,
                 Type = new TypeInfo(typeof(string)),
             };
-            method.Body.AppendLine("return $\"" + gen.InsertOrUpdate() + "\";");
+            method.Statement.AppendLine("return $\"" + gen.InsertOrUpdate() + "\";");
             clss.Add(method);
 
             method = new Method("Delete")
@@ -319,7 +319,7 @@ namespace Sys.Data.Code
                 Modifier = Modifier.Public,
                 Type = new TypeInfo(typeof(string)),
             };
-            method.Body.AppendLine("return $\"" + gen.Delete() + "\";");
+            method.Statement.AppendLine("return $\"" + gen.Delete() + "\";");
             clss.Add(method);
         }
 
@@ -358,7 +358,7 @@ namespace Sys.Data.Code
                 Type = new TypeInfo { UserType = associationClassName },
                 Params = new Parameters().Add("IQuery", "query"),
             };
-            Statement sent = method.Body;
+            Statement sent = method.Statement;
 
             sent.Return($"GetAssociation(query, new {ClassName}[] {{ this }}).FirstOrDefault()");
             clss.Insert(index++, method);
@@ -372,7 +372,7 @@ namespace Sys.Data.Code
             };
             clss.Insert(index++, method);
 
-            sent = method.Body;
+            sent = method.Statement;
             sent.AppendLine("var reader = query.Expand(entities);");
             sent.AppendLine();
             sent.AppendLine($"var associations = new List<{associationClassName}>();");

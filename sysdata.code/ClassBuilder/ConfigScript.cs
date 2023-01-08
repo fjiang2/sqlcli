@@ -172,7 +172,7 @@ namespace Sys.Data.Code
                 Comment = comment
             };
 
-            method.Body.Append($"{mtd(ty, var)};");
+            method.Statement.Append($"{mtd(ty, var)};");
             return method;
         }
 
