@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Data;
 using Sys.Data;
-using Sys.Stdio;
+using syscon.stdio;
 
 namespace sqlcli.Windows
 {

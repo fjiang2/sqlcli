@@ -1,4 +1,4 @@
-﻿namespace Sys.Stdio.Cli
+﻿namespace syscon.stdio.Cli
 {
     class OptionItem
     {

@@ -4,8 +4,8 @@ using System.Linq;
 using Sys.Data;
 using Sys.Data.Comparison;
 using Tie;
-using Sys.Stdio;
-using Sys.Stdio.Cli;
+using syscon.stdio;
+using syscon.stdio.Cli;
 using syscon.grid;
 
 namespace sqlcli

@@ -10,8 +10,8 @@ using Sys.Data;
 using Sys.Data.Comparison;
 using Sys.Data.Manager;
 using Sys.Data.Resource;
-using Sys.Stdio;
-using Sys.Stdio.Cli;
+using syscon.stdio;
+using syscon.stdio.Cli;
 
 namespace sqlcli
 {

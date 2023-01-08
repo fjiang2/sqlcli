@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Sys.Stdio.Cli
+namespace syscon.stdio.Cli
 {
     public class PathName
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.IO;
 using Sys;
 using Tie;
-using Sys.Stdio;
+using syscon.stdio;
 
 namespace anycli
 {

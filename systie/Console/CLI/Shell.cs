@@ -6,9 +6,9 @@ using System.IO;
 
 using Sys;
 using Sys.IO;
-using Sys.Stdio;
+using syscon.stdio;
 
-namespace Sys.Stdio.Cli
+namespace syscon.stdio.Cli
 {
     public class Shell : IShell
     {

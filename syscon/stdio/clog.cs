@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace Sys.Stdio
+namespace syscon.stdio
 {
     public class clog
     {

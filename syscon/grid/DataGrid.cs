@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Data;
 using System.Data.Common;
-using Sys.Stdio;
+using syscon.stdio;
 
 namespace syscon.grid
 {

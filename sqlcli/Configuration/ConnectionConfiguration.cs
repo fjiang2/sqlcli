@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using Sys.Data;
-using Sys.Stdio;
+using syscon.stdio;
 using Tie;
 
 namespace sqlcli

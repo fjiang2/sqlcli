@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tie;
-using Sys.Stdio.Cli;
+using syscon.stdio.Cli;
 
-namespace Sys.Stdio
+namespace syscon.stdio
 {
     public static class Context
     {

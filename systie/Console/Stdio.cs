@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 
-namespace Sys.Stdio
+namespace syscon.stdio
 {
-    public sealed class stdio
+    public sealed class Stdio
     {
         public const string FILE_EDITOR = "editor";
         public const string FILE_LOG = "log";

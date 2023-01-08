@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using Sys.Data;
-using Sys.Stdio;
+using syscon.stdio;
 using Sys.Data.Text;
 
 namespace sqlcli

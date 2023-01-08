@@ -11,8 +11,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-using Sys.Stdio;
-using Sys.Stdio.Cli;
+using syscon.stdio;
+using syscon.stdio.Cli;
 using Sys.Data.Resource;
 using Sys.Data.Code;
 using Sys.Data.Text;
@@ -1693,22 +1693,22 @@ sp_rename '{1}', '{2}', 'COLUMN'";
 			switch (cmd.Arg1)
 			{
 				case "output":
-					stdio.OpenEditor(cfg.OutputFile);
+					Stdio.OpenEditor(cfg.OutputFile);
 					break;
 
 				case "log":
-					stdio.OpenEditor(Context.GetValue<string>("log"));
+					Stdio.OpenEditor(Context.GetValue<string>("log"));
 					break;
 
 				case "config":
 					if (cmd.IsSchema)
-						stdio.OpenEditor("sqlcli.cfg");
+						Stdio.OpenEditor("sqlcli.cfg");
 					else
-						stdio.OpenEditor(ConfigurationEnvironment.Path.Personal);
+						Stdio.OpenEditor(ConfigurationEnvironment.Path.Personal);
 					break;
 
 				case "release":
-					stdio.OpenEditor("ReleaseNotes.txt");
+					Stdio.OpenEditor("ReleaseNotes.txt");
 					break;
 
 				case "working":
@@ -1753,7 +1753,7 @@ sp_rename '{1}', '{2}', 'COLUMN'";
 					string _path = cfg.WorkingDirectory.GetFullPath(filename, ext);
 					if (File.Exists(_path))
 					{
-						stdio.OpenEditor(_path);
+						Stdio.OpenEditor(_path);
 						return true;
 					}
 				}

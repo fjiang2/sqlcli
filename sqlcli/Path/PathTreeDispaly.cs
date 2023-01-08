@@ -9,7 +9,7 @@ using System.Data.OleDb;
 using System.Data;
 using Sys;
 using Sys.Data;
-using Sys.Stdio;
+using syscon.stdio;
 using Tie;
 
 namespace sqlcli

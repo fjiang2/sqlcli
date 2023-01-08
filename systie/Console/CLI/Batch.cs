@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using Sys.Stdio;
+using syscon.stdio;
 using Sys;
 using Sys.IO;
 
-namespace Sys.Stdio.Cli
+namespace syscon.stdio.Cli
 {
     class Batch
     {

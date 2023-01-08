@@ -5,7 +5,7 @@ using System.Linq;
 
 using Sys.Data.IO;
 using Sys.Networking;
-using Sys.Stdio;
+using syscon.stdio;
 using Tie;
 
 namespace Sys
@@ -213,8 +213,8 @@ namespace Sys
                 TryReadCfg(cfg.Personal);
             }
 
-            CopyVariableContext(stdio.FILE_LOG);
-            CopyVariableContext(stdio.FILE_EDITOR);
+            CopyVariableContext(Stdio.FILE_LOG);
+            CopyVariableContext(Stdio.FILE_EDITOR);
 
             CopyContext(DS["Context"]);
 

@@ -8,7 +8,7 @@ using Sys;
 using Sys.CodeBuilder;
 using Sys.Data;
 using Sys.Data.Manager;
-using Sys.Stdio;
+using syscon.stdio;
 
 namespace Sys.Data.Code
 {

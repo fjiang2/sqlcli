@@ -1,6 +1,6 @@
 ﻿using Sys;
 using Sys.Data;
-using Sys.Stdio.Cli;
+using syscon.stdio.Cli;
 
 namespace sqlcli
 {

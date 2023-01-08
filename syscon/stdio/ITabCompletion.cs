@@ -1,4 +1,4 @@
-﻿namespace Sys.Stdio
+﻿namespace syscon.stdio
 {
     public interface ITabCompletion
     {

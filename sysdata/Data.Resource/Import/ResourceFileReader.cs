@@ -8,7 +8,7 @@ using System.Xml.Linq;
 using System.Data;
 using System.IO;
 using Tie;
-using Sys.Stdio;
+using syscon.stdio;
 
 namespace Sys.Data.Resource
 {

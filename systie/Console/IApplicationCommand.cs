@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Sys.Stdio.Cli;
+using syscon.stdio.Cli;
 
-namespace Sys.Stdio
+namespace syscon.stdio
 {
     public interface IApplicationCommand : ICommand
     {
