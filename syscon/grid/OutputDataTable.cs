@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.IO;
 
-namespace sqlcli
+namespace syscon.grid
 {
     public class OutputDataTable
     {
@@ -21,7 +21,7 @@ namespace sqlcli
 
         }
 
-        internal OutputDataTable(DataTable dt, Action<string> writeLine, bool vertical)
+        public OutputDataTable(DataTable dt, Action<string> writeLine, bool vertical)
         {
             this.dt = dt;
             this.vertical = vertical;

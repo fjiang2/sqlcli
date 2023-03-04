@@ -7,7 +7,7 @@ using Sys;
 using Sys.Data;
 using System.Text.RegularExpressions;
 using System.Data;
-using Sys.Stdio;
+using syscon.stdio;
 
 namespace sqlcli
 {

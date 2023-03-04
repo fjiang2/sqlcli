@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Windows.Media;
 
 using Sys;
-using Sys.Stdio;
+using syscon.stdio;
 
 namespace sqlcli
 {

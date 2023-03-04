@@ -24,6 +24,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "systie", "systie\systie.csp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "anycli", "anycli\anycli.csproj", "{DF8EB59C-066C-448F-B342-957FD6056564}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "syscon", "syscon\syscon.csproj", "{594684BB-2818-449F-9622-C276AF0B1854}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -62,6 +64,10 @@ Global
 		{DF8EB59C-066C-448F-B342-957FD6056564}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DF8EB59C-066C-448F-B342-957FD6056564}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DF8EB59C-066C-448F-B342-957FD6056564}.Release|Any CPU.Build.0 = Release|Any CPU
+		{594684BB-2818-449F-9622-C276AF0B1854}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{594684BB-2818-449F-9622-C276AF0B1854}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{594684BB-2818-449F-9622-C276AF0B1854}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{594684BB-2818-449F-9622-C276AF0B1854}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,6 @@
-﻿using Sys.Stdio;
+﻿using syscon.stdio;
 
-namespace Sys.Stdio.Cli
+namespace syscon.stdio.Cli
 {
     /// <summary>
     /// The task of shell

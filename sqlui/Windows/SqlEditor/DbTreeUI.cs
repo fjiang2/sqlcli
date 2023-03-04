@@ -8,7 +8,7 @@ using System.Windows.Controls;
 using System.Data;
 
 using Sys.Data;
-using Sys.Stdio.Cli;
+using syscon.stdio.Cli;
 using Sys;
 
 namespace sqlcli.Windows

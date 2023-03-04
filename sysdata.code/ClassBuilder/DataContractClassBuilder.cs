@@ -8,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using Sys.Data.Manager;
-using Sys.Stdio;
+using syscon.stdio;
 
 namespace Sys.Data.Code
 {

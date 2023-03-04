@@ -8,8 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 
-using Sys.Stdio;
-using Sys.Stdio.Cli;
+using syscon.stdio;
+using syscon.stdio.Cli;
 using Tie;
 
 

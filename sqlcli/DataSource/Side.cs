@@ -8,8 +8,8 @@ using Sys.Data.Comparison;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
-using Sys.Stdio;
-using Sys.Stdio.Cli;
+using syscon.stdio;
+using syscon.stdio.Cli;
 
 namespace sqlcli
 {

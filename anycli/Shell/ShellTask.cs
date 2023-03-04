@@ -3,8 +3,8 @@ using System.Data;
 using System.Linq;
 using Sys.Data;
 using Tie;
-using Sys.Stdio;
-using Sys.Stdio.Cli;
+using syscon.stdio;
+using syscon.stdio.Cli;
 
 namespace anycli
 {

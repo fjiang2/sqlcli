@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using System.Xml.Linq;
 using System.IO;
 using Tie;
-using Sys.Stdio;
+using syscon.stdio;
 
 namespace Sys
 {

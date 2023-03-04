@@ -10,6 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\syscon\syscon.csproj" />
     <ProjectReference Include="..\syscore\syscore.csproj" />
   </ItemGroup>
 

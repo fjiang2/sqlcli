@@ -4,8 +4,9 @@ using System.Linq;
 using Sys.Data;
 using Sys.Data.Comparison;
 using Tie;
-using Sys.Stdio;
-using Sys.Stdio.Cli;
+using syscon.stdio;
+using syscon.stdio.Cli;
+using syscon.grid;
 
 namespace sqlcli
 {
@@ -315,7 +316,7 @@ namespace sqlcli
                     }
                     else
                     {
-                        new SqlCmd(theSide.Provider, text).Read(reader => reader.ToConsole(cfg.MaxRows));
+                        new SqlCmd(theSide.Provider, text).Read(reader => reader.WriteGrid(cfg.MaxRows));
                     }
                     break;
 
@@ -407,7 +408,7 @@ namespace sqlcli
                 case "view":
                     vnames = new MatchedDatabase(dname, arg2).ViewNames();
                     vnames.Select(tname => new { Schema = tname.SchemaName, View = tname.Name })
-                        .ToConsole();
+                        .WriteGrid();
                     break;
 
                 case "proc":
@@ -424,7 +425,7 @@ namespace sqlcli
                         if (L.Any())
                         {
                             L.Select(pvd => new { Alias = pvd.ServerName.Path, Connection = pvd.ToSimpleString() })
-                            .ToConsole();
+                            .WriteGrid();
                         }
                         else
                             cerr.WriteLine("connection string not found");
@@ -440,7 +441,7 @@ namespace sqlcli
                         ((VAL)Context.DS)
                             .Where(row => row[1].VALTYPE != VALTYPE.nullcon && row[1].VALTYPE != VALTYPE.voidcon && !row[0].Str.StartsWith("$"))
                             .Select(row => new { Variable = (string)row[0], Value = row[1] })
-                            .ToConsole();
+                            .WriteGrid();
                     }
                     break;
                 default:

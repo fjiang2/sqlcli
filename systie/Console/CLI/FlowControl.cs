@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Tie;
-using Sys.Stdio;
+using syscon.stdio;
 
-namespace Sys.Stdio.Cli
+namespace syscon.stdio.Cli
 {
     class FlowControl
     {

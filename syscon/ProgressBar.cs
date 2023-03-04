@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Threading;
 
-namespace sqlcli
+namespace syscon.stdio
 {
     /// <summary>
     /// An ASCII progress bar
