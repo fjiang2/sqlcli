@@ -41,7 +41,7 @@ namespace sqlcli
             }
             else
             {
-                cerr.WriteLine("database server not defined");
+                Cerr.WriteLine("database server not defined");
             }
         }
 
@@ -49,7 +49,7 @@ namespace sqlcli
         {
             if (side == null)
             {
-                cerr.WriteLine("undefined side");
+                Cerr.WriteLine("undefined side");
                 return;
             }
 

@@ -59,7 +59,7 @@ namespace sqlcli
                 if (pair[0].IsNull || pair[1].IsNull)
                 {
                     string text = pair[0].ToSimpleString();
-                    cerr.WriteLine($"warning: undefined connection string at servers.{text}");
+                    Cerr.WriteLine($"warning: undefined connection string at servers.{text}");
                     continue;
                 }
 
@@ -72,7 +72,7 @@ namespace sqlcli
                 }
                 catch (Exception ex)
                 {
-                    cerr.WriteLine(ex.Message);
+                    Cerr.WriteLine(ex.Message);
                 }
             }
 
@@ -84,7 +84,7 @@ namespace sqlcli
             string[] x = path.Split('\\');
             if (x.Length < 3)
             {
-                cerr.WriteLine($"invalid server path: {path}, correct format is server\\database");
+                Cerr.WriteLine($"invalid server path: {path}, correct format is server\\database");
                 return null;
             }
 
@@ -104,7 +104,7 @@ namespace sqlcli
             }
             else
             {
-                cerr.WriteLine($"invalid server path: \\{serverName}\\{databaseName}");
+                Cerr.WriteLine($"invalid server path: \\{serverName}\\{databaseName}");
                 return null;
             }
         }

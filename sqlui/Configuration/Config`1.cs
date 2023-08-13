@@ -29,7 +29,7 @@ namespace sqlcli
                     }
                     catch (Exception)
                     {
-                        cerr.WriteLine($"color string: \"{colorString}\" not supported");
+                        Cerr.WriteLine($"color string: \"{colorString}\" not supported");
                     }
                 }
             }
@@ -62,7 +62,7 @@ namespace sqlcli
                     }
                     catch (Exception)
                     {
-                        cerr.WriteLine($"color setting {key} = {colorString} not supported");
+                        Cerr.WriteLine($"color setting {key} = {colorString} not supported");
                     }
                 }
             }

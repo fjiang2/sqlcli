@@ -73,7 +73,7 @@ namespace sqlcli
                     if (cmd.Arg1 != null || cmd.HasHelp)
                         chdir(cmd);
                     else
-                        cout.WriteLine(mgr.ToString());
+                        Cout.WriteLine(mgr.ToString());
                     return NextStep.COMPLETED;
 
                 case "type":
@@ -102,14 +102,14 @@ namespace sqlcli
                     return NextStep.COMPLETED;
 
                 case "ver":
-                    cout.WriteLine("sqlcli [Version {0}]", Helper.ApplicationVerison);
+                    Cout.WriteLine("sqlcli [Version {0}]", Helper.ApplicationVerison);
                     return NextStep.COMPLETED;
 
                 case "show":
                     if (cmd.Arg1 != null)
                         Show(cmd.Arg1.ToLower(), cmd.Arg2);
                     else
-                        cerr.WriteLine("invalid argument");
+                        Cerr.WriteLine("invalid argument");
                     return NextStep.COMPLETED;
 
                 case "find":
@@ -155,7 +155,7 @@ namespace sqlcli
                     if (cmd.Arg1 != null)
                         cfg.WorkingDirectory.ChangeDirectory(cmd.Arg1);
                     else
-                        cout.WriteLine(cfg.WorkingDirectory.CurrentDirectory);
+                        Cout.WriteLine(cfg.WorkingDirectory.CurrentDirectory);
                     return NextStep.COMPLETED;
 
                 case "ldir":
@@ -169,16 +169,16 @@ namespace sqlcli
                         if (lines != null)
                         {
                             foreach (var _line in lines)
-                                cout.WriteLine(_line);
+                                Cout.WriteLine(_line);
                         }
                     }
                     else
-                        cout.WriteLine("invalid arguments");
+                        Cout.WriteLine("invalid arguments");
                     return NextStep.COMPLETED;
 
                 case "path":
                     if (cmd.Arg1 == null)
-                        cout.WriteLine(cfg.Path);
+                        Cout.WriteLine(cfg.Path);
                     else
                         Context.SetValue("path", cmd.Arg1);
                     return NextStep.COMPLETED;
@@ -187,7 +187,7 @@ namespace sqlcli
                     if (cmd.Arg1 != null)
                         Shell.RunBatch(this, cfg, cmd.Arg1, cmd.Arguments);
                     else
-                        cout.WriteLine("invalid arguments");
+                        Cout.WriteLine("invalid arguments");
                     return NextStep.COMPLETED;
 
                 case "call":
@@ -236,7 +236,7 @@ namespace sqlcli
                 default:
                     if (!_SQL.Contains(cmd.Action.ToUpper()))
                     {
-                        cerr.WriteLine("invalid command");
+                        Cerr.WriteLine("invalid command");
                         return NextStep.COMPLETED;
                     }
                     break;
@@ -331,21 +331,21 @@ namespace sqlcli
                     {
                         int count = new SqlCmd(theSide.Provider, text).ExecuteNonQuery();
                         if (count > 0)
-                            cout.WriteLine("{0} of row(s) affected", count);
+                            Cout.WriteLine("{0} of row(s) affected", count);
                         else if (count == 0)
-                            cout.WriteLine("nothing affected");
+                            Cout.WriteLine("nothing affected");
                         else
-                            cout.WriteLine("command(s) completed successfully");
+                            Cout.WriteLine("command(s) completed successfully");
                     }
                     catch (Exception ex)
                     {
-                        cerr.WriteLine(ex.Message);
+                        Cerr.WriteLine(ex.Message);
                         return NextStep.ERROR;
                     }
                     break;
 
                 default:
-                    cerr.WriteLine("invalid command");
+                    Cerr.WriteLine("invalid command");
                     break;
             }
 
@@ -366,9 +366,9 @@ namespace sqlcli
                         foreach (var tname in PKS)
                         {
                             count++;
-                            cout.WriteLine("{0,5} {1}", $"[{count}]", tname);
+                            Cout.WriteLine("{0,5} {1}", $"[{count}]", tname);
                         }
-                        cout.WriteLine("total <{0}> tables with primary keys", count);
+                        Cout.WriteLine("total <{0}> tables with primary keys", count);
                     }
                     break;
 
@@ -382,10 +382,10 @@ namespace sqlcli
                             if (PKS.FirstOrDefault(row => row.Equals(tname)) == null)
                             {
                                 count++;
-                                cout.WriteLine("{0,5} {1}", $"[{count}]", tname);
+                                Cout.WriteLine("{0,5} {1}", $"[{count}]", tname);
                             }
                         }
-                        cout.WriteLine("total <{0}> tables without primary keys", count);
+                        Cout.WriteLine("total <{0}> tables without primary keys", count);
                     }
                     break;
 
@@ -397,11 +397,11 @@ namespace sqlcli
                         dt = vname.ViewSchema();
                         if (dt.Rows.Count > 0)
                         {
-                            cout.WriteLine("<{0}>", vname.ShortName);
+                            Cout.WriteLine("<{0}>", vname.ShortName);
                             dt.ToConsole();
                         }
                         else
-                            cout.WriteLine("not found at <{0}>", vname.ShortName);
+                            Cout.WriteLine("not found at <{0}>", vname.ShortName);
                     }
                     break;
 
@@ -428,12 +428,12 @@ namespace sqlcli
                             .WriteGrid();
                         }
                         else
-                            cerr.WriteLine("connection string not found");
+                            Cerr.WriteLine("connection string not found");
                     }
                     break;
 
                 case "current":
-                    cout.WriteLine("current: {0}({1})", theSide.Provider.Name, showConnection(theSide.Provider));
+                    Cout.WriteLine("current: {0}({1})", theSide.Provider.Name, showConnection(theSide.Provider));
                     break;
 
                 case "var":
@@ -445,7 +445,7 @@ namespace sqlcli
                     }
                     break;
                 default:
-                    cerr.WriteLine("invalid argument");
+                    Cerr.WriteLine("invalid argument");
                     break;
             }
         }

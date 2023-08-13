@@ -28,17 +28,17 @@ namespace anycli
 
 		public void save(ApplicationCommand cmd)
 		{
-			cerr.WriteLine("invalid arguments");
+			Cerr.WriteLine("invalid arguments");
 		}
 
 		public void echo(ApplicationCommand cmd)
 		{
 			if (cmd.HasHelp)
 			{
-				cout.WriteLine("Displays messages, or turns command-echoing on or off");
-				cout.WriteLine("  echo [on | off]");
-				cout.WriteLine("  echo [message]");
-				cout.WriteLine("Type echo without parameters to display the current echo setting.");
+				Cout.WriteLine("Displays messages, or turns command-echoing on or off");
+				Cout.WriteLine("  echo [on | off]");
+				Cout.WriteLine("  echo [message]");
+				Cout.WriteLine("Type echo without parameters to display the current echo setting.");
 				return;
 			}
 
@@ -46,25 +46,25 @@ namespace anycli
 			if (string.IsNullOrEmpty(text))
 			{
 				string status = "on";
-				if (!cout.echo)
+				if (!Cout.echo)
 					status = "off";
 
-				cout.WriteLine($"echo is {status}");
+				Cout.WriteLine($"echo is {status}");
 				return;
 			}
 
 			switch (text)
 			{
 				case "on":
-					cout.echo = true;
+					Cout.echo = true;
 					break;
 
 				case "off":
-					cout.echo = false;
+					Cout.echo = false;
 					break;
 
 				default:
-					cout.WriteLine(text);
+					Cout.WriteLine(text);
 					break;
 			}
 
@@ -79,10 +79,10 @@ namespace anycli
 		{
 			if (cmd.HasHelp)
 			{
-				cout.WriteLine("find command searches name of database, schema, table, view, or column");
-				cout.WriteLine("example:");
-				cout.WriteLine("  find *ID*           : search any string contains ID");
-				cout.WriteLine("  find *na?e          : search string ends with na?e");
+				Cout.WriteLine("find command searches name of database, schema, table, view, or column");
+				Cout.WriteLine("example:");
+				Cout.WriteLine("  find *ID*           : search any string contains ID");
+				Cout.WriteLine("  find *na?e          : search string ends with na?e");
 				return;
 			}
 

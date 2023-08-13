@@ -57,7 +57,7 @@ namespace sqlcli
                 }
                 catch (Exception ex)
                 {
-                    cerr.WriteLine($"invalid file or directory \"{outputFile}\", {ex.Message}");
+                    Cerr.WriteLine($"invalid file or directory \"{outputFile}\", {ex.Message}");
                 }
             }
 

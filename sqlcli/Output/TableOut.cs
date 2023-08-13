@@ -66,7 +66,7 @@ namespace sqlcli
 
 			if (cmd.Has("json"))
 			{
-				cout.WriteLine(table.WriteJson(JsonStyle.Normal, excludeTableName: false));
+				Cout.WriteLine(table.WriteJson(JsonStyle.Normal, excludeTableName: false));
 				return;
 			}
 
@@ -97,7 +97,7 @@ namespace sqlcli
 			}
 			catch (Exception ex)
 			{
-				cerr.WriteLine(ex.Message);
+				Cerr.WriteLine(ex.Message);
 				return false;
 			}
 		}
@@ -111,7 +111,7 @@ namespace sqlcli
 			}
 			catch (Exception ex)
 			{
-				cerr.WriteLine(ex.Message);
+				Cerr.WriteLine(ex.Message);
 				return false;
 			}
 
@@ -153,7 +153,7 @@ namespace sqlcli
 				DuplicatedTable dup = new DuplicatedTable(tname, columns);
 				if (dup.group.Rows.Count == 0)
 				{
-					cout.WriteLine("no duplicated record found");
+					Cout.WriteLine("no duplicated record found");
 					return true;
 				}
 

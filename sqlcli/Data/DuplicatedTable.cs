@@ -60,13 +60,13 @@ namespace sqlcli
             {
                 var where = _columns.Select(column => column.AssignColumn(row[column])).AND();
                 if (AllColumnsSelected)
-                    cout.WriteLine("idential rows");
+                    Cout.WriteLine("idential rows");
                 else
-                    cout.WriteLine("{0}", where);
+                    Cout.WriteLine("{0}", where);
 
                 var builder = new SqlBuilder().SELECT().COLUMNS().FROM(tname).WHERE(where);
                 display(new SqlCmd(tname.Provider, builder).FillDataTable());
-                cout.WriteLine();
+                Cout.WriteLine();
             }
         }
 

@@ -25,7 +25,7 @@ namespace sqlcli
 
             if (vname == string.Empty)
             {
-                cerr.WriteLine("undefined variable name");
+                Cerr.WriteLine("undefined variable name");
                 return;
             }
 
@@ -70,7 +70,7 @@ namespace sqlcli
                             ExpandServerName(node, Refreshing);
                         }
 
-                        cout.WriteLine("{0,4} {1,26} <SVR> {2,10} Databases", sub(i), sname.Path, sname.Disconnected ? "?" : node.Nodes.Count.ToString());
+                        Cout.WriteLine("{0,4} {1,26} <SVR> {2,10} Databases", sub(i), sname.Path, sname.Disconnected ? "?" : node.Nodes.Count.ToString());
                         h = PagePause(cmd, ++h);
 
                         values.Add(sname.Path);
@@ -78,7 +78,7 @@ namespace sqlcli
                 }
 
                 Assign(cmd, values);
-                cout.WriteLine("\t{0} Server(s)", count);
+                Cout.WriteLine("\t{0} Server(s)", count);
             });
 
             return true;
@@ -92,7 +92,7 @@ namespace sqlcli
             ServerName sname = (ServerName)pt.Item;
             if (sname.Disconnected)
             {
-                cout.WriteLine("\t? Database(s)");
+                Cout.WriteLine("\t? Database(s)");
             }
             else
             {
@@ -112,7 +112,7 @@ namespace sqlcli
                         if (node.Nodes.Count == 0)
                             ExpandDatabaseName(node, cmd.Refresh);
 
-                        cout.WriteLine("{0,4} {1,26} <DB> {2,10} Tables/Views", sub(i), dname.Name, node.Nodes.Count);
+                        Cout.WriteLine("{0,4} {1,26} <DB> {2,10} Tables/Views", sub(i), dname.Name, node.Nodes.Count);
                         h = PagePause(cmd, ++h);
 
                         values.Add(dname.Name);
@@ -120,7 +120,7 @@ namespace sqlcli
                 }
 
                 Assign(cmd, values);
-                cout.WriteLine("\t{0} Database(s)", count);
+                Cout.WriteLine("\t{0} Database(s)", count);
             }
 
             return true;
@@ -176,7 +176,7 @@ namespace sqlcli
                     }
 
 
-                    cout.WriteLine("{0,5} {1,15}.{2,-37} <{3}>", sub(i), tname.SchemaName, tname.Name, desc);
+                    Cout.WriteLine("{0,5} {1,15}.{2,-37} <{3}>", sub(i), tname.SchemaName, tname.Name, desc);
 
                     h = PagePause(cmd, ++h);
 
@@ -185,10 +185,10 @@ namespace sqlcli
             }
 
             Assign(cmd, values);
-            cout.WriteLine("\t{0} Table(s)", count[0]);
-            cout.WriteLine("\t{0} View(s)", count[1]);
-            cout.WriteLine("\t{0} Procedure(s)", count[2]);
-            cout.WriteLine("\t{0} Function(s)", count[3]);
+            Cout.WriteLine("\t{0} Table(s)", count[0]);
+            Cout.WriteLine("\t{0} View(s)", count[1]);
+            Cout.WriteLine("\t{0} Procedure(s)", count[2]);
+            Cout.WriteLine("\t{0} Function(s)", count[3]);
 
             return true;
         }
@@ -198,9 +198,9 @@ namespace sqlcli
             if (cmd.HasPage && h >= Console.WindowHeight - 1)
             {
                 h = 0;
-                cout.Write("press any key to continue...");
-                cin.ReadKey();
-                cout.WriteLine();
+                Cout.Write("press any key to continue...");
+                Cin.ReadKey();
+                Cout.WriteLine();
             }
             return h;
         }
@@ -220,7 +220,7 @@ namespace sqlcli
             {
                 if (tname.Type == TableNameType.View)
                 {
-                    cout.WriteLine("cannot display view structure");
+                    Cout.WriteLine("cannot display view structure");
                     return false;
                 }
 
@@ -277,12 +277,12 @@ namespace sqlcli
         {
             if (dt.Rows.Count > 0)
             {
-                cout.WriteLine("<{0}>", title);
+                Cout.WriteLine("<{0}>", title);
                 dt.ToConsole();
             }
             else
             {
-                cout.WriteLine(title + " not found");
+                Cout.WriteLine(title + " not found");
             }
         }
 
@@ -290,7 +290,7 @@ namespace sqlcli
         private static void _DisplayColumnNodes(ApplicationCommand cmd, TableName tname)
         {
             TableSchema schema = new TableSchema(tname);
-            cout.WriteLine("TABLE: {0}", tname.Path);
+            Cout.WriteLine("TABLE: {0}", tname.Path);
 
             bool hasJson = cmd.Has("json");
             VAL lines = new VAL();
@@ -312,7 +312,7 @@ namespace sqlcli
 
                     if (!hasJson)
                     {
-                        cout.WriteLine("{0,5} {1,26} {2,-16} {3,10} {4,10}",
+                        Cout.WriteLine("{0,5} {1,26} {2,-16} {3,10} {4,10}",
                            sub(++i),
                            string.Format("[{0}]", column.ColumnName),
                            column.GetSQLType(),
@@ -336,9 +336,9 @@ namespace sqlcli
             }
 
             if (!hasJson)
-                cout.WriteLine("\t{0} Column(s)", count);
+                Cout.WriteLine("\t{0} Column(s)", count);
             else
-                cout.WriteLine(lines.ToJson());
+                Cout.WriteLine(lines.ToJson());
         }
 
         private static bool _DisplayLocatorNodes(TreeNode<IDataPath> pt, ApplicationCommand cmd)
@@ -359,16 +359,16 @@ namespace sqlcli
                         Locator locator = (Locator)item;
                         if (!string.IsNullOrEmpty(locator.Name))
                         {
-                            cout.WriteLine("{0,5} {1,-20} {2}", sub(i), locator.Name, locator.Where);
+                            Cout.WriteLine("{0,5} {1,-20} {2}", sub(i), locator.Name, locator.Where);
                             continue;
                         }
                     }
 
-                    cout.WriteLine("{0,5} {1}", sub(i), item);
+                    Cout.WriteLine("{0,5} {1}", sub(i), item);
                 }
             }
 
-            cout.WriteLine("\t{0} Item(s)", count);
+            Cout.WriteLine("\t{0} Item(s)", count);
             return true;
         }
 
@@ -382,7 +382,7 @@ namespace sqlcli
                 return false;
 
             DataTable schema = vname.ViewSchema();
-            cout.WriteLine("VIEW: {0}", vname.Path);
+            Cout.WriteLine("VIEW: {0}", vname.Path);
 
             int i = 0;
             int count = 0;
@@ -394,7 +394,7 @@ namespace sqlcli
                 {
                     count++;
 
-                    cout.WriteLine("{0,5} {1,26} {2,-16} {3,10}",
+                    Cout.WriteLine("{0,5} {1,26} {2,-16} {3,10}",
                         sub(++i),
                         string.Format("{0}", columnName),
                         row["DATA_TYPE"],
@@ -404,7 +404,7 @@ namespace sqlcli
                 }
 
             }
-            cout.WriteLine("\t{0} Column(s)", count);
+            Cout.WriteLine("\t{0} Column(s)", count);
 
             return true;
         }

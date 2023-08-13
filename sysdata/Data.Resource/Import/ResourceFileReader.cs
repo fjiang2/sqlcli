@@ -75,8 +75,8 @@ namespace Sys.Data.Resource
                 if (list.Select(x => x.name).Contains(entry.name))
                 {
                     var result = list.Find(x => x.name == entry.name);
-                    cerr.WriteLine($"duplicated in resx: {result}");
-                    cerr.WriteLine($"duplicated in resx: {entry}");
+                    Cerr.WriteLine($"duplicated in resx: {result}");
+                    Cerr.WriteLine($"duplicated in resx: {entry}");
                 }
 
                 list.Add(entry);
@@ -121,13 +121,13 @@ namespace Sys.Data.Resource
 
                 if (source == null)
                 {
-                    cerr.WriteLine($"cannot find <source>");
+                    Cerr.WriteLine($"cannot find <source>");
                     continue;
                 }
 
                 if (target == null)
                 {
-                    cerr.WriteLine($"cannot find <target> in {source}");
+                    Cerr.WriteLine($"cannot find <target> in {source}");
                     continue;
                 }
 

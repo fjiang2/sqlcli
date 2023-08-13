@@ -19,17 +19,17 @@ namespace anycli
 
         public static void Help()
         {
-            cout.WriteLine("Path points to server, database,tables, data rows");
-            cout.WriteLine(@"      \server\database\table\filter\filter\....");
-            cout.WriteLine("Notes: table names support wildcard matching, e.g. Prod*,Pro?ucts");
-            cout.WriteLine("exit                    : quit application");
-            cout.WriteLine("help                    : this help");
-            cout.WriteLine("?                       : this help");
-            cout.WriteLine("rem                     : comments or remarks");
-            cout.WriteLine("ver                     : display version");
-            cout.WriteLine("cls                     : clears the screen");
-            cout.WriteLine("echo /?                 : display text");
-            cout.WriteLine();
+            Cout.WriteLine("Path points to server, database,tables, data rows");
+            Cout.WriteLine(@"      \server\database\table\filter\filter\....");
+            Cout.WriteLine("Notes: table names support wildcard matching, e.g. Prod*,Pro?ucts");
+            Cout.WriteLine("exit                    : quit application");
+            Cout.WriteLine("help                    : this help");
+            Cout.WriteLine("?                       : this help");
+            Cout.WriteLine("rem                     : comments or remarks");
+            Cout.WriteLine("ver                     : display version");
+            Cout.WriteLine("cls                     : clears the screen");
+            Cout.WriteLine("echo /?                 : display text");
+            Cout.WriteLine();
         }
     }
 }

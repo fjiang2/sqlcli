@@ -32,7 +32,7 @@ namespace sqlcli
             }
             catch (Exception ex)
             {
-                cerr.WriteLine(ex.Message);
+                Cerr.WriteLine(ex.Message);
                 return 0;
             }
 
@@ -76,7 +76,7 @@ namespace sqlcli
                     }
                     catch (System.Data.SqlClient.SqlException ex)
                     {
-                        cerr.WriteLine(ex.AllMessages(builder.ToString()));
+                        Cerr.WriteLine(ex.AllMessages(builder.ToString()));
                         return count;
                     }
 
@@ -111,7 +111,7 @@ namespace sqlcli
 
             if (items.Length > columns.Length)
             {
-                cerr.WriteLine($"#columns({items.Length}) on .csv > #column({columns.Length}) on database, {line}");
+                Cerr.WriteLine($"#columns({items.Length}) on .csv > #column({columns.Length}) on database, {line}");
                 return null;
             }
 
@@ -124,7 +124,7 @@ namespace sqlcli
                 }
                 catch (Exception ex)
                 {
-                    cerr.WriteLine($"cannot parse {items[i]} on column {columns[i]}, {ex.Message}");
+                    Cerr.WriteLine($"cannot parse {items[i]} on column {columns[i]}, {ex.Message}");
                 }
             }
 
@@ -137,7 +137,7 @@ namespace sqlcli
             int count = 0;
             if (!File.Exists(path))
             {
-                cerr.WriteLine($"file {path} not found");
+                Cerr.WriteLine($"file {path} not found");
                 return 0;
             }
 
@@ -178,7 +178,7 @@ namespace sqlcli
                 }
                 catch (Exception ex)
                 {
-                    cerr.WriteLine(ex.Message);
+                    Cerr.WriteLine(ex.Message);
                     break;
                 }
             }

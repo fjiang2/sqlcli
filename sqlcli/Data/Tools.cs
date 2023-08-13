@@ -26,7 +26,7 @@ namespace sqlcli
                     return;
             }
 
-            cout.WriteLine("command find is not supported on the current database server type.");
+            Cout.WriteLine("command find is not supported on the current database server type.");
         }
 
         private static void FindNameOnSqlServer(ConnectionProvider provider, string match)
@@ -39,7 +39,7 @@ namespace sqlcli
             if (dt.Rows.Count != 0)
             {
                 found = true;
-                cout.WriteLine(ConsoleColor.Cyan, "Table Names");
+                Cout.WriteLine(ConsoleColor.Cyan, "Table Names");
                 dt.ToConsole();
             };
 
@@ -64,7 +64,7 @@ ORDER BY c.name, c.column_id
             if (dt.Rows.Count != 0)
             {
                 found = true;
-                cout.WriteLine(ConsoleColor.Cyan, "Table Columns");
+                Cout.WriteLine(ConsoleColor.Cyan, "Table Columns");
                 dt.ToConsole();
             };
 
@@ -75,7 +75,7 @@ ORDER BY c.name, c.column_id
             if (dt.Rows.Count != 0)
             {
                 found = true;
-                cout.WriteLine(ConsoleColor.Cyan, "View Names");
+                Cout.WriteLine(ConsoleColor.Cyan, "View Names");
                 dt.ToConsole();
             }
 
@@ -97,12 +97,12 @@ ORDER BY c.name, c.column_id
             if (dt.Rows.Count != 0)
             {
                 found = true;
-                cout.WriteLine(ConsoleColor.Cyan, "View Columns");
+                Cout.WriteLine(ConsoleColor.Cyan, "View Columns");
                 dt.ToConsole();
             }
 
             if (!found)
-                cout.WriteLine("nothing is found");
+                Cout.WriteLine("nothing is found");
         }
 
 
@@ -190,7 +190,7 @@ ORDER BY c.name, c.column_id
             }
             else
             {
-                cout.WriteLine("nothing is found");
+                Cout.WriteLine("nothing is found");
             }
         }
 
@@ -216,7 +216,7 @@ ORDER BY c.name, c.column_id
             else
             {
                 count = int.MaxValue;
-                cerr.WriteLine($"total count={cnt}, too many rows, progress bar may not be accurate");
+                Cerr.WriteLine($"total count={cnt}, too many rows, progress bar may not be accurate");
             }
 
             return count;

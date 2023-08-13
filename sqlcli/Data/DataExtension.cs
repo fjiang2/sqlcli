@@ -31,7 +31,7 @@ namespace sqlcli
             }
             catch (Exception ex)
             {
-                cerr.WriteLine($"invalid data set file: {path}, {ex.Message}");
+                Cerr.WriteLine($"invalid data set file: {path}, {ex.Message}");
             }
 
             return null;

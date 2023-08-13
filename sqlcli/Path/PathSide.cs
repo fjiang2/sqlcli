@@ -49,7 +49,7 @@ namespace sqlcli
         {
             if (source == null)
             {
-                cerr.WriteLine("invalid argument");
+                Cerr.WriteLine("invalid argument");
                 return false;
             }
 
@@ -58,14 +58,14 @@ namespace sqlcli
             node = mgr.Navigate(path);
             if (node == null)
             {
-                cerr.WriteLine("invalid path:" + path);
+                Cerr.WriteLine("invalid path:" + path);
                 return false;
             }
 
             dname = mgr.GetPathFrom<DatabaseName>(node);
             if (dname == null)
             {
-                cerr.WriteLine($"warning: {sourceText} database is unavailable");
+                Cerr.WriteLine($"warning: {sourceText} database is unavailable");
                 return false;
             }
 
@@ -112,7 +112,7 @@ namespace sqlcli
             dname = mgr.GetPathFrom<DatabaseName>(node);
             if (dname == null)
             {
-                cerr.WriteLine("warning: destination database is unavailable");
+                Cerr.WriteLine("warning: destination database is unavailable");
                 return false;
             }
 

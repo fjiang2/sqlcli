@@ -12,12 +12,12 @@ namespace syscon.grid
         public static void WriteGrid<T>(this IEnumerable<T> source, bool vertical = false)
         {
             DataTable dt = source.ToDataTable();
-            new OutputDataTable(dt, cout.TrimWriteLine, vertical).Output();
+            new OutputDataTable(dt, Cout.TrimWriteLine, vertical).Output();
         }
 
         public static void WriteGrid(this DataTable dt, bool vertical = false, bool more = false, bool outputDbNull = true, int maxColumnWidth = 0)
         {
-            OutputDataTable odt = new OutputDataTable(dt, cout.TrimWriteLine, vertical)
+            OutputDataTable odt = new OutputDataTable(dt, Cout.TrimWriteLine, vertical)
             {
                 OutputDbNull = outputDbNull,
                 MaxColumnWidth = maxColumnWidth,
@@ -27,7 +27,7 @@ namespace syscon.grid
             var top = more ? "top " : "";
             var rows = dt.Rows.Count > 1 ? "rows" : "row";
 
-            cout.WriteLine($"<{top}{dt.Rows.Count} {rows}>");
+            Cout.WriteLine($"<{top}{dt.Rows.Count} {rows}>");
         }
 
 
@@ -48,7 +48,7 @@ namespace syscon.grid
 
                 string[] headers = schema.Select(row => row.Name).ToArray();
 
-                var D = new OutputDataLine(cout.TrimWriteLine, headers.Length);
+                var D = new OutputDataLine(Cout.TrimWriteLine, headers.Length);
 
                 D.MeasureWidth(schema.Select(row => row.Size).ToArray());
                 D.MeasureWidth(headers);
@@ -60,7 +60,7 @@ namespace syscon.grid
 
                 if (!reader.HasRows)
                 {
-                    cout.WriteLine("<0 row>");
+                    Cout.WriteLine("<0 row>");
                     return;
                 }
 
@@ -84,7 +84,7 @@ namespace syscon.grid
 
                 var rows = count > 1 ? "rows" : "row";
                 var limit = limited ? "limit reached" : "";
-                cout.WriteLine($"<{count} {rows}> {limit}");
+                Cout.WriteLine($"<{count} {rows}> {limit}");
 
                 reader.NextResult();
             }

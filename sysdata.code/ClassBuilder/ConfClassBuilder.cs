@@ -235,13 +235,13 @@ namespace Sys.Data.Code
 
             if (columnKey != null && !dt.Columns.Contains(columnKey))
             {
-                cerr.WriteLine($"column [{columnKey}] not found in [{dt.TableName}]");
+                Cerr.WriteLine($"column [{columnKey}] not found in [{dt.TableName}]");
                 return string.Empty;
             }
 
             if (columnDefaultValue != null && !dt.Columns.Contains(columnDefaultValue))
             {
-                cerr.WriteLine($"column [{columnDefaultValue}] not found in [{dt.TableName}]");
+                Cerr.WriteLine($"column [{columnDefaultValue}] not found in [{dt.TableName}]");
                 return string.Empty;
             }
 

@@ -45,7 +45,7 @@ namespace Sys.Data.Code
             }
             catch (Exception ex)
             {
-                cerr.WriteLine(ex.Message);
+                Cerr.WriteLine(ex.Message);
                 return;
             }
 

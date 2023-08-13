@@ -117,7 +117,7 @@ namespace sqlcli.Windows
             }
             catch (Exception ex)
             {
-                cerr.WriteLine(ex.Message);
+                Cerr.WriteLine(ex.Message);
             }
         }
 
@@ -147,7 +147,7 @@ namespace sqlcli.Windows
             }
             catch (Exception ex)
             {
-                cerr.WriteLine(ex.Message);
+                Cerr.WriteLine(ex.Message);
             }
 
         }

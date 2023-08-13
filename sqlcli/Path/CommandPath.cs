@@ -38,20 +38,20 @@ namespace sqlcli
                                     return new TableName[] { _tname };
                                 else
                                 {
-                                    cerr.WriteLine("invalid path");
+                                    Cerr.WriteLine("invalid path");
                                     return null;
                                 }
                             }
                         }
                         else
                         {
-                            cerr.WriteLine("database is unavailable");
+                            Cerr.WriteLine("database is unavailable");
                             return null;
                         }
                     }
                     else
                     {
-                        cerr.WriteLine("invalid path");
+                        Cerr.WriteLine("invalid path");
                         return null;
                     }
                 }

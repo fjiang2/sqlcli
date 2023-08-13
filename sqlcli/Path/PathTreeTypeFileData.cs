@@ -41,11 +41,11 @@ namespace sqlcli
                     int index = 1;
                     foreach (DatabaseName dname in sname.GetDatabaseNames())
                     {
-                        cout.WriteLine();
-                        cout.WriteLine($"({index++}) {dname.Name}");
+                        Cout.WriteLine();
+                        Cout.WriteLine($"({index++}) {dname.Name}");
                         foreach (TableName tname in dname.GetTableNames())
                         {
-                            cout.WriteLine($"[{tname.ShortName}]");
+                            Cout.WriteLine($"[{tname.ShortName}]");
                             tout = new TableOut(cmd, tname);
                             tout.Display();
                         }
@@ -60,8 +60,8 @@ namespace sqlcli
                 DatabaseName dname = (DatabaseName)pt.Item;
                 foreach (TableName tname in dname.GetTableNames())
                 {
-                    cout.WriteLine();
-                    cout.WriteLine($"[{tname.ShortName}]");
+                    Cout.WriteLine();
+                    Cout.WriteLine($"[{tname.ShortName}]");
                     tout = new TableOut(cmd, tname);
                     tout.Display();
                 }
@@ -82,7 +82,7 @@ namespace sqlcli
                     string code = tname.DatabaseName.GetProcedure(tname);
                     if (!string.IsNullOrEmpty(code))
                     {
-                        cout.WriteLine(code);
+                        Cout.WriteLine(code);
                         return true;
                     }
                 }

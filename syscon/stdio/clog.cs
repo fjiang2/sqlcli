@@ -8,13 +8,13 @@ using System.IO;
 
 namespace syscon.stdio
 {
-    public class clog
+    public class Clog
     {
         private static TextWriter _writer = null;
 
         public static string LogFileName { get; set; } = "clog.log";
 
-        ~clog()
+        ~Clog()
         {
             if (_writer != null)
                 _writer.Close();

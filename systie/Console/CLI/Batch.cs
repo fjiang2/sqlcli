@@ -51,7 +51,7 @@ namespace syscon.stdio.Cli
                 }
                 catch (Exception ex)
                 {
-                    cerr.WriteLine($"invalid path:\"{_path}\", using ; as delimiter", ex);
+                    Cerr.WriteLine($"invalid path:\"{_path}\", using ; as delimiter", ex);
                 }
             }
 
@@ -63,7 +63,7 @@ namespace syscon.stdio.Cli
         {
             if (!IsBatch)
             {
-                cerr.WriteLine($"must be {EXT} file: {path}");
+                Cerr.WriteLine($"must be {EXT} file: {path}");
                 return false;
             }
 
@@ -84,7 +84,7 @@ namespace syscon.stdio.Cli
             }
             else
             {
-                cerr.WriteLine($"cannot find the file: {path}");
+                Cerr.WriteLine($"cannot find the file: {path}");
                 return false;
             }
         }

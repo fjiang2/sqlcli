@@ -81,7 +81,7 @@ namespace syscon.stdio
                         }
                         else
                         {
-                            cerr.WriteLine("invalid arguments on function void run(string)");
+                            Cerr.WriteLine("invalid arguments on function void run(string)");
                         }
 
                         if (line != null)
@@ -94,7 +94,7 @@ namespace syscon.stdio
                             }
                             else
                             {
-                                cerr.WriteLine("shell not found");
+                                Cerr.WriteLine("shell not found");
                                 return new VAL();
                             }
                         }
@@ -113,7 +113,7 @@ namespace syscon.stdio
 
                             if (name == null)
                             {
-                                cout.WriteLine("require parameter name at arguments({0}), run func(id=20,x=2);", i + 1);
+                                Cout.WriteLine("require parameter name at arguments({0}), run func(id=20,x=2);", i + 1);
                                 return new VAL(2);
                             }
                             val.AddMember(name, parameter);

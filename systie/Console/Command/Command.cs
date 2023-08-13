@@ -196,7 +196,7 @@ namespace syscon.stdio.Cli
 
                     if (k == args.Length)
                     {
-                        cerr.WriteLine("Unclosed quotation mark after the character string \"");
+                        Cerr.WriteLine("Unclosed quotation mark after the character string \"");
                         result = new string[] { };
                         return false;
                     }
@@ -249,7 +249,7 @@ namespace syscon.stdio.Cli
 
                     if (k == args.Length)
                     {
-                        cerr.WriteLine("Unclosed expression character }");
+                        Cerr.WriteLine("Unclosed expression character }");
                         result = string.Empty;
                         return false;
                     }
@@ -271,7 +271,7 @@ namespace syscon.stdio.Cli
                         }
                         catch (Exception ex)
                         {
-                            cerr.WriteLine($"error in {code}, {ex.Message}");
+                            Cerr.WriteLine($"error in {code}, {ex.Message}");
                         }
 
                         foreach (char ch in text) buf[i++] = ch;
@@ -279,7 +279,7 @@ namespace syscon.stdio.Cli
                 }
                 else if (args[k] == '}')
                 {
-                    cerr.WriteLine("Unclosed expression character }");
+                    Cerr.WriteLine("Unclosed expression character }");
                     result = string.Empty;
                     return false;
                 }

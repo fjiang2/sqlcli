@@ -26,9 +26,9 @@ namespace syscon.stdio.Cli
             string line;
 
         L1:
-            cout.Write($"{Task.CurrentPath}> ");
+            Cout.Write($"{Task.CurrentPath}> ");
         L2:
-            line = cin.ReadLine();
+            line = Cin.ReadLine();
 
             if (Console.IsOutputRedirected)
                 Console.WriteLine(line);
@@ -39,7 +39,7 @@ namespace syscon.stdio.Cli
 
             if (FlowControl.IsFlowStatement(line))
             {
-                cerr.WriteLine($"use \"{line}\" on batch script file only");
+                Cerr.WriteLine($"use \"{line}\" on batch script file only");
                 goto L1;
             }
 
@@ -68,9 +68,9 @@ namespace syscon.stdio.Cli
             FlowControl flow = new FlowControl(lines);
             NextStep next = flow.Execute(Run);
             if (next == NextStep.EXIT)
-                cout.WriteLine(ConsoleColor.Green, "completed.");
+                Cout.WriteLine(ConsoleColor.Green, "completed.");
 
-            cout.Write($"{Task.CurrentPath}> ");
+            Cout.Write($"{Task.CurrentPath}> ");
         }
 
         private bool multipleLineMode = false;
@@ -102,7 +102,7 @@ namespace syscon.stdio.Cli
                             var _result = TrySingleLineCommand(line);
                             if (_result == NextStep.COMPLETED)
                             {
-                                cout.WriteLine();
+                                Cout.WriteLine();
                                 return NextStep.COMPLETED;
                             }
                             else if (_result == NextStep.ERROR)
@@ -128,12 +128,12 @@ namespace syscon.stdio.Cli
                 {
                     multipleLineMode = false;
                     var result = Task.DoMultipleLineCommand(text);
-                    cout.WriteLine();
+                    Cout.WriteLine();
                     return result;
                 }
                 catch (Exception ex)
                 {
-                    cout.WriteLine(ex.AllMessages());
+                    Cout.WriteLine(ex.AllMessages());
                     return NextStep.ERROR;
                 }
 
@@ -141,7 +141,7 @@ namespace syscon.stdio.Cli
             else if (multipleLineBuilder.ToString() != "")
             {
                 multipleLineMode = true;
-                cout.Write("...");
+                Cout.Write("...");
                 return NextStep.CONTINUE;
             }
 

@@ -19,7 +19,7 @@ namespace sqlcli
                 {
                     e.Cancel = true;
                     cts.Cancel();
-                    cout.WriteLine("command interrupting...");
+                    Cout.WriteLine("command interrupting...");
                 };
 
             Console.CancelKeyPress += cancelKeyPress;
@@ -38,8 +38,8 @@ namespace sqlcli
             {
                 if (message == null)
                     message = "command interrupted";
-                cout.WriteLine();
-                cout.WriteLine(message);
+                Cout.WriteLine();
+                Cout.WriteLine(message);
             }
 
             cts.Dispose();

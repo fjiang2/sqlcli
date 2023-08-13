@@ -189,7 +189,7 @@ namespace sqlcli
             DatabaseName d = provider.DefaultDatabaseName;
             if (DbSchemaProvider.IsSystemDatabase(d.Name))
             {
-                cerr.WriteLine($"cannot navigate to system database: \"{d.Name}\"");
+                Cerr.WriteLine($"cannot navigate to system database: \"{d.Name}\"");
                 return null;
             }
 
@@ -205,7 +205,7 @@ namespace sqlcli
 
             if (string.IsNullOrEmpty(cmd.Arg1))
             {
-                cerr.WriteLine("argument cannot be empty");
+                Cerr.WriteLine("argument cannot be empty");
             }
 
             TableName tname = GetCurrentPath<TableName>();
@@ -219,7 +219,7 @@ namespace sqlcli
             var builder = new SqlBuilder().SELECT().TOP(1).COLUMNS().FROM(tname).WHERE(locator);
             if (builder.Invalid(tname))
             {
-                cerr.WriteLine($"invalid path: {cmd.Arg1}");
+                Cerr.WriteLine($"invalid path: {cmd.Arg1}");
                 return pt;
             }
 

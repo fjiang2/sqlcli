@@ -171,7 +171,7 @@ namespace Sys.Data.Code
             {
                 if (dt.Columns.Count < 2)
                 {
-                    cerr.WriteLine("cannot generate dictionary class, column# > 2");
+                    Cerr.WriteLine("cannot generate dictionary class, column# > 2");
                     return;
                 }
 
@@ -290,7 +290,7 @@ namespace Sys.Data.Code
             int count = dt.Columns.Count;
             if (count < 2)
             {
-                cerr.WriteLine("cannot generate enum class because table is < 2 columns");
+                Cerr.WriteLine("cannot generate enum class because table is < 2 columns");
                 return;
             }
 
@@ -326,13 +326,13 @@ namespace Sys.Data.Code
 
             if (_feature == null)
             {
-                cerr.WriteLine("invalid enum property name");
+                Cerr.WriteLine("invalid enum property name");
                 return;
             }
 
             if (_value == null)
             {
-                cerr.WriteLine("invalid enum property value");
+                Cerr.WriteLine("invalid enum property value");
                 return;
             }
 
@@ -381,7 +381,7 @@ namespace Sys.Data.Code
 
             if (optionColumns.Length == 0)
             {
-                cerr.WriteLine("missing parameter /field:col1,col2");
+                Cerr.WriteLine("missing parameter /field:col1,col2");
                 return;
             }
 
@@ -391,7 +391,7 @@ namespace Sys.Data.Code
             }
             else if (optionColumns.Length != optionConstants.Length)
             {
-                cerr.WriteLine($"invalid parameter /value:{string.Join(",", optionConstants)}");
+                Cerr.WriteLine($"invalid parameter /value:{string.Join(",", optionConstants)}");
                 return;
             }
 
@@ -423,7 +423,7 @@ namespace Sys.Data.Code
                 }
                 else if (type != _type)
                 {
-                    cerr.WriteLine($"column [{constant}] data type is imcompatible");
+                    Cerr.WriteLine($"column [{constant}] data type is imcompatible");
                     continue;
                 }
 

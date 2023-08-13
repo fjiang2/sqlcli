@@ -112,7 +112,7 @@ namespace Sys.Data.Code
             string path = OutputFile($"{name}.cs");
             if (path == null)
             {
-                cout.WriteLine(text);
+                Cout.WriteLine(text);
             }
             else
             {
@@ -125,11 +125,11 @@ namespace Sys.Data.Code
                 try
                 {
                     text.WriteIntoFile(file);
-                    cout.WriteLine("created on {0}", Path.GetFullPath(file));
+                    Cout.WriteLine("created on {0}", Path.GetFullPath(file));
                 }
                 catch (Exception ex)
                 {
-                    cout.WriteLine(ex.Message);
+                    Cout.WriteLine(ex.Message);
                 }
             }
         }
@@ -163,7 +163,7 @@ namespace Sys.Data.Code
                 }
                 catch (Exception ex)
                 {
-                    cerr.WriteLine($"invalid file or directory \"{outputFile}\", {ex.Message}");
+                    Cerr.WriteLine($"invalid file or directory \"{outputFile}\", {ex.Message}");
                 }
             }
 
@@ -190,7 +190,7 @@ namespace Sys.Data.Code
         {
             if (!File.Exists(path))
             {
-                cerr.WriteLine($"file {path} not found");
+                Cerr.WriteLine($"file {path} not found");
                 return null;
             }
 

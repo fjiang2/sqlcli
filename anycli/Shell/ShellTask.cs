@@ -53,12 +53,12 @@ namespace anycli
 					return NextStep.COMPLETED;
 
 				case "ver":
-					cout.WriteLine("anycli [Version {0}]", ShellHelp.ApplicationVerison);
+					Cout.WriteLine("anycli [Version {0}]", ShellHelp.ApplicationVerison);
 					return NextStep.COMPLETED;
 
 				case "path":
 					if (cmd.Arg1 == null)
-						cout.WriteLine(cfg.Path);
+						Cout.WriteLine(cfg.Path);
 					else
 						Context.SetValue("path", cmd.Arg1);
 					return NextStep.COMPLETED;
@@ -67,7 +67,7 @@ namespace anycli
 					if (cmd.Arg1 != null)
 						Shell.RunBatch(this, cfg, cmd.Arg1, cmd.Arguments);
 					else
-						cout.WriteLine("invalid arguments");
+						Cout.WriteLine("invalid arguments");
 					return NextStep.COMPLETED;
 
 				case "call":
@@ -76,7 +76,7 @@ namespace anycli
 					break;
 
 				default:
-					cerr.WriteLine("invalid command");
+					Cerr.WriteLine("invalid command");
 					break;
 			}
 
@@ -113,17 +113,17 @@ namespace anycli
 				case "exec":
 					try
 					{
-						cout.WriteLine("command(s) completed successfully");
+						Cout.WriteLine("command(s) completed successfully");
 					}
 					catch (Exception ex)
 					{
-						cerr.WriteLine(ex.Message);
+						Cerr.WriteLine(ex.Message);
 						return NextStep.ERROR;
 					}
 					break;
 
 				default:
-					cerr.WriteLine("invalid command");
+					Cerr.WriteLine("invalid command");
 					break;
 			}
 

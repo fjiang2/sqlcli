@@ -75,7 +75,7 @@ namespace sqlcli
                 }
                 catch (Exception ex)
                 {
-                    cerr.WriteLine($"failed to retrieve table names from {dname}, {ex.Message}");
+                    Cerr.WriteLine($"failed to retrieve table names from {dname}, {ex.Message}");
                     return false;
                 }
             }
