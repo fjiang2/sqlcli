@@ -11,8 +11,8 @@ namespace syscon.stdio
         /// <summary>
         /// turn command-echoing on/off on the screen
         /// </summary>
-        public static bool echo { get; set; } = true;
-        private static int WindowWidth { get; } = 80;
+        public static bool Echo { get; set; } = true;
+        public static int WindowWidth { get; } = 80;
 
         static Cout()
         {
@@ -24,7 +24,7 @@ namespace syscon.stdio
 
         public static void Write(string text)
         {
-            if (echo)
+            if (Echo)
                 Console.Write(text);
 
             Clog.Write(text);
@@ -32,7 +32,7 @@ namespace syscon.stdio
 
         public static void WriteLine(string text)
         {
-            if (echo)
+            if (Echo)
                 Console.WriteLine(text);
 
             Clog.WriteLine(text);
@@ -60,7 +60,7 @@ namespace syscon.stdio
 
         public static void TrimWriteLine(string text)
         {
-            if (echo)
+            if (Echo)
             {
                 int w = -1;
                 if (!Console.IsOutputRedirected && IsConsole)

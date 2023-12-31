@@ -13,7 +13,7 @@ namespace syscon.stdio
             var keep = Console.ForegroundColor;
             Console.ForegroundColor = ConsoleColor.DarkRed;
 
-            Console.WriteLine(text);
+            Console.Error.WriteLine(text);
             Clog.WriteLine(text);
 
             Console.ForegroundColor = keep;

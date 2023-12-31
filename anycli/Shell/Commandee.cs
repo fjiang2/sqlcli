@@ -46,7 +46,7 @@ namespace anycli
 			if (string.IsNullOrEmpty(text))
 			{
 				string status = "on";
-				if (!Cout.echo)
+				if (!Cout.Echo)
 					status = "off";
 
 				Cout.WriteLine($"echo is {status}");
@@ -56,11 +56,11 @@ namespace anycli
 			switch (text)
 			{
 				case "on":
-					Cout.echo = true;
+					Cout.Echo = true;
 					break;
 
 				case "off":
-					Cout.echo = false;
+					Cout.Echo = false;
 					break;
 
 				default:
