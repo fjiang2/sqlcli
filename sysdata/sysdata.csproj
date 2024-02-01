@@ -13,8 +13,8 @@
   <ItemGroup>
     <PackageReference Include="sqlcode" Version="1.0.12" />
     <PackageReference Include="System.CodeDom" Version="8.0.0" />
-    <PackageReference Include="System.Data.SqlClient" Version="4.8.5" />
-    <PackageReference Include="Tie" Version="2.0.10" />
+    <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
+    <PackageReference Include="Tie" Version="2.0.11" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\syscore\syscore.csproj" />
